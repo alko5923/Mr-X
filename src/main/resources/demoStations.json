@@ -1,0 +1,87 @@
+[
+	{
+		"name": 1,
+		"stationType": "Taxi",
+        "blackStation": false,
+        "neighboursTaxi": [
+            2,
+            3,
+            5,
+            7
+        ],
+        "neighboursBus": [],
+        "neighboursTube": []
+    },
+    {
+    	"name": 2,
+    	"stationType": "Taxi",
+    	"blackStation": false,
+        "neighboursTaxi": [
+            1,
+            3,
+            4
+        ],
+        "neighboursBus": [],
+        "neighboursTube": []
+    },
+    {
+    	"name": 3,
+    	"stationType": "Taxi",
+    	"blackStation": false,
+        "neighboursTaxi": [
+            1,
+            2,
+            4,
+            5
+        ],
+        "neighboursBus": [],
+        "neighboursTube": []
+    },
+    {
+    	"name": 4,
+    	"stationType": "Taxi",
+    	"blackStation": false,
+        "neighboursTaxi": [
+            2,
+            3
+        ],
+        "neighboursBus": [],
+        "neighboursTube": []
+    },
+    {
+    	"name": 5,
+    	"stationType": "Taxi",
+    	"blackStation": false,
+        "neighboursTaxi": [
+            1,
+            3,
+            6,
+            7
+        ],
+        "neighboursBus": [],
+        "neighboursTube": []
+    },
+    {
+    	"name": 6,
+    	"stationType": "Taxi",
+    	"blackStation": false,
+        "neighboursTaxi": [
+            5,
+            7
+        ],
+        "neighboursBus": [],
+        "neighboursTube": []
+    },
+    {
+    	"name": 7,
+    	"stationType": "Taxi",
+    	"blackStation": false,
+        "neighboursTaxi": [
+            1,
+            5,
+            6
+        ],
+        "neighboursBus": [],
+        "neighboursTube": []
+    }
+]
