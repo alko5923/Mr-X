@@ -64,39 +64,10 @@ public class Hunt {
 			
 			
 			//Clone Hunter
-			Hunter hunterClone = new Hunter(hunter);
-			
 			Cloner cloner = new Cloner();
-			//Hunter hunterCloneTest = cloner.deepClone(hunter);
+			Hunter hunterCloneTest = cloner.deepClone(hunter);
 			
-//			//Clone the detectives, the stations, the moves and Mr. X also
-//			List<Detective> clonedDetectives = new ArrayList<Detective>();
-//			for(int i = 0; i < hunter.getNrOfDetectives(); i++) {
-//				Detective det = hunter.getListDetectives().get(i);
-//				Detective detClone = new Detective(det);
-//				clonedDetectives.add(detClone);
-//			}
-//			
-//			hunterClone.setDetectives(clonedDetectives);
-//			
-//			
-//			List<Station> clonedStations = new ArrayList<Station>();
-//			for (int i = 0; i < hunter.getStations().size(); i++) {
-//				Station station = hunter.getStations().get(i);
-//				Station stationClone = new Station(station);
-//				clonedStations.add(stationClone);
-//			}
-//			
-//			hunterClone.setStations(clonedStations);
-//			
-//			List<Move> clonedMoves = new ArrayList<Move>();
-//			for (int i = 0; i < hunter.getStations().size(); i++) {
-//				Station station = hunter.getStations().get(i);
-//				Station stationClone = new Station(station);
-//				clonedStations.add(stationClone);
-//			}
-			
-			/*
+			//Make a move on the HunterCloneTest
 			Move move = hunterCloneTest.getListDetectives().get(0).getPossibleMovesCurrentStation().get(0);
 			hunterCloneTest.moveDetective(hunterCloneTest.getListDetectives().get(0), move);
 			
@@ -109,7 +80,10 @@ public class Hunt {
 			hunterCloneTest.findMrXPossibleMoves();
 			hunterCloneTest.coordinatePossibleDetectiveMoves();
 			hunterCloneTest.generateAllPossibleMoveCombosDetectives(hunterCloneTest.getAllPossibleDetectiveMoves());
-			*/
+			
+			//Reset the hunterCloneTest
+			hunterCloneTest = hunter;
+			
 //			//TODO: Run the minimax on the clone and save the best detective moves found
 //			List<Move> bestDetMoves = hunterClone.bestDetectiveMoves(ticketUsed, step, clonedDetectives, clonedStations);
 //			
@@ -133,7 +107,7 @@ public class Hunt {
 			}
 			
 			System.out.println("ORIGINAL HUNTER \n= " + hunter + "\n");
-			//System.out.println("HUNTER CLONE = \n" + hunterCloneTest + "\n");
+			System.out.println("HUNTER CLONE = \n" + hunterCloneTest + "\n");
 		}
 			
 	}
