@@ -29,17 +29,24 @@ public class Hunt {
 
 		hunter.setupDemo();
 		hunter.initialMrXPossibleStations();
-		hunter.findMrXPossibleMoves();
-		hunter.coordinatePossibleDetectiveMoves();
-		hunter.generateAllPossibleMoveCombosDetectives(hunter.getAllPossibleDetectiveMoves());
-		System.out.println(hunter);
-
 		
 		for(int step = 1; step < moves+1; step++) {
 			
-			System.out.println(" ***** Move nr. " + (step) + " *****\n");
+			System.out.println(" ***** MOVE NR. " + (step) + " *****\n");
 						
 			String ticketUsed = hunter.moveMrX();
+			
+			hunter.coordinatePossibleDetectiveMoves();
+			hunter.generateAllPossibleMoveCombosDetectives(hunter.getAllPossibleDetectiveMoves());
+			
+			
+			// TODO: CHECK THIS 
+			if (step == 3 || step == 8 || step == 13 || step == 18 || step == 24) {
+				System.out.println("\nMr. X, reveal yourself!\n");
+				System.out.println("Where is Mr. X at the moment?\n");
+				mrXLocation = sc.nextInt();
+				hunter.reveal(mrXLocation);
+			}
 			
 			if (hunter.getAllPossibleMoveCombosDetectives().size()==1) {
 				List<Move> bestMoves = new ArrayList<Move>();
@@ -62,52 +69,55 @@ public class Hunt {
 
 			}
 			
-			
-			//Clone Hunter
-			Cloner cloner = new Cloner();
-			Hunter hunterCloneTest = cloner.deepClone(hunter);
-			
-			//Make a move on the HunterCloneTest
-			Move move = hunterCloneTest.getListDetectives().get(0).getPossibleMovesCurrentStation().get(0);
-			hunterCloneTest.moveDetective(hunterCloneTest.getListDetectives().get(0), move);
-			
-			hunter.findMrXPossibleStations(ticketUsed);
-			hunter.findMrXPossibleMoves();
-			hunter.coordinatePossibleDetectiveMoves();
-			hunter.generateAllPossibleMoveCombosDetectives(hunter.getAllPossibleDetectiveMoves());
-			
-			hunterCloneTest.findMrXPossibleStations(ticketUsed);
-			hunterCloneTest.findMrXPossibleMoves();
-			hunterCloneTest.coordinatePossibleDetectiveMoves();
-			hunterCloneTest.generateAllPossibleMoveCombosDetectives(hunterCloneTest.getAllPossibleDetectiveMoves());
-			
-			//Reset the hunterCloneTest
-			hunterCloneTest = hunter;
-			
-//			//TODO: Run the minimax on the clone and save the best detective moves found
-//			List<Move> bestDetMoves = hunterClone.bestDetectiveMoves(ticketUsed, step, clonedDetectives, clonedStations);
-//			
-//			hunter.setBestDetMoves(bestDetMoves);
-//			
-//			//Read the best detective moves found and execute them on the original Hunter
-//			for (int i = 0; i < hunter.getNrOfDetectives(); i++) {
-//				Detective detective = hunter.getListDetectives().get(i);
-//				for (int j = 0; j < hunter.getBestDetectiveMoves().size(); j++) {
-//					Move move = hunter.getBestDetectiveMoves().get(j);
-//					hunter.moveDetective(detective, move);
+			else {
+				//Clone Hunter
+				Cloner cloner = new Cloner();
+				Hunter hunterCloneTest = cloner.deepClone(hunter);
+				
+				//Make a move on the HunterCloneTest
+				Move move = hunterCloneTest.getListDetectives().get(0).getPossibleMovesCurrentStation().get(0);
+				hunterCloneTest.moveDetective(hunterCloneTest.getListDetectives().get(0), move);
+				
+				hunter.findMrXPossibleStations(ticketUsed);
+				hunter.findMrXPossibleMoves();
+				hunter.coordinatePossibleDetectiveMoves();
+				hunter.generateAllPossibleMoveCombosDetectives(hunter.getAllPossibleDetectiveMoves());
+				
+				hunterCloneTest.findMrXPossibleStations(ticketUsed);
+				hunterCloneTest.findMrXPossibleMoves();
+				hunterCloneTest.coordinatePossibleDetectiveMoves();
+				hunterCloneTest.generateAllPossibleMoveCombosDetectives(hunterCloneTest.getAllPossibleDetectiveMoves());
+				
+				//Reset the hunterCloneTest
+				hunterCloneTest = hunter;
+				
+//				//TODO: Run the minimax on the clone and save the best detective moves found
+//				List<Move> bestDetMoves = hunterClone.bestDetectiveMoves(ticketUsed, step, clonedDetectives, clonedStations);
+//				
+//				hunter.setBestDetMoves(bestDetMoves);
+//				
+//				//Read the best detective moves found and execute them on the original Hunter
+//				for (int i = 0; i < hunter.getNrOfDetectives(); i++) {
+//					Detective detective = hunter.getListDetectives().get(i);
+//					for (int j = 0; j < hunter.getBestDetectiveMoves().size(); j++) {
+//						Move move = hunter.getBestDetectiveMoves().get(j);
+//						hunter.moveDetective(detective, move);
+//					}
 //				}
-//			}
+				
+				System.out.println("HUNTER CLONE = \n" + hunterCloneTest + "\n");
+			}
 			
-			// TODO: CHECK THIS 
-			if (step == 3 || step == 8 || step == 13 || step == 18 || step == 24) {
-				System.out.println("\nMr. X, reveal yourself!\n");
-				System.out.println("Where is Mr. X at the moment?\n");
-				mrXLocation = sc.nextInt();
-				hunter.reveal(mrXLocation);
+			
+			for (int i = 0; i < hunter.getNrOfDetectives(); i++) {
+				String detName = hunter.getListDetectives().get(i).getName();
+				Move move = hunter.getBestDetectiveMoves().get(i);
+				System.out.println("Detective " + detName + " : " + move);
+				
 			}
 			
 			System.out.println("ORIGINAL HUNTER \n= " + hunter + "\n");
-			System.out.println("HUNTER CLONE = \n" + hunterCloneTest + "\n");
+			
 		}
 			
 	}

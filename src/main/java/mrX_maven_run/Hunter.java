@@ -558,11 +558,13 @@ public class Hunter {
 		return ticketUsed;
 	}
 	
+	//TODO: consider and develop this! 
 	/**Simulate Mr. X making a move.
 	 * 
 	 * @param move
 	 */
 	public void simulateMrXmove(Move move) {
+		//Check if he has the ticket to make the move
 		mrX.setSimulatedCurrentStation(move.getDestinationStation().getNameInt());
 		mrX.addToUsedTickets(move.getTicket());
 	}
@@ -824,7 +826,7 @@ public class Hunter {
 		//Each possible location Mr. X is located at = +10
 		//The values of all those stations
 		//MINUS:
-		//Each possible Mr. X location reacheable in 1 move = -10 
+		//Each possible Mr. X location reachable in 1 move = -10 
 		//Values of those station
 		double evaluation = possibleMrXstations.size() * 10;
 		if (noMovesLeftCheck()) {
@@ -931,6 +933,9 @@ public class Hunter {
 		sb.append(mrX.toString());
 		sb.append("All possible Mr. X stations = " + possibleMrXstations + "\n");
 		sb.append("All possible Mr. X moves = " + possibleMrXmoves + "\n");
+		sb.append("---------------------------------\n");
+		sb.append("*** DETECTIVE MOVES ***\n");
+		sb.append("---------------------------------\n");
 		sb.append("All possible detective moves = " + allPossibleDetectiveMoves + "\n");
 		sb.append("All possible combinations of detective moves = " + allPossibleMoveCombosDetectives + "\n");
 		sb.append("The best detective moves = " + bestDetectiveMoves + "\n");
