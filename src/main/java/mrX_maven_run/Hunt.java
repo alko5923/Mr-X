@@ -21,6 +21,13 @@ public class Hunt {
 	private static int moves = 24;
 	private static int mrXLocation;
 	
+	/**The minimax algorithm that runs through the tree of possible game states.
+	 * 
+	 * @param depth
+	 * @param isMaximizing
+	 */
+	
+	
 	public static void main(String[] args) throws InterruptedException, FileNotFoundException, IOException {
 		
 		Hunter hunter = new Hunter();
@@ -55,6 +62,8 @@ public class Hunt {
 					Move move = hunter.getAllPossibleMoveCombosDetectives().get(0).get(i);
 					bestMoves.add(move);
 					hunter.setBestDetMoves(bestMoves);
+					String detName = det.getName();
+					System.out.println("Detective " + detName + " : " + move);
 					hunter.moveDetective(det, move);
 				}
 				
@@ -72,49 +81,83 @@ public class Hunt {
 			else {
 				//Clone Hunter
 				Cloner cloner = new Cloner();
-				Hunter hunterCloneTest = cloner.deepClone(hunter);
+				TreeNode<Hunter> rootNode = new TreeNode<Hunter>(hunter, cloner);
+				double bestScore = Double.NEGATIVE_INFINITY;
 				
-				//Make a move on the HunterCloneTest
-				Move move = hunterCloneTest.getListDetectives().get(0).getPossibleMovesCurrentStation().get(0);
-				hunterCloneTest.moveDetective(hunterCloneTest.getListDetectives().get(0), move);
 				
-				hunter.findMrXPossibleStations(ticketUsed);
-				hunter.findMrXPossibleMoves();
-				hunter.coordinatePossibleDetectiveMoves();
-				hunter.generateAllPossibleMoveCombosDetectives(hunter.getAllPossibleDetectiveMoves());
+				for (int i = 0; i < hunter.getPossibleMrXmoves().size(); i++) {
+					Move move = hunter.getPossibleMrXmoves().get(i);
+					//System.out.println("THE SIMULATED MOVE nr. " + i + " = " + move);
+					Hunter clonedState = rootNode.getDeepCloneOfRepresentedState();
+					clonedState.simulateMrXmove(move);
+					TreeNode<Hunter> startNode = new TreeNode<Hunter>(clonedState, cloner);
+					rootNode.addChild(startNode);
+					double score = clonedState.miniMax(0, false, startNode, cloner);
+					bestScore = Math.max(score, bestScore);
+					rootNode.setNodeEvaluation(bestScore);
+				}
 				
-				hunterCloneTest.findMrXPossibleStations(ticketUsed);
-				hunterCloneTest.findMrXPossibleMoves();
-				hunterCloneTest.coordinatePossibleDetectiveMoves();
-				hunterCloneTest.generateAllPossibleMoveCombosDetectives(hunterCloneTest.getAllPossibleDetectiveMoves());
+				double bestScore1 = Double.NEGATIVE_INFINITY;
 				
-				//Reset the hunterCloneTest
-				hunterCloneTest = hunter;
+				List<Move> bestCom = new ArrayList<Move>();
 				
-//				//TODO: Run the minimax on the clone and save the best detective moves found
-//				List<Move> bestDetMoves = hunterClone.bestDetectiveMoves(ticketUsed, step, clonedDetectives, clonedStations);
-//				
+				for (int i = 0; i < rootNode.getChildren().size(); i++) {
+					double nodeEvaluation = rootNode.getChildren().get(i).getNodeEvaluation();
+					if (nodeEvaluation > bestScore1) {
+						bestScore1 = nodeEvaluation;
+						bestCom = rootNode.getChildren().get(i).getBestCombo();
+						System.out.println(bestCom);
+					}
+					
+				}
+				
+				hunter.setBestDetMoves(bestCom);
+				
+				for (int i = 0; i < hunter.getBestDetectiveMoves().size(); i++) {
+					Detective det = hunter.getListDetectives().get(i);
+					Move move = hunter.getBestDetectiveMoves().get(i);
+					String detName = det.getName();
+					System.out.println("Detective " + detName + " : " + move);
+					hunter.moveDetective(det, move);
+				}
+				
+				
+				
+				//Find the best moves for all seekers. 
+					
+//				List<Move> bestDetMoves = new ArrayList<Move>();
+//				//the AI is the minimizing player, Mr. X (human) is the maximizing player 
+//				double bestScore = Double.NEGATIVE_INFINITY;
+//					
+//				for (int i = 0; i < hunter.getPossibleMrXmoves().size(); i++) {
+//					Move move = hunter.getPossibleMrXmoves().get(i);
+//					hunter.simulateMrXmove(move);
+//					hunter.coordinatePossibleDetectiveMoves();
+//					hunter.generateAllPossibleMoveCombosDetectives(hunter.getAllPossibleDetectiveMoves());
+//					double score = hunter.miniMax(0, false, hunter);
+//					if (score > bestScore) {
+//						bestScore = score;
+//						//TODO: make sure you set the currently executing combo move to the best detective moves in the minimax
+//						bestDetMoves = hunter.getBestDetectiveMoves();
+//					}
+//					hunter = hunterClone;
+//				}
+//					
 //				hunter.setBestDetMoves(bestDetMoves);
+//				
 //				
 //				//Read the best detective moves found and execute them on the original Hunter
 //				for (int i = 0; i < hunter.getNrOfDetectives(); i++) {
 //					Detective detective = hunter.getListDetectives().get(i);
-//					for (int j = 0; j < hunter.getBestDetectiveMoves().size(); j++) {
-//						Move move = hunter.getBestDetectiveMoves().get(j);
-//						hunter.moveDetective(detective, move);
-//					}
+//					String detName = detective.getName();
+//					Move move = hunter.getBestDetectiveMoves().get(i);
+//					System.out.println("Detective " + detName + " : " + move);
+//					hunter.moveDetective(detective, move);
 //				}
 				
-				System.out.println("HUNTER CLONE = \n" + hunterCloneTest + "\n");
+				//System.out.println("HUNTER CLONE = \n" + hunterClone + "\n");
 			}
 			
-			
-			for (int i = 0; i < hunter.getNrOfDetectives(); i++) {
-				String detName = hunter.getListDetectives().get(i).getName();
-				Move move = hunter.getBestDetectiveMoves().get(i);
-				System.out.println("Detective " + detName + " : " + move);
-				
-			}
 			
 			System.out.println("ORIGINAL HUNTER \n= " + hunter + "\n");
 			

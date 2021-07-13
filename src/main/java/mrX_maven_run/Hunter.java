@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.rits.cloning.Cloner;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.*;
 
@@ -95,6 +96,7 @@ public class Hunter {
 		return stations;
 	}
 	
+	//TODO: change the heuristic function. Replace it with a function that tries to minimize the distance to Mr. X.
 	/**A simple evaluation formula for a station, based on number and type of connections from it.
 	 * 
 	 * @param stations
@@ -374,7 +376,7 @@ public class Hunter {
 			Detective detective = listDetectives.get(i);
 			detective.findPossibleMovesDetective();
 		}
-		
+		mrX.setStations(stations);
 		printStations(stations);
 		}
 
@@ -387,7 +389,6 @@ public class Hunter {
 	 */
 	public boolean noMovesLeftCheck() {
 			if (possibleMrXmoves.size() == 0) {
-				System.out.println("Mr. X has no moves left! Busted!");
 				return true;
 			}
 			return false;
@@ -564,9 +565,11 @@ public class Hunter {
 	 * @param move
 	 */
 	public void simulateMrXmove(Move move) {
-		//Check if he has the ticket to make the move
 		mrX.setSimulatedCurrentStation(move.getDestinationStation().getNameInt());
 		mrX.addToUsedTickets(move.getTicket());
+		findMrXPossibleStations(move.getTicket());
+		findMrXPossibleMoves();
+		
 	}
 	
 	/**Remove the ticket Mr. X used from his available tickets.
@@ -583,51 +586,6 @@ public class Hunter {
 		else if (ticket.equals("Tube")) {
 			mrX.removeXTubeTicket();
 		}
-	}
-	
-	/**Cleans up the possible moves for every cloned detective. 
-	 * 
-	 */
-	public void coordinatePossibleDetectiveMoves(List<Detective> clonedDetectives) {
-		/**Loop through all detectives, except for the last one 
-		 * For every detective, loop through all possible moves
-		 * If any of the moves' destinations stations equals any of the detectives' current stations,
-		 * remove the move.
-		 * This is a design choice to make the algorithm easier: a following detective will not be able to move
-		 * to a station that was occupied by a previous detective. 
-		 */
-		List<Integer> detectivesCurrentStations = new ArrayList<Integer>();
-		
-		for (int i = 0; i < clonedDetectives.size(); i++) {
-			Detective det = clonedDetectives.get(i);
-			int current = det.getCurrentPosition();
-			detectivesCurrentStations.add(current);
-		}
-		
-		
-		for (int i = 0; i < clonedDetectives.size()-1; i++) {
-			
-			Detective det = clonedDetectives.get(i);
-			
-			for (int j = 0; j < det.getPossibleMovesCurrentStation().size(); j++) {
-				
-				int destination = det.getPossibleMovesCurrentStation().get(j).getDestinationStation().getNameInt();
-				if (detectivesCurrentStations.contains(destination)) {
-					det.getPossibleMovesCurrentStation().remove(j);
-				}
-			}
-		}
-		
-		List<List<Move>> allMoves = new ArrayList<List<Move>>();
-		
-		//Save all possible moves in a list of lists, allPossibleDetectiveMoves
-		for (int i = 0; i < clonedDetectives.size(); i++) {
-			Detective detective = clonedDetectives.get(i);
-			List<Move> possibleMoves = detective.getPossibleMovesCurrentStation();
-			allMoves.add(possibleMoves);
-		}
-		
-		allPossibleDetectiveMoves = allMoves;
 	}
 	
 	
@@ -721,63 +679,65 @@ public class Hunter {
 	}
 	
 	
-	/**Find the best moves for all seekers. 
-	 * 
-	 * @param ticketUsed
-	 * @param gameMove
-	 */
-	public List<Move> bestDetectiveMoves(String ticketUsed, int gameMove, List<Detective> clonedDetectives, List<Station> clonedStations) {
-		
-		List<Move> bestDetMoves = new ArrayList<Move>();
-		//the AI is the minimizing player, Mr. X (human) is the maximizing player 
-		double bestScore = Double.POSITIVE_INFINITY;
-		
-		coordinatePossibleDetectiveMoves(clonedDetectives);
-		generateAllPossibleMoveCombosDetectives(allPossibleDetectiveMoves);
-		
-		//Make the first possible move combo
-		//Run the minimax and save the score
-		//Run the second possible move combo
-		//Run the minimax and save the score; if the score is lower, make it the new best score
-		//Once you have gone through all the possible move combos, return the best score 
-		
-		for (int i = 0; i < allPossibleMoveCombosDetectives.size(); i++) {
-			for (int j = 0; j < allPossibleMoveCombosDetectives.get(i).size(); j++) {
-				Detective det = clonedDetectives.get(j);
-				moveDetective(det, allPossibleMoveCombosDetectives.get(i).get(j));
-			}
-			double score = miniMax(0, true, clonedDetectives);
-			if (score < bestScore) {
-				bestScore = score;
-				bestDetMoves = allPossibleMoveCombosDetectives.get(i);
-			}
-		}
-		
-		bestDetectiveMoves = bestDetMoves;
-		
-		return bestDetMoves;
-	}
-	
-	/**The minimax algorithm that runs through the tree of possible game states.
-	 * 
-	 * @param depth
-	 * @param isMaximizing
-	 */
-	public double miniMax(int depth, boolean isMaximizing, List<Detective> clonedDetectivesList) {
+//	/**Find the best moves for all seekers. 
+//	 * 
+//	 * @param ticketUsed
+//	 * @param gameMove
+//	 */
+//	public List<Move> bestDetectiveMoves(String ticketUsed, int gameMove) {
+//		
+//		List<Move> bestDetMoves = new ArrayList<Move>();
+//		//the AI is the minimizing player, Mr. X (human) is the maximizing player 
+//		double bestScore = Double.POSITIVE_INFINITY;
+//		
+//		coordinatePossibleDetectiveMoves();
+//		generateAllPossibleMoveCombosDetectives(allPossibleDetectiveMoves);
+//		
+//		//Make the first possible move combo
+//		//Run the minimax and save the score
+//		//Run the second possible move combo
+//		//Run the minimax and save the score; if the score is lower, make it the new best score
+//		//Once you have gone through all the possible move combos, return the best score 
+//		
+//		for (int i = 0; i < allPossibleMoveCombosDetectives.size(); i++) {
+//			for (int j = 0; j < allPossibleMoveCombosDetectives.get(i).size(); j++) {
+//				Detective det = listDetectives.get(j);
+//				moveDetective(det, allPossibleMoveCombosDetectives.get(i).get(j));
+//			}
+//			double score = miniMax(0, true);
+//			if (score < bestScore) {
+//				bestScore = score;
+//				bestDetMoves = allPossibleMoveCombosDetectives.get(i);
+//			}
+//		}
+//		
+//		bestDetectiveMoves = bestDetMoves;
+//		
+//		return bestDetMoves;
+//	}
+//	
+//	/**The minimax algorithm that runs through the tree of possible game states.
+//	 * 
+//	 * @param depth
+//	 * @param isMaximizing
+//	 */
+	public double miniMax(int depth, boolean isMaximizing, TreeNode<Hunter> startNode, Cloner cloner) {
 		
 		//Check if Mr. X has no moves left and return negative infinity if that is the case  
-		boolean result = noMovesLeftCheck();
-		if (result == true) {
-			System.out.println("Mr. X is no more!");
-			return Double.NEGATIVE_INFINITY;
-		}
-		
 		double bestScore;
 		
-		//Once you reach a depth of two, evaluate the game state and return the score 
+		boolean result = startNode.getData().noMovesLeftCheck();
+		if (result == true) {
+			System.out.println("MR. X IS NO MORE!!!");
+			bestScore = Double.NEGATIVE_INFINITY;
+		}
+		
+		
+		//Once you reach a depth of two, evaluate the game state and propagate the score 
 		if(depth == 2) {
-			double miniMaxEvaluation = evaluateGameState();
-			System.out.println("Game state evaluation = " + miniMaxEvaluation);
+			double miniMaxEvaluation = startNode.getData().evaluateGameState();
+			//System.out.println("Game state evaluation = " + miniMaxEvaluation);
+			startNode.setNodeEvaluation(miniMaxEvaluation);
 			return miniMaxEvaluation;
 			
 		}
@@ -787,28 +747,64 @@ public class Hunter {
 			bestScore = Double.NEGATIVE_INFINITY;
 			//Loop through all possible Mr. X moves and make every one of them; 
 			//Call minimax with minimizing player 
+			
+			Hunter clonedState = startNode.getDeepCloneOfRepresentedState();
+			
 			for (int i = 0; i < possibleMrXmoves.size(); i++) {
-				Move move = possibleMrXmoves.get(i);
-				simulateMrXmove(move);
-				findMrXPossibleStations(move.getTicket());
-				findMrXPossibleMoves();
-				coordinatePossibleDetectiveMoves();
-				generateAllPossibleMoveCombosDetectives(allPossibleDetectiveMoves);
-				double score = miniMax(depth+1, false, clonedDetectivesList);
+				Move move = clonedState.getPossibleMrXmoves().get(i);
+				clonedState.simulateMrXmove(move);
+				clonedState.findMrXPossibleStations(move.getTicket());
+				clonedState.findMrXPossibleMoves();
+				clonedState.coordinatePossibleDetectiveMoves();
+				clonedState.generateAllPossibleMoveCombosDetectives(allPossibleDetectiveMoves);
+				
+				TreeNode<Hunter> newChild = new TreeNode<Hunter>(clonedState, cloner);
+				//startNode.addChild(newChild);
+				
+				double score = clonedState.miniMax(depth+1, false, newChild, cloner);
+				
+				startNode.addChild(newChild);
+				
 				bestScore = Math.max(score, bestScore);
+				startNode.setNodeEvaluation(bestScore);
 			}
 		}
+		
 		else {
 			bestScore = Double.POSITIVE_INFINITY;
 			//Loop through all possible move combos and make every one of them
 			//Call minimax with maximizing player
 			for (int i = 0; i < allPossibleMoveCombosDetectives.size(); i++) {
+				
+				Hunter clonedState = startNode.getDeepCloneOfRepresentedState();
+				
 				for (int j = 0; j < allPossibleMoveCombosDetectives.get(i).size(); j++) {
-					Detective det = clonedDetectivesList.get(j);
-					moveDetective(det, allPossibleMoveCombosDetectives.get(i).get(j));
+					
+					Detective det = clonedState.getListDetectives().get(j);
+					Move move = clonedState.getAllPossibleMoveCombosDetectives().get(i).get(j);
+					clonedState.moveDetective(det, move);
+					clonedState.findMrXPossibleStations(move.getTicket());
+					clonedState.findMrXPossibleMoves();
 				}
-				double score = miniMax(depth+1, false, clonedDetectivesList);
-				bestScore = Math.min(score, bestScore);
+				
+				clonedState.coordinatePossibleDetectiveMoves();
+				clonedState.generateAllPossibleMoveCombosDetectives(allPossibleDetectiveMoves);
+				
+				TreeNode<Hunter> newChild = new TreeNode<Hunter>(clonedState, cloner);
+				//startNode.addChild(newChild);
+				
+				double score = clonedState.miniMax(depth+1, true, newChild, cloner);
+				
+				startNode.addChild(newChild);
+				
+				//bestScore = Math.min(score, bestScore);
+				if (score < bestScore) {
+					bestScore = score;
+					List<Move> bestCombo = startNode.getData().getAllPossibleMoveCombosDetectives().get(i);
+					startNode.setBestCombo(bestCombo);
+				}
+				
+				startNode.setNodeEvaluation(bestScore);
 			}
 			
 		}
@@ -827,7 +823,7 @@ public class Hunter {
 		//The values of all those stations
 		//MINUS:
 		//Each possible Mr. X location reachable in 1 move = -10 
-		//Values of those station
+		//Values of those stations
 		double evaluation = possibleMrXstations.size() * 10;
 		if (noMovesLeftCheck()) {
 			evaluation = Double.NEGATIVE_INFINITY;
@@ -844,28 +840,27 @@ public class Hunter {
 			//if the list of Mr. X possible stations contains a neighbour and if the detective has the right type of ticket, then increment counter
 			for (int j = 0; j < startStation.getNumberTaxiConnections(); j++) {
 				Station destinationStation = getStation(startStation.getTaxiNeighbours().get(j)-1);
-				if (possibleMrXstations.contains(destinationStation.getNameInt())) {
+				if (possibleMrXstations.contains(destinationStation.getNameInt()) && detective.getTaxiTicketsAvailable()>0) {
 					int value = destinationStation.getValue();
 					evaluation -= (10 + value);
 				}
 			}
 			for (int j = 0; j < startStation.getNumberBusConnections(); j++) {
 				Station destinationStation = getStation(startStation.getBusNeighbours().get(j)-1);
-				if (possibleMrXstations.contains(destinationStation.getNameInt())) {
+				if (possibleMrXstations.contains(destinationStation.getNameInt()) && detective.getBusTicketsAvailable()>0) {
 					int value = destinationStation.getValue();
 					evaluation -= (10 + value);
 				}
 			}
 			for (int j = 0; j < startStation.getNumberTubeConnections(); j++) {
 				Station destinationStation = getStation(startStation.getTubeNeighbours().get(j)-1);
-				if (possibleMrXstations.contains(destinationStation.getNameInt())) {
+				if (possibleMrXstations.contains(destinationStation.getNameInt()) && detective.getTubeTicketsAvailable()>0) {
 					int value = destinationStation.getValue();
 					evaluation -= (10 + value);
 				}
 			}
 		}
 		
-		System.out.println("Game state evaluation = " + evaluation + "\n");
 		return evaluation; 
 	}
 	

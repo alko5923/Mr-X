@@ -65,6 +65,9 @@ public class MrX {
 		this.simulatedCurrentStation = simulatedCurrentStation;
 	}
 	
+	public void setStations(List<Station> stationsList) {
+		this.stationsList = stationsList;
+	}
 	
 	/**Add a station to the list of stations where Mr. X. has revealed himself. 
 	 * 
