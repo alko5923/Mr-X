@@ -160,6 +160,7 @@ public class MrX {
 				sb.append(", ");
 			}
 			sb.append(" ]\n");
+			sb.append("Simulated current station = " + simulatedCurrentStation + "\n");
 			
 			return sb.toString();
 		}

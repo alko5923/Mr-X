@@ -1,8 +1,6 @@
 package mrX_maven_run;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -84,7 +82,6 @@ public class Hunt {
 				TreeNode<Hunter> rootNode = new TreeNode<Hunter>(hunter, cloner);
 				double bestScore = Double.NEGATIVE_INFINITY;
 				
-				
 				for (int i = 0; i < hunter.getPossibleMrXmoves().size(); i++) {
 					Move move = hunter.getPossibleMrXmoves().get(i);
 					//System.out.println("THE SIMULATED MOVE nr. " + i + " = " + move);
@@ -120,48 +117,10 @@ public class Hunt {
 					System.out.println("Detective " + detName + " : " + move);
 					hunter.moveDetective(det, move);
 				}
-				
-				
-				
-				//Find the best moves for all seekers. 
-					
-//				List<Move> bestDetMoves = new ArrayList<Move>();
-//				//the AI is the minimizing player, Mr. X (human) is the maximizing player 
-//				double bestScore = Double.NEGATIVE_INFINITY;
-//					
-//				for (int i = 0; i < hunter.getPossibleMrXmoves().size(); i++) {
-//					Move move = hunter.getPossibleMrXmoves().get(i);
-//					hunter.simulateMrXmove(move);
-//					hunter.coordinatePossibleDetectiveMoves();
-//					hunter.generateAllPossibleMoveCombosDetectives(hunter.getAllPossibleDetectiveMoves());
-//					double score = hunter.miniMax(0, false, hunter);
-//					if (score > bestScore) {
-//						bestScore = score;
-//						//TODO: make sure you set the currently executing combo move to the best detective moves in the minimax
-//						bestDetMoves = hunter.getBestDetectiveMoves();
-//					}
-//					hunter = hunterClone;
-//				}
-//					
-//				hunter.setBestDetMoves(bestDetMoves);
-//				
-//				
-//				//Read the best detective moves found and execute them on the original Hunter
-//				for (int i = 0; i < hunter.getNrOfDetectives(); i++) {
-//					Detective detective = hunter.getListDetectives().get(i);
-//					String detName = detective.getName();
-//					Move move = hunter.getBestDetectiveMoves().get(i);
-//					System.out.println("Detective " + detName + " : " + move);
-//					hunter.moveDetective(detective, move);
-//				}
-				
-				//System.out.println("HUNTER CLONE = \n" + hunterClone + "\n");
-			}
 			
 			
 			System.out.println("ORIGINAL HUNTER \n= " + hunter + "\n");
-			
+			}
 		}
-			
 	}
 }
