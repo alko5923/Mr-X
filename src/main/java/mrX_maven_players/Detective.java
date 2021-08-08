@@ -1,6 +1,9 @@
-package mrX_maven_run;
+package mrX_maven_players;
 
 import java.util.*;
+
+import mrX_maven_game.Move;
+import mrX_maven_game.Station;
 
 /**This class represents a detective.
  * 
@@ -13,12 +16,12 @@ public class Detective {
 	private String name;
 	private int startPosition;
 	private int currentPosition;
-	//private List<Station> stationsList = new ArrayList<Station>();
 	private List<Move> possibleMovesCurrentStation = new ArrayList<Move>();
 	private List<Move> moveList = new ArrayList<Move>();
 	private int taxiTicketsAvailable;
 	private int busTicketsAvailable;
 	private int tubeTicketsAvailable;
+	//TODO: these 3 below seem unnecessary, is there a better way? 
 	private List<Station> perfectTubeStations;
 	private List<Station> lessPerfectTubeStations;
 	private List<Move> path;
@@ -28,13 +31,10 @@ public class Detective {
 		this.name = name;
 		this.startPosition = startPosition;
 		this.currentPosition = startPosition;
-		//this.stationsList = stationsList;
 		this.taxiTicketsAvailable = taxiTickets;
 		this.busTicketsAvailable = busTickets;
-		this.tubeTicketsAvailable = tubeTickets;
-		
+		this.tubeTicketsAvailable = tubeTickets;	
 	}
-	
 	
 	/**Get the number of the detective.
 	 * 

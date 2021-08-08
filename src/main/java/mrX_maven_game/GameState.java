@@ -1,4 +1,4 @@
-package mrX_maven_run;
+package mrX_maven_game;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,6 +7,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.rits.cloning.Cloner;
+
+import mrX_maven_players.Detective;
+import mrX_maven_players.MrX;
+import mrX_maven_utilities.TreeNode;
+
 import java.util.*;
 
 
@@ -16,7 +21,7 @@ import java.util.*;
  *
  */
 
-public class Hunter {
+public class GameState {
 	
 	private Scanner sc = new Scanner(System.in);
 	private int numberOfDetectives;
@@ -37,7 +42,7 @@ public class Hunter {
 	private Move winningMove = null;
 	
 	
-	public Hunter() {
+	public GameState() {
 		
 	}
 	
@@ -45,7 +50,7 @@ public class Hunter {
 	 * 
 	 * @param original
 	 */
-	public Hunter(Hunter original) {
+	public GameState(GameState original) {
 		this.mrX = original.mrX;
 		this.numberOfDetectives = original.numberOfDetectives;
 		this.numberOfPolice = original.numberOfPolice;
@@ -1092,7 +1097,7 @@ public class Hunter {
 	 * @param depth
 	 * @param isMaximizing
 	 */
-	public double miniMax(int depth, boolean isMaximizing, TreeNode<Hunter> startNode, Cloner cloner, List<List<Integer>> parsedDistances, int step, List<Station> stations) {
+	public double miniMax(int depth, boolean isMaximizing, TreeNode<GameState> startNode, Cloner cloner, List<List<Integer>> parsedDistances, int step, List<Station> stations) {
 		
 		//Check if Mr. X has no moves left and return negative infinity if that is the case  
 		double bestScore;
@@ -1128,7 +1133,7 @@ public class Hunter {
 			//Loop through all possible Mr. X moves and make every one of them; 
 			//Call minimax with minimizing player 
 			for (int i = 0; i < startNode.getData().getPossibleMrXmoves().size(); i++) {
-				Hunter clonedState = startNode.getDeepCloneOfRepresentedState();
+				GameState clonedState = startNode.getDeepCloneOfRepresentedState();
 				Move move = clonedState.getPossibleMrXmoves().get(i);
 				clonedState.simulateMrXmove(move, step, parsedDistances);
 				clonedState.findMrXPossibleStations(move.getTicket(), step);
@@ -1136,7 +1141,7 @@ public class Hunter {
 				clonedState.coordinatePossibleDetectiveMoves(step, parsedDistances);
 				clonedState.generateAllPossibleMoveCombosDetectives(allPossibleDetectiveMoves, parsedDistances, step);
 				
-				TreeNode<Hunter> newChild = new TreeNode<Hunter>(clonedState, cloner);
+				TreeNode<GameState> newChild = new TreeNode<GameState>(clonedState, cloner);
 				
 				double score = clonedState.miniMax(depth+1, false, newChild, cloner, parsedDistances, step, stations);
 				
@@ -1152,7 +1157,7 @@ public class Hunter {
 			//Loop through all possible move combos and make every one of them
 			//Call minimax with maximizing player
 			for (int i = 0; i < allPossibleMoveCombosDetectives.size(); i++) {
-				Hunter clonedState = startNode.getDeepCloneOfRepresentedState();
+				GameState clonedState = startNode.getDeepCloneOfRepresentedState();
 				for (int j = 0; j < allPossibleMoveCombosDetectives.get(i).size(); j++) {
 					
 					Detective det = clonedState.getListDetectives().get(j);
@@ -1170,7 +1175,7 @@ public class Hunter {
 				clonedState.coordinatePossibleDetectiveMoves(step, parsedDistances);
 				clonedState.generateAllPossibleMoveCombosDetectives(clonedState.getAllPossibleDetectiveMoves(), parsedDistances, step);
 				
-				TreeNode<Hunter> newChild = new TreeNode<Hunter>(clonedState, cloner);
+				TreeNode<GameState> newChild = new TreeNode<GameState>(clonedState, cloner);
 				//startNode.addChild(newChild);
 				
 				double score = clonedState.miniMax(depth+1, true, newChild, cloner, parsedDistances, step, stations);
@@ -1192,7 +1197,7 @@ public class Hunter {
 		return bestScore;
 	}
 	
-	public double calculateAverageDistanceDetectives(TreeNode<Hunter> startNode, List<List<Integer>> parsedDistances) {
+	public double calculateAverageDistanceDetectives(TreeNode<GameState> startNode, List<List<Integer>> parsedDistances) {
 		
 		double averageDistance = 0;
 		int nrDetectives = startNode.getData().getListDetectives().size();
@@ -1211,7 +1216,7 @@ public class Hunter {
 	 * 
 	 * @return	the evaluation of the game state. 
 	 */
-	public double evaluateGameState(TreeNode<Hunter> startNode, List<List<Integer>> parsedDistances) {
+	public double evaluateGameState(TreeNode<GameState> startNode, List<List<Integer>> parsedDistances) {
 		//PLUS:
 		//Each possible location Mr. X is located at = +10
 		//The values of all those stations
@@ -1224,7 +1229,7 @@ public class Hunter {
 		
 		
 		
-		Hunter state = startNode.getData();
+		GameState state = startNode.getData();
 		double evaluation = state.getPossibleMrXstations().size() * 10;
 		if (noMovesLeftCheck()) {
 			evaluation = -10000;

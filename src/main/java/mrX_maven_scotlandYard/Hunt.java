@@ -1,4 +1,4 @@
-package mrX_maven_run;
+package mrX_maven_scotlandYard;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import com.rits.cloning.Cloner;
+
+import mrX_maven_game.GameState;
+import mrX_maven_game.Move;
+import mrX_maven_game.Station;
+import mrX_maven_players.Detective;
+import mrX_maven_utilities.DistancesFileParser;
+import mrX_maven_utilities.TreeNode;
 
 
 /**This class represents the main overview logic of the program.
@@ -22,7 +29,7 @@ public class Hunt {
 	private static int mrXLocation;
 	
 	
-	public static Move findSecondMove(int nextNeighbour, Station destination, List<Integer> distancesFromNextNeighbour, List<Integer> distancesFromDestination, int distance, Station neighbourStation, Hunter hunter) {
+	public static Move findSecondMove(int nextNeighbour, Station destination, List<Integer> distancesFromNextNeighbour, List<Integer> distancesFromDestination, int distance, Station neighbourStation, GameState hunter) {
 		Move secondMove = null;
 		//If distance is 1 then we can just save the second move straight to the destination
 		if (nextNeighbour < destination.getNameInt()) {
@@ -42,7 +49,7 @@ public class Hunt {
 		return secondMove;
 	}
 	
-	public static List<Move> findMoves(int neighbour, Station destination, List<Integer> distancesFromNeighbour, List<Integer> distancesFromDestination, int distance, Hunter hunter, Station startingStation, List<List<Integer>> parsedDistances) {
+	public static List<Move> findMoves(int neighbour, Station destination, List<Integer> distancesFromNeighbour, List<Integer> distancesFromDestination, int distance, GameState hunter, Station startingStation, List<List<Integer>> parsedDistances) {
 		List<Move> movesFound = new ArrayList<Move>();
 		if (neighbour < destination.getNameInt()) {
 			int distanceToDest = distancesFromNeighbour.get(destination.getNameInt()-neighbour-1);
@@ -185,7 +192,7 @@ public class Hunt {
 	
 	//TODO: make sure they are not aiming for the same tube station
 	
-	public static void findPath(int distance, Station startingStation, List<List<Integer>> parsedDistances, Station destination, Hunter hunter, Detective det) {
+	public static void findPath(int distance, Station startingStation, List<List<Integer>> parsedDistances, Station destination, GameState hunter, Detective det) {
 		List<Move> moves = new ArrayList<Move>();
 		
 		for (int k = 0; k < startingStation.getNumberTaxiConnections(); k++) {
@@ -222,7 +229,7 @@ public class Hunt {
 	
 	public static void main(String[] args) throws InterruptedException, FileNotFoundException, IOException {
 		
-		Hunter hunter = new Hunter();
+		GameState hunter = new GameState();
 		
 		System.out.println("Welcome to The Hunt for Mr X, the codebreaker for the game Scotland Yard!\n");
 		
@@ -527,7 +534,7 @@ public class Hunt {
 			else {
 				//Clone Hunter
 				Cloner cloner = new Cloner();
-				TreeNode<Hunter> rootNode = new TreeNode<Hunter>(hunter, cloner);
+				TreeNode<GameState> rootNode = new TreeNode<GameState>(hunter, cloner);
 				double bestScore = Double.NEGATIVE_INFINITY;
 				
 				
@@ -536,9 +543,9 @@ public class Hunt {
 				for (int i = 0; i < hunter.getPossibleMrXmoves().size(); i++) {
 					Move move = hunter.getPossibleMrXmoves().get(i);
 					//System.out.println("THE SIMULATED MOVE nr. " + i + " = " + move);
-					Hunter clonedState = rootNode.getDeepCloneOfRepresentedState();
+					GameState clonedState = rootNode.getDeepCloneOfRepresentedState();
 					clonedState.simulateMrXmove(move, step, parsedDistances);
-					TreeNode<Hunter> startNode = new TreeNode<Hunter>(clonedState, cloner);
+					TreeNode<GameState> startNode = new TreeNode<GameState>(clonedState, cloner);
 					rootNode.addChild(startNode);
 					double score = clonedState.miniMax(0, false, startNode, cloner, parsedDistances, step, hunter.getStations());
 					//bestScore = Math.max(score, bestScore);

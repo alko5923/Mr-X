@@ -1,4 +1,4 @@
-package mrX_maven_run;
+package mrX_maven_game;
 
 import java.util.ArrayList;
 
@@ -18,16 +18,6 @@ public class Station {
 		this.neighboursTaxi = neighboursTaxi;
 		this.neighboursBus = neighboursBus;
 		this.neighboursTube = neighboursTube;
-	}
-	
-	public Station(Station original) {
-		this.name = original.name;
-		this.stationType = original.stationType;
-		this.neighboursTaxi = original.neighboursTaxi;
-		this.neighboursBus = original.neighboursBus;
-		this.neighboursTube = original.neighboursTube;
-		this.value = original.value;
-		this.occupied = original.occupied;
 	}
 	
 	

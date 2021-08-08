@@ -1,8 +1,10 @@
-package mrX_maven_run;
+package mrX_maven_utilities;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.rits.cloning.Cloner;
+
+import mrX_maven_game.Move;
 
 public class TreeNode<Hunter> {
 	private Hunter hunter = null;
@@ -78,13 +80,13 @@ public class TreeNode<Hunter> {
     	StringBuilder sb = new StringBuilder();
     	sb.append("*** NODE INFO *** \n");
     	sb.append("Node evaluation = " + nodeEvaluation + "\n");
-    	//sb.append(hunter.toString());
     	sb.append("NUMBER OF CHILDREN = " + this.getChildren().size() + "\n");
     	sb.append("CHILD NODES = \n");
+    	
     	for (int i = 0; i < this.getChildren().size(); i ++) {
     		sb.append(this.getChildren().get(i));
     	}
-    	//sb.append("BEST COMBO = " + this.getBestCombo() + "\n");
+    	
     	return sb.toString();
     }
 

@@ -1,5 +1,4 @@
-package mrX_maven_run;
-
+package mrX_maven_game;
 
 /**Represent a move by one of the players on the map. 
  * 

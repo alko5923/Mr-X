@@ -1,7 +1,9 @@
- package mrX_maven_run;
+ package mrX_maven_players;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import mrX_maven_game.Station;
 
 /**This class represents Mr. X, the villain of the game.
  * 
@@ -14,11 +16,9 @@ public class MrX {
 	private int tubeTicketsAvailable;
 	private List<String> ticketsUsed = new ArrayList<String>();
 	private List<Integer> mrXReveals = new ArrayList<Integer>();
-	//private List<Station> stationsList = new ArrayList<Station>();
 	private int simulatedCurrentStation;
 	
 	public MrX(List<Station> stationsList, int taxiTicketsAvailable, int busTicketsAvailable, int tubeTicketsAvailable) {
-		//this.stationsList = stationsList;
 		this.taxiTicketsAvailable = taxiTicketsAvailable;
 		this.busTicketsAvailable = busTicketsAvailable;
 		this.tubeTicketsAvailable = tubeTicketsAvailable;
@@ -65,9 +65,6 @@ public class MrX {
 		this.simulatedCurrentStation = simulatedCurrentStation;
 	}
 	
-//	public void setStations(List<Station> stationsList) {
-//		this.stationsList = stationsList;
-//	}
 	
 	/**Add a station to the list of stations where Mr. X. has revealed himself. 
 	 * 
@@ -75,7 +72,6 @@ public class MrX {
 	 * @throws 	LocationNotFoundException
 	 */
 	public void addToReveals(int stationName) {
-			//Station station = stationsList.get(stationName-1);
 			mrXReveals.add(stationName);
 	}
 	
