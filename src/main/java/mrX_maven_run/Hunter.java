@@ -34,6 +34,7 @@ public class Hunter {
 	private List<List<Move>> allPossibleDetectiveMoves = new ArrayList<List<Move>>();
 	private List<List<Move>> allPossibleMoveCombosDetectives = new ArrayList<List<Move>>();
 	private List<Move> bestDetectiveMoves = new ArrayList<Move>();
+	private Move winningMove = null;
 	
 	
 	public Hunter() {
@@ -79,6 +80,23 @@ public class Hunter {
 		return (stationsList.get(station));
 	}
 	
+	/**Load the demo stations from the JSON file.
+	 *
+	 *@return	ArrayList of stations
+	 * @throws 	FileNotFoundException 
+	 */
+	public List<Station> loadStationsDemo() throws FileNotFoundException {
+		
+		Gson gson = new Gson();
+		JsonReader reader = new JsonReader(new FileReader("src/main/resources/demoStations.json"));
+		List<Station> stations = gson.fromJson(reader, new TypeToken<ArrayList<Station>>(){}.getType());
+		
+		//stations.remove(0);
+		this.stationsList = stations;
+		evaluateStations(stations);
+		return stations;
+	}
+	
 	/**Load the stations from the JSON file.
 	 *
 	 *@return	ArrayList of stations
@@ -87,9 +105,10 @@ public class Hunter {
 	public List<Station> loadStations() throws FileNotFoundException {
 		
 		Gson gson = new Gson();
-		JsonReader reader = new JsonReader(new FileReader("src/main/resources/demoStations.json"));
+		JsonReader reader = new JsonReader(new FileReader("src/main/resources/stations.json"));
 		List<Station> stations = gson.fromJson(reader, new TypeToken<ArrayList<Station>>(){}.getType());
 		
+		stations.remove(0);
 		this.stationsList = stations;
 		evaluateStations(stations);
 		return stations;
@@ -252,13 +271,52 @@ public class Hunter {
 	public void setBestDetMoves(List<Move> bestDetMoves) {
 		this.bestDetectiveMoves = bestDetMoves;
 	}
-		
 	
 	/**Set up the detectives, including their number and names.
 	 * 
 	 * @return		the number of detectives playing. 
 	 */
 	public int setupDetectives(List<Station> stations) {
+		
+		while(true) {
+			System.out.println("Please enter the number of detectives: ");
+			int numberOfDetectives = sc.nextInt();
+				if(numberOfDetectives > 5) {
+					System.out.println("The max number of detectives is 5!");
+					continue;
+				}
+				else if(numberOfDetectives < 2) {
+					System.out.println("The min number of detectives is 2!");
+					continue;
+				}
+				else {
+					for (int number = 1; number < numberOfDetectives+1; number+=1) {
+						System.out.println("Name of detective nr. " + number + ": ");
+						String nameDetective = sc.next();
+						
+						System.out.println("Please give start location of detective " + nameDetective + ":");
+						while(true) {
+							int startPos = sc.nextInt();
+							if(possibleStartingStationsDetectives.contains(startPos)) {
+								Detective detective = createDetective(number, nameDetective, startPos, 10, 8, 4, stationsList);
+								detective.setCurrentPosition(startPos);
+								break;
+							}
+							System.out.println("That is not a valid starting position!");
+						}
+					}
+				}
+				this.numberOfDetectives = numberOfDetectives;
+				return numberOfDetectives;
+		}
+	}
+	
+	
+	/**Set up the detectives for the demo, including their number and names.
+	 * 
+	 * @return		the number of detectives playing. 
+	 */
+	public int setupDetectivesDemo(List<Station> stations) {
 		
 		while(true) {
 			System.out.println("Please enter the number of detectives: ");
@@ -356,12 +414,15 @@ public class Hunter {
 	public void setupFullGame() throws FileNotFoundException {
 		
 		List<Station> stations = loadStations();
-		numberOfDetectives = setupDetectives(stations);
-		numberOfPolice = setupPolice(numberOfDetectives);
-		//TODO: refactor 
-		//startPosPolice = setupStartPosPolice(numberOfPolice);
-		
+		setupDetectives(stations);
+		for (int i = 0; i < listDetectives.size(); i++) {
+			Detective detective = listDetectives.get(i);
+			detective.findPossibleMovesDetective(stations);
 		}
+		//mrX.setStations(stations);
+		printStations(stations);
+		
+	}
 	
 	/**Set up the demo game, for development purposes.
 	 * 
@@ -369,15 +430,15 @@ public class Hunter {
 	 */
 	public void setupDemo() throws FileNotFoundException {
 		
-		List<Station> stations = loadStations();
-		setupDetectives(stations);
+		List<Station> stations = loadStationsDemo();
+		setupDetectivesDemo(stations);
 		for (int i = 0; i < listDetectives.size(); i++) {
 			Detective detective = listDetectives.get(i);
-			detective.findPossibleMovesDetective();
+			detective.findPossibleMovesDetective(stations);
 		}
-		mrX.setStations(stations);
+		//mrX.setStations(stations);
 		printStations(stations);
-		}
+	}
 
 	
 	
@@ -393,69 +454,149 @@ public class Hunter {
 			return false;
 	}
 	
-	
-	/**Find all possible stations where Mr. X could be located at the start of the game. 
+	/**Initialize all possible stations where Mr. X could be located at the start of the game. 
 	 * 
 	 */
 	public void initialMrXPossibleStations() {
 		
-		possibleMrXstations = possibleStartingStationsMrXdemo;
+		this.possibleMrXstations = possibleStartingStationsMrX;
+	}
+	
+	
+	/**Initialize all possible stations where Mr. X could be located at the start of the game. 
+	 * 
+	 */
+	public void initialMrXPossibleStationsDemo() {
+		
+		this.possibleMrXstations = possibleStartingStationsMrXdemo;
 	}
 	
 	/**Find all possible stations where Mr. X could be located after using a certain type of ticket.
 	 * 
 	 * @param ticketUsed
 	 */
-	public void findMrXPossibleStations(String ticketUsed) {
+	public void findMrXPossibleStations(String ticketUsed, int step) {
 		//loop through the list of possible Mr. X stations
 		//every station that can be reached with the ticketUsed and that is not occupied, 
 		//add it to the list of new possible Mr. X stations.
 		
-		List<Integer> possibleStations = new ArrayList<Integer>();
-		if (ticketUsed.equals("Taxi")) {
-			for (int i = 0; i < possibleMrXstations.size(); i++) {
-				Station startStation = getStation(possibleMrXstations.get(i)-1);
-				for (int j = 0; j < startStation.getNumberTaxiConnections(); j++) {
-					Station destinationStation = getStation(startStation.getTaxiNeighbours().get(j)-1);
-					if (destinationStation.isOccupied()==false && possibleStations.contains(destinationStation.getNameInt())==false) {
-						possibleStations.add(destinationStation.getNameInt());
-					}
-				}
-			}
+		if (step == 3 || step == 8 || step == 13 || step == 18 || step == 24) {
+			return;
 		}
-			if (ticketUsed.equals("Bus")) {
+		
+		else {
+			List<Integer> possibleStations = new ArrayList<Integer>();
+			if (ticketUsed.equals("Taxi")) {
 				for (int i = 0; i < possibleMrXstations.size(); i++) {
 					Station startStation = getStation(possibleMrXstations.get(i)-1);
-					for (int j = 0; j < startStation.getNumberBusConnections(); j++) {
-						Station destinationStation = getStation(startStation.getBusNeighbours().get(j)-1);
-						if (destinationStation.isOccupied()==false) {
+					for (int j = 0; j < startStation.getNumberTaxiConnections(); j++) {
+						Station destinationStation = getStation(startStation.getTaxiNeighbours().get(j)-1);
+						if (destinationStation.isOccupied()==false && possibleStations.contains(destinationStation.getNameInt())==false) {
 							possibleStations.add(destinationStation.getNameInt());
 						}
 					}
 				}
 			}
-			if (ticketUsed.equals("Tube")) {
-				for (int i = 0; i < possibleMrXstations.size(); i++) {
-					Station startStation = getStation(possibleMrXstations.get(i)-1);
-					for (int j = 0; j < startStation.getNumberTubeConnections(); j++) {
-						Station destinationStation = getStation(startStation.getTubeNeighbours().get(j)-1);
-						if (destinationStation.isOccupied()==false) {
-							possibleStations.add(destinationStation.getNameInt());
+				if (ticketUsed.equals("Bus")) {
+					for (int i = 0; i < possibleMrXstations.size(); i++) {
+						Station startStation = getStation(possibleMrXstations.get(i)-1);
+						for (int j = 0; j < startStation.getNumberBusConnections(); j++) {
+							Station destinationStation = getStation(startStation.getBusNeighbours().get(j)-1);
+							if (destinationStation.isOccupied()==false) {
+								possibleStations.add(destinationStation.getNameInt());
+							}
 						}
 					}
 				}
+				if (ticketUsed.equals("Tube")) {
+					for (int i = 0; i < possibleMrXstations.size(); i++) {
+						Station startStation = getStation(possibleMrXstations.get(i)-1);
+						for (int j = 0; j < startStation.getNumberTubeConnections(); j++) {
+							Station destinationStation = getStation(startStation.getTubeNeighbours().get(j)-1);
+							if (destinationStation.isOccupied()==false) {
+								possibleStations.add(destinationStation.getNameInt());
+							}
+						}
+					}
+				}
+				
+				possibleStations.sort(null);
+				this.possibleMrXstations = possibleStations;
+		}
+			
+	}
+	
+	//TODO: or remove all moves that would lead to a distance of 1 between Mr. X and any detective? 
+	
+	public List<Move> pruneMrXMoves(List<Move> possibleMoves, List<List<Integer>> parsedDistances) {
+		
+		List<Move> prunedMoves = possibleMoves;
+		
+		//Find the nearest detective
+		//Remove all moves that do not increase the distance to him 
+		
+//		int nearestDistance = 1000; 
+//		List<Integer> distances = new ArrayList<Integer>();
+//		
+//		for (Detective det : listDetectives) {
+//			
+//			int distance = 0;
+//			List<Integer> distancesFromDet = parsedDistances.get(det.getCurrentPosition()-1);
+//			List<Integer> distancesFromMrX = parsedDistances.get(mrX.getSimulatedCurrentStation()-1);
+//			
+//			if (det.getCurrentPosition() < mrX.getSimulatedCurrentStation()) {
+//				distance = distancesFromDet.get(mrX.getSimulatedCurrentStation()-det.getCurrentPosition()-1);
+//				
+//			}
+//			
+//			else {
+//				distance = distancesFromMrX.get(det.getCurrentPosition()-mrX.getSimulatedCurrentStation()-1);
+//			}
+//			
+//			if (distance < nearestDistance) {
+//				nearestDistance = distance;
+//				
+//			}
+//		}
+		
+		List<Integer> distancesFromMrX = new ArrayList<Integer>();
+		
+		if (mrX.getSimulatedCurrentStation() != 199) {
+			distancesFromMrX = parsedDistances.get(mrX.getSimulatedCurrentStation()-1);
+		}
+		
+		List<Move> toRemove = new ArrayList<Move>();
+		int distance = 0;
+		
+		for (Move move : possibleMoves) {
+			Station destination = move.getDestinationStation();
+			List<Integer> distancesFromDestination = parsedDistances.get(destination.getNameInt()-1);
+			
+			if (destination.getNameInt() < mrX.getSimulatedCurrentStation()) {
+				distance = distancesFromDestination.get(mrX.getSimulatedCurrentStation()-destination.getNameInt()-1);
+			}
+			else {
+				distance = distancesFromMrX.get(destination.getNameInt()-mrX.getSimulatedCurrentStation()-1);
 			}
 			
-			possibleStations.sort(null);
-			this.possibleMrXstations = possibleStations;
+			if (distance == 1) {
+				toRemove.add(move);
+			}
 			
+		}
+		
+		prunedMoves.removeAll(toRemove);
+		
+		return prunedMoves;
+		
+		
 	}
 	
 	/**Find all possible Mr. X moves from the simulated current station.
 	 * 
 	 * @param simulatedStation
 	 */
-	public void findMrXPossibleMoves(Station station) {
+	public void findMrXPossibleMoves(Station station, int step, List<List<Integer>> parsedDistances) {
 		
 		List<Move> possibleMoves = new ArrayList<Move>();
 		
@@ -487,13 +628,19 @@ public class Hunter {
 			}
 		}
 		
+//		if (step > 2) {
+//			List<Move> prunedMoves = pruneMrXMoves(possibleMoves, parsedDistances);
+//			this.possibleMrXmoves = prunedMoves;
+//		}
+		
 		this.possibleMrXmoves = possibleMoves;
+		
 	}
 	
 	/**Find all possible Mr. X moves. 
 	 * 
 	 */
-	public void findMrXPossibleMoves() {
+	public void findMrXPossibleMoves(int step, List<List<Integer>> parsedDistances) {
 		
 		//loop through all possible stations
 		//check all possible moves from them and add them to the list of possible moves
@@ -532,16 +679,24 @@ public class Hunter {
 							}
 						}
 					}
-				this.possibleMrXmoves = possibleMoves;
+			
+//			if (step > 2) {
+//				List<Move> prunedMoves = pruneMrXMoves(possibleMoves, parsedDistances);
+//				this.possibleMrXmoves = prunedMoves;
+//			}
+			
+			this.possibleMrXmoves = possibleMoves;
 		
 			}
+	
+	
 	
 	/**Move a detective. 
 	 * 
 	 * @param detective
 	 * @param move
 	 */
-	public boolean moveDetective(Detective detective, Move move) {
+	public boolean moveDetective(Detective detective, Move move, List<Station> stationsList) {
 		
 		Station startStation = move.getStartStation();
 		Station destinationStation = move.getDestinationStation();
@@ -551,7 +706,7 @@ public class Hunter {
 			destinationStation.occupyStation();
 			handleStatisticsDetective(move, detective.getNumber()-1);	
 			detective.setCurrentPosition(destinationStation.getNameInt());
-			detective.findPossibleMovesDetective();
+			detective.findPossibleMovesDetective(stationsList);
 			possibleMrXstations.remove(Integer.valueOf(destinationStation.getNameInt()));
 			
 			return true;
@@ -566,7 +721,7 @@ public class Hunter {
 	 * 
 	 * @return		the type of ticket that Mr. X used. 
 	 */
-	public String moveMrX() {
+	public String moveMrX(int step, List<List<Integer>> parsedDistances) {
 		System.out.println("\nOK, Mr. X moves ...\n");
 		boolean waitingForMrX = true;
 		
@@ -590,8 +745,11 @@ public class Hunter {
 			//TODO throw an exception? 
 		}
 		
-		findMrXPossibleStations(ticketUsed);
-		findMrXPossibleMoves();
+//		if (step > 2) {
+//			findMrXPossibleStations(ticketUsed);
+//			findMrXPossibleMoves(step, parsedDistances);
+//		}
+		
 		
 		return ticketUsed;
 	}
@@ -601,7 +759,7 @@ public class Hunter {
 	 * 
 	 * @param move
 	 */
-	public void simulateMrXmove(Move move) {
+	public void simulateMrXmove(Move move, int step, List<List<Integer>> parsedDistances) {
 		mrX.setSimulatedCurrentStation(move.getDestinationStation().getNameInt());
 		if (move.getTicket().equals("Taxi") && mrX.getAvailableTaxi() > 0 || move.getTicket().equals("Bus") && 
 				mrX.getAvailableBus() > 0 || move.getTicket().equals("Tube") && mrX.getAvailableTube() > 0) {
@@ -609,7 +767,7 @@ public class Hunter {
 			removeMrXticket(move.getTicket());
 		}
 		//findMrXPossibleStations(move.getTicket());
-		findMrXPossibleMoves(stationsList.get(mrX.getSimulatedCurrentStation()-1));
+		findMrXPossibleMoves(stationsList.get(mrX.getSimulatedCurrentStation()-1), step, parsedDistances);
 		
 	}
 	
@@ -629,11 +787,76 @@ public class Hunter {
 		}
 	}
 	
+	 public int returnShortestDistance(int position1, int position2, List<List<Integer>> parsedDistances) {
+		 
+		 if (position1 == position2)
+	            return 0;
+		 
+		 else
+	            return shortestDistanceBetweenDifferent(position1, position2, parsedDistances);
+	    }
+	 
+	 public int shortestDistanceBetweenDifferent(int position1, int position2, List<List<Integer>> parsedDistances) {
+	        
+		 int index1, index2;
+		 
+		 if (position1 < position2) {
+	            index1 = position1 - 1;
+	            index2 = (position2 - position1) - 1;
+	        }
+		 
+		 else {
+	            index1 = position2 - 1;
+	            index2 = (position1 - position2) - 1;
+	        }
+		 
+		 return parsedDistances.get(index1).get(index2);
+	 }
+	
+	
+//	/**Return the shortest distance between two stations. 
+//	 * 
+//	 * @param start
+//	 * @param destination
+//	 * @return
+//	 */
+//	public int returnShortestDistance(int start, int destination, List<List<Integer>> parsedDistances) {
+//		
+//		int distance = 0;
+//		
+//		if (start == destination) {
+//			return 0;
+//		}
+//		
+//		else {
+//			
+//			List<Integer> distancesFromStart = new ArrayList<Integer>();
+//			
+//			if (start != 199) {
+//				distancesFromStart = parsedDistances.get(start-1);
+//				List<Integer> distancesFromDestination = parsedDistances.get(destination-1);
+//			}
+//			
+//			
+//			if (start < destination) {	
+//				distance = distancesFromStart.get(destination-start-1);
+//			}
+//			else {
+//				distance = distancesFromDestination.get(start-destination-1);
+//			}
+//			
+//			return distance;
+//			
+//		}
+//		
+//		
+//	}
+	
 	
 	/**Cleans up the possible moves for every detective. 
 	 * 
 	 */
-	public void coordinatePossibleDetectiveMoves() {
+	public void coordinatePossibleDetectiveMoves(int step, List<List<Integer>> parsedDistances) {
 		/**Loop through all detectives, except for the last one 
 		 * For every detective, loop through all possible moves
 		 * If any of the moves' destinations stations equals any of the detectives' current stations,
@@ -641,8 +864,57 @@ public class Hunter {
 		 * This is a design choice to make the algorithm easier: a following detective will not be able to move
 		 * to a station that was occupied by a previous detective. 
 		 */
+		
 		List<Integer> detectivesCurrentStations = new ArrayList<Integer>();
 		
+		//Remove the moves that increase the distance between current detective station and any of Mr. X possible stations  
+		
+		if (step > 2) {
+			
+			//TODO: calculate average distance of detectives 
+			//int averageDist = calculateAverageDistanceDetectives();
+			//TODO: in case average distance is greater than a certain number, occupy as many of the closest tube stations as possible 
+			//if (averageDistance > ??) {
+				
+			//}
+			
+			
+			for (Detective det : listDetectives) {
+				
+				List<Move> toRemove = new ArrayList<Move>();
+				
+				for (Move move : det.getPossibleMovesCurrentStation()) {
+					
+					int currentDistance = 0;
+					int newDistance = 0;
+					
+					for (int station : possibleMrXstations) {
+						
+						currentDistance = returnShortestDistance(det.getCurrentPosition(), station, parsedDistances);
+						newDistance = returnShortestDistance(move.getDestinationStation().getNameInt(), station, parsedDistances);
+						
+						if(newDistance > currentDistance) {
+							toRemove.add(move);
+						}
+						
+					}
+					
+				}
+				
+				List<Move> cleanedUpMoves = det.getPossibleMovesCurrentStation();
+				
+				cleanedUpMoves.removeAll(toRemove);
+				
+				det.setPossibleMovesCurrentStation(cleanedUpMoves);
+				
+			
+			}
+			
+					
+		}
+		
+				
+				
 		for (int i = 0; i < numberOfDetectives; i++) {
 			Detective det = listDetectives.get(i);
 			int current = det.getCurrentPosition();
@@ -672,6 +944,8 @@ public class Hunter {
 			allMoves.add(possibleMoves);
 		}
 		
+		
+		
 		this.allPossibleDetectiveMoves = allMoves;
 	}
 	
@@ -680,7 +954,7 @@ public class Hunter {
 	 * 
 	 * 
 	 */
-	public final void generateAllPossibleMoveCombosDetectives(List<List<Move>> lists) {
+	public final void generateAllPossibleMoveCombosDetectives(List<List<Move>> lists, List<List<Integer>> parsedDistances, int step) {
 		
 		//Use guava to create a cartesian product of all possible combos
 		List<List<Move>> allCombos = new ArrayList<List<Move>>();
@@ -715,6 +989,98 @@ public class Hunter {
 			}
 		}
 		
+		//TODO: filter all possible combos with the following criteria: if the move does not shorten the total 
+		//distance from the current positions of detectives to the simulated current position of Mr. X then 
+		//remove the move 
+		
+		//D1 at 7, D2 at 2
+		//Mr. X simulated current position = 5
+		
+		//One check for if station nr. is lower, another for if it is higher
+		//Sum the distances
+		
+		//Check distances from destination station of every move to Mr. X simulated current position 
+		//Sum the distances
+		
+		//If this sum is higher than the previous sum, remove the combo 
+		
+
+		if (step > 2) {
+			
+			List<Integer> distancesFromMrXStation = new ArrayList<Integer>();
+			
+			if (mrX.getSimulatedCurrentStation() != 199) {
+				distancesFromMrXStation = parsedDistances.get(mrX.getSimulatedCurrentStation()-1);
+			}
+			
+			List<List<Move>> toRemove = new ArrayList<List<Move>>();
+			
+			int oldDistances = 0; 
+			
+			for (Detective det : listDetectives) {
+				
+				List<Integer> distancesFromCurrentDetStation = new ArrayList<Integer>();
+				
+				if(det.getCurrentPosition() != 199) {
+					distancesFromCurrentDetStation = parsedDistances.get(det.getCurrentPosition()-1);
+				}
+				
+				int oldDistance = 0; 
+				
+				if (det.getCurrentPosition() < mrX.getSimulatedCurrentStation()) {	
+					oldDistance = distancesFromCurrentDetStation.get(mrX.getSimulatedCurrentStation()-det.getCurrentPosition()-1);
+					oldDistances += oldDistance;
+				}
+				else {
+					oldDistance = distancesFromMrXStation.get(det.getCurrentPosition()-mrX.getSimulatedCurrentStation()-1);
+					oldDistances += oldDistance;
+				}
+			}
+			
+			
+			for (List<Move> combo : allCombosCleanedUp) {
+				
+
+				int newDistances = 0;
+				
+				for (Move move : combo) {
+					
+					List<Integer> distancesFromMoveDestination = new ArrayList<Integer>();
+					
+					if (move.getDestinationStation().getNameInt() != 199) {
+						distancesFromMoveDestination = parsedDistances.get(move.getDestinationStation().getNameInt()-1);
+					}
+					
+					int newDist = 0;
+					
+					if(mrX.getSimulatedCurrentStation()-move.getDestinationStation().getNameInt() == 0 || move.getDestinationStation().getNameInt()-mrX.getSimulatedCurrentStation() == 0) {
+						setWinningMove(move);
+						//System.out.println("WINNING MOVE = " + move);
+					}
+					
+					else {
+						if (move.getDestinationStation().getNameInt() < mrX.getSimulatedCurrentStation()) {
+							newDist = distancesFromMoveDestination.get(mrX.getSimulatedCurrentStation()-move.getDestinationStation().getNameInt()-1);
+							newDistances += newDist; 
+						}
+						else {
+							newDist = distancesFromMrXStation.get(move.getDestinationStation().getNameInt()-mrX.getSimulatedCurrentStation()-1);
+							newDistances += newDist;
+						}
+					}
+					
+				}
+				
+				if(newDistances > oldDistances) {
+					toRemove.add(combo);
+				}
+			}
+			
+			allCombosCleanedUp.removeAll(toRemove);
+		}
+		
+		
+		
 		this.allPossibleMoveCombosDetectives = allCombosCleanedUp;
 		
 	}
@@ -726,7 +1092,7 @@ public class Hunter {
 	 * @param depth
 	 * @param isMaximizing
 	 */
-	public double miniMax(int depth, boolean isMaximizing, TreeNode<Hunter> startNode, Cloner cloner) {
+	public double miniMax(int depth, boolean isMaximizing, TreeNode<Hunter> startNode, Cloner cloner, List<List<Integer>> parsedDistances, int step, List<Station> stations) {
 		
 		//Check if Mr. X has no moves left and return negative infinity if that is the case  
 		double bestScore;
@@ -735,13 +1101,20 @@ public class Hunter {
 		boolean result = startNode.getData().noMovesLeftCheck();
 		if (result == true) {
 			System.out.println("MR. X IS NO MORE!!!");
-			bestScore = Double.NEGATIVE_INFINITY;
+			//bestScore = Double.NEGATIVE_INFINITY;
+			bestScore = -10000;
+			return bestScore;
 		}
 		
+//		//TODO: check this! 
+		if (winningMove != null) {
+			bestScore = Double.NEGATIVE_INFINITY;
+			return bestScore;
+		}
 		
 		//Once you reach a depth of two, evaluate the game state and propagate the score 
 		if(depth == 2) {
-			double miniMaxEvaluation = startNode.getData().evaluateGameState(startNode);
+			double miniMaxEvaluation = startNode.getData().evaluateGameState(startNode, parsedDistances);
 			//System.out.println("Game state evaluation = " + miniMaxEvaluation);
 			startNode.setNodeEvaluation(miniMaxEvaluation);
 			return miniMaxEvaluation;
@@ -757,15 +1130,15 @@ public class Hunter {
 			for (int i = 0; i < startNode.getData().getPossibleMrXmoves().size(); i++) {
 				Hunter clonedState = startNode.getDeepCloneOfRepresentedState();
 				Move move = clonedState.getPossibleMrXmoves().get(i);
-				clonedState.simulateMrXmove(move);
-				clonedState.findMrXPossibleStations(move.getTicket());
+				clonedState.simulateMrXmove(move, step, parsedDistances);
+				clonedState.findMrXPossibleStations(move.getTicket(), step);
 				//clonedState.findMrXPossibleMoves();
-				clonedState.coordinatePossibleDetectiveMoves();
-				clonedState.generateAllPossibleMoveCombosDetectives(allPossibleDetectiveMoves);
+				clonedState.coordinatePossibleDetectiveMoves(step, parsedDistances);
+				clonedState.generateAllPossibleMoveCombosDetectives(allPossibleDetectiveMoves, parsedDistances, step);
 				
 				TreeNode<Hunter> newChild = new TreeNode<Hunter>(clonedState, cloner);
 				
-				double score = clonedState.miniMax(depth+1, false, newChild, cloner);
+				double score = clonedState.miniMax(depth+1, false, newChild, cloner, parsedDistances, step, stations);
 				
 				startNode.addChild(newChild);
 				
@@ -784,18 +1157,23 @@ public class Hunter {
 					
 					Detective det = clonedState.getListDetectives().get(j);
 					Move move = clonedState.getAllPossibleMoveCombosDetectives().get(i).get(j);
-					clonedState.moveDetective(det, move);
+					if(clonedState.getMrX().getSimulatedCurrentStation() == move.getDestinationStation().getNameInt()) {
+						bestScore = Double.NEGATIVE_INFINITY;
+						startNode.setBestCombo(startNode.getData().getAllPossibleMoveCombosDetectives().get(i));
+						return bestScore;
+					}
+					clonedState.moveDetective(det, move, stations);
 					//clonedState.findMrXPossibleStations(move.getTicket());
-					clonedState.findMrXPossibleMoves(clonedState.getStations().get((clonedState.getMrX().getSimulatedCurrentStation()-1)));
+					clonedState.findMrXPossibleMoves(clonedState.getStations().get((clonedState.getMrX().getSimulatedCurrentStation()-1)), step, parsedDistances);
 				}
 				
-				clonedState.coordinatePossibleDetectiveMoves();
-				clonedState.generateAllPossibleMoveCombosDetectives(clonedState.getAllPossibleDetectiveMoves());
+				clonedState.coordinatePossibleDetectiveMoves(step, parsedDistances);
+				clonedState.generateAllPossibleMoveCombosDetectives(clonedState.getAllPossibleDetectiveMoves(), parsedDistances, step);
 				
 				TreeNode<Hunter> newChild = new TreeNode<Hunter>(clonedState, cloner);
 				//startNode.addChild(newChild);
 				
-				double score = clonedState.miniMax(depth+1, true, newChild, cloner);
+				double score = clonedState.miniMax(depth+1, true, newChild, cloner, parsedDistances, step, stations);
 				
 				startNode.addChild(newChild);
 				
@@ -814,23 +1192,42 @@ public class Hunter {
 		return bestScore;
 	}
 	
+	public double calculateAverageDistanceDetectives(TreeNode<Hunter> startNode, List<List<Integer>> parsedDistances) {
+		
+		double averageDistance = 0;
+		int nrDetectives = startNode.getData().getListDetectives().size();
+		
+		for (Detective det : startNode.getData().getListDetectives()) {
+			int dist = returnShortestDistance(det.getCurrentPosition(), startNode.getData().getMrX().getSimulatedCurrentStation(), parsedDistances);
+			averageDistance += dist;
+		}
+		
+		return (averageDistance / nrDetectives);
+	}
 	
-	//TODO: at the moment, locations reachable can be counted several times, perhaps you should implement this as one per detective? 
+	
+	//TODO: include distances of detectives to possible Mr. X stations 
 	/**Evaluates a game state.
 	 * 
 	 * @return	the evaluation of the game state. 
 	 */
-	public double evaluateGameState(TreeNode<Hunter> startNode) {
-		//SUM:
+	public double evaluateGameState(TreeNode<Hunter> startNode, List<List<Integer>> parsedDistances) {
+		//PLUS:
 		//Each possible location Mr. X is located at = +10
 		//The values of all those stations
+		//TODO: The increase in average distance
+		
 		//MINUS:
 		//Each possible Mr. X location reachable in 1 move = -10 
 		//Values of those stations
+		//TODO: The decrease in average distance
+		
+		
+		
 		Hunter state = startNode.getData();
 		double evaluation = state.getPossibleMrXstations().size() * 10;
 		if (noMovesLeftCheck()) {
-			evaluation = Double.NEGATIVE_INFINITY;
+			evaluation = -10000;
 			return evaluation; 
 		}
 		for (int i = 0; i < state.getPossibleMrXstations().size(); i++) {
@@ -864,6 +1261,12 @@ public class Hunter {
 				}
 			}
 		}
+		
+		//double averageDistancePrevious = calculateAverageDistanceDetectives(startNode.getParent(), parsedDistances);
+		//double averageDistanceNew = calculateAverageDistanceDetectives(startNode, parsedDistances);
+		
+		//evaluation += (averageDistancePrevious - averageDistanceNew);
+		
 		
 		return evaluation; 
 	}
@@ -940,6 +1343,14 @@ public class Hunter {
 		sb.append("The best detective moves = " + bestDetectiveMoves + "\n");
 		
 		return sb.toString();
+	}
+
+	public Move getWinningMove() {
+		return winningMove;
+	}
+
+	public void setWinningMove(Move winningMove) {
+		this.winningMove = winningMove;
 	}
 	
 }

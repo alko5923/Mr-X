@@ -1,4 +1,4 @@
-package mrX_maven_run;
+ package mrX_maven_run;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class MrX {
 	private int taxiTicketsAvailable;
-	private int busTicketsAvailable;
+	private int busTicketsAvailable; 
 	private int tubeTicketsAvailable;
 	private List<String> ticketsUsed = new ArrayList<String>();
-	private List<Station> mrXReveals = new ArrayList<Station>();
-	private List<Station> stationsList = new ArrayList<Station>();
+	private List<Integer> mrXReveals = new ArrayList<Integer>();
+	//private List<Station> stationsList = new ArrayList<Station>();
 	private int simulatedCurrentStation;
 	
 	public MrX(List<Station> stationsList, int taxiTicketsAvailable, int busTicketsAvailable, int tubeTicketsAvailable) {
-		this.stationsList = stationsList;
+		//this.stationsList = stationsList;
 		this.taxiTicketsAvailable = taxiTicketsAvailable;
 		this.busTicketsAvailable = busTicketsAvailable;
 		this.tubeTicketsAvailable = tubeTicketsAvailable;
@@ -65,9 +65,9 @@ public class MrX {
 		this.simulatedCurrentStation = simulatedCurrentStation;
 	}
 	
-	public void setStations(List<Station> stationsList) {
-		this.stationsList = stationsList;
-	}
+//	public void setStations(List<Station> stationsList) {
+//		this.stationsList = stationsList;
+//	}
 	
 	/**Add a station to the list of stations where Mr. X. has revealed himself. 
 	 * 
@@ -75,8 +75,8 @@ public class MrX {
 	 * @throws 	LocationNotFoundException
 	 */
 	public void addToReveals(int stationName) {
-			Station station = stationsList.get(stationName-1);
-			mrXReveals.add(station);
+			//Station station = stationsList.get(stationName-1);
+			mrXReveals.add(stationName);
 	}
 	
 	/**Remove a taxi ticket from the number of available taxi tickets. 
@@ -156,7 +156,7 @@ public class MrX {
 			
 			sb.append("Mr. X reveal list: [ "); 
 			for (int i = 0; i < mrXReveals.size(); i+=1 ) {
-				sb.append(mrXReveals.get(i).getNameInt());
+				sb.append(mrXReveals.get(i));
 				sb.append(", ");
 			}
 			sb.append(" ]\n");

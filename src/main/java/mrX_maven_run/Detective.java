@@ -13,41 +13,26 @@ public class Detective {
 	private String name;
 	private int startPosition;
 	private int currentPosition;
-	private List<Station> stationsList = new ArrayList<Station>();
+	//private List<Station> stationsList = new ArrayList<Station>();
 	private List<Move> possibleMovesCurrentStation = new ArrayList<Move>();
 	private List<Move> moveList = new ArrayList<Move>();
 	private int taxiTicketsAvailable;
 	private int busTicketsAvailable;
 	private int tubeTicketsAvailable;
+	private List<Station> perfectTubeStations;
+	private List<Station> lessPerfectTubeStations;
+	private List<Move> path;
 	
 	public Detective(int number, String name, int startPosition, int taxiTickets, int busTickets, int tubeTickets, List<Station> stationsList) {
 		this.number = number;
 		this.name = name;
 		this.startPosition = startPosition;
 		this.currentPosition = startPosition;
-		this.stationsList = stationsList;
+		//this.stationsList = stationsList;
 		this.taxiTicketsAvailable = taxiTickets;
 		this.busTicketsAvailable = busTickets;
 		this.tubeTicketsAvailable = tubeTickets;
 		
-	}
-	
-	/**A constructor for the Detective clone.
-	 *  
-	 * @param original
-	 */
-	
-	public Detective(Detective original) {
-		this.number = original.number;
-		this.name = original.name;
-		this.startPosition = original.startPosition;
-		this.currentPosition = original.currentPosition;
-		this.possibleMovesCurrentStation = original.possibleMovesCurrentStation;
-		this.moveList = original.moveList;
-		this.taxiTicketsAvailable = original.taxiTicketsAvailable;
-		this.busTicketsAvailable = original.busTicketsAvailable;
-		this.tubeTicketsAvailable = original.tubeTicketsAvailable;
-		this.stationsList = original.stationsList;
 	}
 	
 	
@@ -110,7 +95,7 @@ public class Detective {
 	/**Find all the possible moves the seeker can make from their current position.
 	 * 
 	 */
-	public void findPossibleMovesDetective() {
+	public void findPossibleMovesDetective(List<Station> stationsList) {
 		
 		List<Move> possibleMoves = new ArrayList<Move>();
 		Station startStation = stationsList.get(currentPosition-1);
@@ -196,6 +181,36 @@ public class Detective {
 	}
 	
 	
+	public List<Station> getPerfectTubeStations() {
+		return perfectTubeStations;
+	}
+
+
+	public void setPerfectTubeStations(List<Station> perfectTubeStations) {
+		this.perfectTubeStations = perfectTubeStations;
+	}
+
+
+	public List<Station> getLessPerfectTubeStations() {
+		return lessPerfectTubeStations;
+	}
+
+
+	public void setLessPerfectTubeStations(List<Station> lessPerfectTubeStations) {
+		this.lessPerfectTubeStations = lessPerfectTubeStations;
+	}
+	
+	
+	public List<Move> getPath() {
+		return path;
+	}
+
+	
+	public void setPath(List<Move> path) {
+		this.path = path;
+	}	
+
+	
 	/**Print the information about the detective to the console.
 	 * 
 	 */
@@ -225,10 +240,14 @@ public class Detective {
 		sb.append(busTicketsAvailable);
 		sb.append("\nTube tickets available = "); 
 		sb.append(tubeTicketsAvailable);
+		sb.append("\nPerfect tube stations = ");
+		sb.append(perfectTubeStations);
+		sb.append("\nLess perfect tube stations = ");
+		sb.append(lessPerfectTubeStations);
+		sb.append("\nPath = ");
+		sb.append(path);
 		sb.append("\n---------------------------------\n");
 		return sb.toString();
 	}
-
-	
 	
 }

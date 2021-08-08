@@ -32,7 +32,8 @@
             1,
             2,
             4,
-            5
+            5,
+            8
         ],
         "neighboursBus": [],
         "neighboursTube": []
@@ -67,7 +68,8 @@
     	"blackStation": false,
         "neighboursTaxi": [
             5,
-            7
+            7,
+            9
         ],
         "neighboursBus": [],
         "neighboursTube": []
@@ -81,6 +83,28 @@
             5,
             6
         ],
+        "neighboursBus": [],
+        "neighboursTube": []
+    },
+    {
+    	"name": 8,
+    	"stationType": "Taxi",
+    	"blackStation": false,
+        "neighboursTaxi": [
+            3,
+            9
+        ],
+        "neighboursBus": [],
+        "neighboursTube": []
+    },
+    {
+    	"name": 9,
+    	"stationType": "Taxi",
+    	"blackStation": false,
+        "neighboursTaxi": [
+            6,
+            8
+         ],
         "neighboursBus": [],
         "neighboursTube": []
     }

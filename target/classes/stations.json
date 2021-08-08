@@ -1,11 +1,11 @@
 [
     {
-        "number": 0,
+        "name": 0,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursTaxi": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 1,
             "y": 1
@@ -16,18 +16,18 @@
         }
     },
     {
-        "number": 1,
-        "stationType": "Underground",
+        "name": 1,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             9,
             8
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             46,
             58
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             46
         ],
         "tuiCoordinates": {
@@ -40,15 +40,15 @@
         }
     },
     {
-        "number": 2,
+        "name": 2,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             20,
             10
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 81,
             "y": 7
@@ -59,19 +59,19 @@
         }
     },
     {
-        "number": 3,
+        "name": 3,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             11,
             4,
             12
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             23,
             22
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 123,
             "y": 6
@@ -82,15 +82,15 @@
         }
     },
     {
-        "number": 4,
+        "name": 4,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             3,
             13
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 140,
             "y": 11
@@ -101,15 +101,15 @@
         }
     },
     {
-        "number": 5,
+        "name": 5,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             15,
             16
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 214,
             "y": 5
@@ -120,15 +120,15 @@
         }
     },
     {
-        "number": 6,
+        "name": 6,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             29,
             7
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 238,
             "y": 8
@@ -139,17 +139,17 @@
         }
     },
     {
-        "number": 7,
+        "name": 7,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             6,
             17
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             42
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 259,
             "y": 11
@@ -160,16 +160,16 @@
         }
     },
     {
-        "number": 8,
+        "name": 8,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             1,
             18,
             19
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 31,
             "y": 13
@@ -180,16 +180,16 @@
         }
     },
     {
-        "number": 9,
+        "name": 9,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             1,
             19,
             20
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 53,
             "y": 14
@@ -200,17 +200,17 @@
         }
     },
     {
-        "number": 10,
+        "name": 10,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             2,
             11,
             21,
             34
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 97,
             "y": 14
@@ -221,16 +221,16 @@
         }
     },
     {
-        "number": 11,
+        "name": 11,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             3,
             10,
             22
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 114,
             "y": 17
@@ -241,15 +241,15 @@
         }
     },
     {
-        "number": 12,
+        "name": 12,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             3,
             23
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 130,
             "y": 19
@@ -260,20 +260,20 @@
         }
     },
     {
-        "number": 13,
-        "stationType": "Underground",
+        "name": 13,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             4,
             23,
             24
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             23,
             14,
             52
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             46,
             67,
             89
@@ -288,19 +288,19 @@
         }
     },
     {
-        "number": 14,
+        "name": 14,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             13,
             15,
             25
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             13,
             15
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 171,
             "y": 15
@@ -311,22 +311,22 @@
         }
     },
     {
-        "number": 15,
+        "name": 15,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             5,
             14,
             16,
             26,
             28
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             14,
             41,
             29
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 194,
             "y": 13
@@ -337,17 +337,17 @@
         }
     },
     {
-        "number": 16,
+        "name": 16,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             5,
             15,
             28,
             29
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 219,
             "y": 16
@@ -358,16 +358,16 @@
         }
     },
     {
-        "number": 17,
+        "name": 17,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             7,
             29,
             30
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 256,
             "y": 27
@@ -378,16 +378,16 @@
         }
     },
     {
-        "number": 18,
+        "name": 18,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             8,
             31,
             43
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 18,
             "y": 20
@@ -398,16 +398,16 @@
         }
     },
     {
-        "number": 19,
+        "name": 19,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             8,
             9,
             32
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 38,
             "y": 21
@@ -418,16 +418,16 @@
         }
     },
     {
-        "number": 20,
+        "name": 20,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             2,
             9,
             33
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 66,
             "y": 19
@@ -438,15 +438,15 @@
         }
     },
     {
-        "number": 21,
+        "name": 21,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             10,
             33
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 84,
             "y": 24
@@ -457,22 +457,22 @@
         }
     },
     {
-        "number": 22,
+        "name": 22,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             11,
             23,
             34,
             35
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             3,
             23,
             34,
             65
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 115,
             "y": 30
@@ -483,22 +483,22 @@
         }
     },
     {
-        "number": 23,
+        "name": 23,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             12,
             13,
             22,
             37
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             3,
             13,
             22,
             67
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 136,
             "y": 26
@@ -509,15 +509,15 @@
         }
     },
     {
-        "number": 24,
+        "name": 24,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             37,
             38
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 157,
             "y": 35
@@ -528,16 +528,16 @@
         }
     },
     {
-        "number": 25,
+        "name": 25,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             14,
             38,
             39
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 173,
             "y": 37
@@ -548,16 +548,16 @@
         }
     },
     {
-        "number": 26,
+        "name": 26,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             15,
             27,
             39
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 191,
             "y": 23
@@ -568,16 +568,16 @@
         }
     },
     {
-        "number": 27,
+        "name": 27,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             26,
             28,
             40
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 196,
             "y": 37
@@ -588,17 +588,17 @@
         }
     },
     {
-        "number": 28,
+        "name": 28,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             15,
             16,
             27,
             41
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 207,
             "y": 31
@@ -609,23 +609,23 @@
         }
     },
     {
-        "number": 29,
+        "name": 29,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             6,
             16,
             17,
             41,
             42
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             15,
             41,
             42,
             55
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 236,
             "y": 30
@@ -636,15 +636,15 @@
         }
     },
     {
-        "number": 30,
+        "name": 30,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             17,
             42
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 269,
             "y": 32
@@ -655,16 +655,16 @@
         }
     },
     {
-        "number": 31,
+        "name": 31,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             18,
             43,
             44
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 26,
             "y": 28
@@ -675,17 +675,17 @@
         }
     },
     {
-        "number": 32,
+        "name": 32,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             19,
             33,
             44,
             45
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 49,
             "y": 33
@@ -696,17 +696,17 @@
         }
     },
     {
-        "number": 33,
+        "name": 33,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             20,
             21,
             32,
             46
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 72,
             "y": 30
@@ -717,21 +717,21 @@
         }
     },
     {
-        "number": 34,
+        "name": 34,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             10,
             22,
             47,
             48
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             22,
             46,
             63
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 99,
             "y": 33
@@ -742,17 +742,17 @@
         }
     },
     {
-        "number": 35,
+        "name": 35,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             22,
             36,
             48,
             65
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 119,
             "y": 43
@@ -763,16 +763,16 @@
         }
     },
     {
-        "number": 36,
+        "name": 36,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             35,
             37,
             49
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 131,
             "y": 52
@@ -783,17 +783,17 @@
         }
     },
     {
-        "number": 37,
+        "name": 37,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             23,
             24,
             36,
             50
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 145,
             "y": 44
@@ -804,17 +804,17 @@
         }
     },
     {
-        "number": 38,
+        "name": 38,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             24,
             25,
             50,
             51
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 163,
             "y": 45
@@ -825,17 +825,17 @@
         }
     },
     {
-        "number": 39,
+        "name": 39,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             25,
             26,
             51,
             52
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 181,
             "y": 46
@@ -846,17 +846,17 @@
         }
     },
     {
-        "number": 40,
+        "name": 40,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             27,
             41,
             52,
             53
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 198,
             "y": 48
@@ -867,22 +867,22 @@
         }
     },
     {
-        "number": 41,
+        "name": 41,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             28,
             29,
             40,
             54
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             15,
             29,
             52,
             87
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 214,
             "y": 41
@@ -893,21 +893,21 @@
         }
     },
     {
-        "number": 42,
+        "name": 42,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             29,
             30,
             56,
             72
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             7,
             29,
             72
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 260,
             "y": 46
@@ -918,16 +918,16 @@
         }
     },
     {
-        "number": 43,
+        "name": 43,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             18,
             31,
             57
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 9,
             "y": 32
@@ -938,16 +938,16 @@
         }
     },
     {
-        "number": 44,
+        "name": 44,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             31,
             32,
             58
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 34,
             "y": 42
@@ -958,18 +958,18 @@
         }
     },
     {
-        "number": 45,
+        "name": 45,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             32,
             46,
             58,
             59,
             60
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 56,
             "y": 44
@@ -980,22 +980,22 @@
         }
     },
     {
-        "number": 46,
-        "stationType": "Underground",
+        "name": 46,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             33,
             45,
             47,
             61
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             1,
             34,
             58,
             78
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             1,
             13,
             74,
@@ -1011,16 +1011,16 @@
         }
     },
     {
-        "number": 47,
+        "name": 47,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             34,
             46,
             62
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 89,
             "y": 39
@@ -1031,17 +1031,17 @@
         }
     },
     {
-        "number": 48,
+        "name": 48,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             34,
             35,
             62,
             63
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 101,
             "y": 56
@@ -1052,16 +1052,16 @@
         }
     },
     {
-        "number": 49,
+        "name": 49,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             36,
             50,
             66
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 137,
             "y": 61
@@ -1072,16 +1072,16 @@
         }
     },
     {
-        "number": 50,
+        "name": 50,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             37,
             38,
             49
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 151,
             "y": 57
@@ -1092,18 +1092,18 @@
         }
     },
     {
-        "number": 51,
+        "name": 51,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             38,
             39,
             52,
             67,
             68
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 170,
             "y": 56
@@ -1114,22 +1114,22 @@
         }
     },
     {
-        "number": 52,
+        "name": 52,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             39,
             40,
             51,
             69
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             13,
             41,
             67,
             86
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 187,
             "y": 53
@@ -1140,16 +1140,16 @@
         }
     },
     {
-        "number": 53,
+        "name": 53,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             40,
             54,
             69
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 203,
             "y": 57
@@ -1160,17 +1160,17 @@
         }
     },
     {
-        "number": 54,
+        "name": 54,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             41,
             53,
             55,
             70
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 214,
             "y": 49
@@ -1181,18 +1181,18 @@
         }
     },
     {
-        "number": 55,
+        "name": 55,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             54,
             71
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             29,
             89
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 236,
             "y": 45
@@ -1203,15 +1203,15 @@
         }
     },
     {
-        "number": 56,
+        "name": 56,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             42,
             91
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 276,
             "y": 60
@@ -1222,16 +1222,16 @@
         }
     },
     {
-        "number": 57,
+        "name": 57,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             43,
             58,
             73
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 16,
             "y": 47
@@ -1242,23 +1242,23 @@
         }
     },
     {
-        "number": 58,
+        "name": 58,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             44,
             45,
             57,
             59,
             74
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             1,
             46,
             74,
             77
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 41,
             "y": 51
@@ -1269,17 +1269,17 @@
         }
     },
     {
-        "number": 59,
+        "name": 59,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             45,
             58,
             75,
             76
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 51,
             "y": 61
@@ -1290,16 +1290,16 @@
         }
     },
     {
-        "number": 60,
+        "name": 60,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             45,
             61,
             76
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 64,
             "y": 59
@@ -1310,18 +1310,18 @@
         }
     },
     {
-        "number": 61,
+        "name": 61,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             46,
             60,
             62,
             76,
             78
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 79,
             "y": 62
@@ -1332,17 +1332,17 @@
         }
     },
     {
-        "number": 62,
+        "name": 62,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             47,
             48,
             61,
             79
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 89,
             "y": 59
@@ -1353,22 +1353,22 @@
         }
     },
     {
-        "number": 63,
+        "name": 63,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             48,
             64,
             79,
             80
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             34,
             65,
             79,
             100
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 104,
             "y": 76
@@ -1379,16 +1379,16 @@
         }
     },
     {
-        "number": 64,
+        "name": 64,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             63,
             65,
             81
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 118,
             "y": 74
@@ -1399,22 +1399,22 @@
         }
     },
     {
-        "number": 65,
+        "name": 65,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             35,
             64,
             66,
             82
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             22,
             63,
             67,
             82
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 132,
             "y": 72
@@ -1425,17 +1425,17 @@
         }
     },
     {
-        "number": 66,
+        "name": 66,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             49,
             65,
             67,
             82
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 141,
             "y": 71
@@ -1446,23 +1446,23 @@
         }
     },
     {
-        "number": 67,
-        "stationType": "Underground",
+        "name": 67,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             51,
             66,
             68,
             84
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             23,
             52,
             65,
             82,
             102
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             13,
             79,
             89,
@@ -1478,17 +1478,17 @@
         }
     },
     {
-        "number": 68,
+        "name": 68,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             51,
             67,
             69,
             85
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 179,
             "y": 66
@@ -1499,17 +1499,17 @@
         }
     },
     {
-        "number": 69,
+        "name": 69,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             52,
             53,
             68,
             86
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 193,
             "y": 63
@@ -1520,16 +1520,16 @@
         }
     },
     {
-        "number": 70,
+        "name": 70,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             54,
             71,
             87
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 214,
             "y": 61
@@ -1540,17 +1540,17 @@
         }
     },
     {
-        "number": 71,
+        "name": 71,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             55,
             70,
             72,
             89
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 235,
             "y": 61
@@ -1561,21 +1561,21 @@
         }
     },
     {
-        "number": 72,
+        "name": 72,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             42,
             71,
             90,
             91
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             42,
             105,
             107
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 260,
             "y": 64
@@ -1586,16 +1586,16 @@
         }
     },
     {
-        "number": 73,
+        "name": 73,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             57,
             74,
             92
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 12,
             "y": 59
@@ -1606,20 +1606,20 @@
         }
     },
     {
-        "number": 74,
-        "stationType": "Underground",
+        "name": 74,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             58,
             73,
             75,
             92
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             58,
             94
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             46
         ],
         "tuiCoordinates": {
@@ -1632,16 +1632,16 @@
         }
     },
     {
-        "number": 75,
+        "name": 75,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             59,
             74,
             94
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 41,
             "y": 68
@@ -1652,17 +1652,17 @@
         }
     },
     {
-        "number": 76,
+        "name": 76,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             59,
             60,
             61,
             77
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 58,
             "y": 71
@@ -1673,22 +1673,22 @@
         }
     },
     {
-        "number": 77,
+        "name": 77,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             76,
             78,
             95,
             96
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             58,
             78,
             94,
             124
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 67,
             "y": 81
@@ -1699,21 +1699,21 @@
         }
     },
     {
-        "number": 78,
+        "name": 78,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             61,
             77,
             79,
             97
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             46,
             77,
             79
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 82,
             "y": 80
@@ -1724,20 +1724,20 @@
         }
     },
     {
-        "number": 79,
-        "stationType": "Underground",
+        "name": 79,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             62,
             63,
             78,
             98
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             63,
             78
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             46,
             67,
             93,
@@ -1753,16 +1753,16 @@
         }
     },
     {
-        "number": 80,
+        "name": 80,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             63,
             99,
             100
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 109,
             "y": 84
@@ -1773,16 +1773,16 @@
         }
     },
     {
-        "number": 81,
+        "name": 81,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             64,
             82,
             100
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 126,
             "y": 87
@@ -1793,22 +1793,22 @@
         }
     },
     {
-        "number": 82,
+        "name": 82,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             65,
             66,
             81,
             101
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             65,
             67,
             100,
             140
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 135,
             "y": 83
@@ -1819,15 +1819,15 @@
         }
     },
     {
-        "number": 83,
+        "name": 83,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             101,
             102
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 149,
             "y": 80
@@ -1838,15 +1838,15 @@
         }
     },
     {
-        "number": 84,
+        "name": 84,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             67,
             85
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 164,
             "y": 76
@@ -1857,16 +1857,16 @@
         }
     },
     {
-        "number": 85,
+        "name": 85,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             68,
             84,
             103
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 178,
             "y": 73
@@ -1877,21 +1877,21 @@
         }
     },
     {
-        "number": 86,
+        "name": 86,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             69,
             103,
             104
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             52,
             87,
             102,
             116
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 193,
             "y": 79
@@ -1902,19 +1902,19 @@
         }
     },
     {
-        "number": 87,
+        "name": 87,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             70,
             88
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             41,
             86,
             105
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 210,
             "y": 82
@@ -1925,16 +1925,16 @@
         }
     },
     {
-        "number": 88,
+        "name": 88,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             87,
             89,
             117
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 226,
             "y": 90
@@ -1945,19 +1945,19 @@
         }
     },
     {
-        "number": 89,
-        "stationType": "Underground",
+        "name": 89,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             71,
             88,
             105
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             55,
             105
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             13,
             67,
             128,
@@ -1973,16 +1973,16 @@
         }
     },
     {
-        "number": 90,
+        "name": 90,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             72,
             91,
             105
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 253,
             "y": 78
@@ -1993,18 +1993,18 @@
         }
     },
     {
-        "number": 91,
+        "name": 91,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             56,
             72,
             90,
             105,
             107
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 270,
             "y": 79
@@ -2015,16 +2015,16 @@
         }
     },
     {
-        "number": 92,
+        "name": 92,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             73,
             74,
             93
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 5,
             "y": 78
@@ -2035,17 +2035,17 @@
         }
     },
     {
-        "number": 93,
-        "stationType": "Underground",
+        "name": 93,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             92,
             94
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             94
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             79
         ],
         "tuiCoordinates": {
@@ -2058,20 +2058,20 @@
         }
     },
     {
-        "number": 94,
+        "name": 94,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             75,
             93,
             95
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             74,
             77,
             93
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 27,
             "y": 87
@@ -2082,16 +2082,16 @@
         }
     },
     {
-        "number": 95,
+        "name": 95,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             77,
             94,
             122
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 36,
             "y": 85
@@ -2102,16 +2102,16 @@
         }
     },
     {
-        "number": 96,
+        "name": 96,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             77,
             97,
             109
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 73,
             "y": 97
@@ -2122,17 +2122,17 @@
         }
     },
     {
-        "number": 97,
+        "name": 97,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             78,
             96,
             98,
             109
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 83,
             "y": 94
@@ -2143,17 +2143,17 @@
         }
     },
     {
-        "number": 98,
+        "name": 98,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             79,
             97,
             99,
             110
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 97,
             "y": 90
@@ -2164,17 +2164,17 @@
         }
     },
     {
-        "number": 99,
+        "name": 99,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             80,
             98,
             110,
             112
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 109,
             "y": 93
@@ -2185,22 +2185,22 @@
         }
     },
     {
-        "number": 100,
+        "name": 100,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             80,
             81,
             101,
             112,
             113
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             63,
             82,
             111
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 121,
             "y": 101
@@ -2211,17 +2211,17 @@
         }
     },
     {
-        "number": 101,
+        "name": 101,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             82,
             83,
             100,
             114
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 138,
             "y": 90
@@ -2232,20 +2232,20 @@
         }
     },
     {
-        "number": 102,
+        "name": 102,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             83,
             103,
             115
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             67,
             86,
             127
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 159,
             "y": 84
@@ -2256,16 +2256,16 @@
         }
     },
     {
-        "number": 103,
+        "name": 103,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             85,
             86,
             102
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 178,
             "y": 84
@@ -2276,15 +2276,15 @@
         }
     },
     {
-        "number": 104,
+        "name": 104,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             86,
             116
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 193,
             "y": 88
@@ -2295,24 +2295,24 @@
         }
     },
     {
-        "number": 105,
+        "name": 105,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             89,
             90,
             91,
             106,
             108
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             72,
             87,
             89,
             107,
             108
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 246,
             "y": 91
@@ -2323,15 +2323,15 @@
         }
     },
     {
-        "number": 106,
+        "name": 106,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             105,
             107
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 261,
             "y": 93
@@ -2342,20 +2342,20 @@
         }
     },
     {
-        "number": 107,
+        "name": 107,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             91,
             106,
             119
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             72,
             105,
             161
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 275,
             "y": 93
@@ -2366,20 +2366,20 @@
         }
     },
     {
-        "number": 108,
+        "name": 108,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             105,
             117,
             119
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             105,
             116,
             135
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 245,
             "y": 106
@@ -2390,17 +2390,17 @@
         }
     },
     {
-        "number": 109,
+        "name": 109,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             96,
             97,
             110,
             124
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 84,
             "y": 115
@@ -2411,17 +2411,17 @@
         }
     },
     {
-        "number": 110,
+        "name": 110,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             98,
             99,
             109,
             111
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 101,
             "y": 99
@@ -2432,19 +2432,19 @@
         }
     },
     {
-        "number": 111,
-        "stationType": "Underground",
+        "name": 111,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             110,
             112,
             124
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             100,
             124
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             67,
             79,
             153,
@@ -2460,17 +2460,17 @@
         }
     },
     {
-        "number": 112,
+        "name": 112,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             99,
             100,
             111,
             125
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 112,
             "y": 106
@@ -2481,16 +2481,16 @@
         }
     },
     {
-        "number": 113,
+        "name": 113,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             100,
             114,
             125
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 127,
             "y": 109
@@ -2501,10 +2501,10 @@
         }
     },
     {
-        "number": 114,
+        "name": 114,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             101,
             113,
             115,
@@ -2512,8 +2512,8 @@
             131,
             132
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 141,
             "y": 104
@@ -2524,17 +2524,17 @@
         }
     },
     {
-        "number": 115,
+        "name": 115,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             102,
             114,
             126,
             127
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 156,
             "y": 95
@@ -2545,22 +2545,22 @@
         }
     },
     {
-        "number": 116,
+        "name": 116,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             104,
             117,
             118,
             127
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             86,
             108,
             127,
             142
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 194,
             "y": 105
@@ -2571,17 +2571,17 @@
         }
     },
     {
-        "number": 117,
+        "name": 117,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             88,
             108,
             116,
             129
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 224,
             "y": 106
@@ -2592,17 +2592,17 @@
         }
     },
     {
-        "number": 118,
+        "name": 118,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             116,
             129,
             134,
             142
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 194,
             "y": 115
@@ -2613,16 +2613,16 @@
         }
     },
     {
-        "number": 119,
+        "name": 119,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             107,
             108,
             136
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 271,
             "y": 110
@@ -2633,15 +2633,15 @@
         }
     },
     {
-        "number": 120,
+        "name": 120,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             121,
             144
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 4,
             "y": 135
@@ -2652,16 +2652,16 @@
         }
     },
     {
-        "number": 121,
+        "name": 121,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             120,
             122,
             145
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 15,
             "y": 135
@@ -2672,20 +2672,20 @@
         }
     },
     {
-        "number": 122,
+        "name": 122,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             95,
             121,
             123,
             146
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             123,
             144
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 31,
             "y": 135
@@ -2696,23 +2696,23 @@
         }
     },
     {
-        "number": 123,
+        "name": 123,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             122,
             124,
             137,
             148,
             149
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             122,
             124,
             144,
             165
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 63,
             "y": 135
@@ -2723,23 +2723,23 @@
         }
     },
     {
-        "number": 124,
+        "name": 124,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             109,
             111,
             123,
             130,
             138
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             77,
             111,
             123,
             153
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 80,
             "y": 131
@@ -2750,16 +2750,16 @@
         }
     },
     {
-        "number": 125,
+        "name": 125,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             112,
             113,
             131
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 118,
             "y": 118
@@ -2770,17 +2770,17 @@
         }
     },
     {
-        "number": 126,
+        "name": 126,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             114,
             115,
             127,
             140
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 148,
             "y": 119
@@ -2791,22 +2791,22 @@
         }
     },
     {
-        "number": 127,
+        "name": 127,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             115,
             116,
             126,
             133,
             134
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             102,
             116,
             133
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 177,
             "y": 113
@@ -2817,24 +2817,24 @@
         }
     },
     {
-        "number": 128,
-        "stationType": "Underground",
+        "name": 128,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             142,
             143,
             160,
             172,
             188
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             135,
             142,
             161,
             187,
             199
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             89,
             140,
             185
@@ -2849,18 +2849,18 @@
         }
     },
     {
-        "number": 129,
+        "name": 129,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             117,
             118,
             135,
             142,
             143
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 220,
             "y": 115
@@ -2871,16 +2871,16 @@
         }
     },
     {
-        "number": 130,
+        "name": 130,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             124,
             131,
             139
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 111,
             "y": 130
@@ -2891,16 +2891,16 @@
         }
     },
     {
-        "number": 131,
+        "name": 131,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             114,
             125,
             130
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 128,
             "y": 125
@@ -2911,15 +2911,15 @@
         }
     },
     {
-        "number": 132,
+        "name": 132,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             114,
             140
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 140,
             "y": 125
@@ -2930,20 +2930,20 @@
         }
     },
     {
-        "number": 133,
+        "name": 133,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             127,
             140,
             141
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             127,
             140,
             157
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 170,
             "y": 140
@@ -2954,17 +2954,17 @@
         }
     },
     {
-        "number": 134,
+        "name": 134,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             118,
             127,
             141,
             142
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 187,
             "y": 122
@@ -2975,21 +2975,21 @@
         }
     },
     {
-        "number": 135,
+        "name": 135,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             129,
             136,
             143,
             161
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             108,
             128,
             161
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 232,
             "y": 125
@@ -3000,16 +3000,16 @@
         }
     },
     {
-        "number": 136,
+        "name": 136,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             119,
             135,
             162
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 271,
             "y": 128
@@ -3020,15 +3020,15 @@
         }
     },
     {
-        "number": 137,
+        "name": 137,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             123,
             147
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 57,
             "y": 147
@@ -3039,16 +3039,16 @@
         }
     },
     {
-        "number": 138,
+        "name": 138,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             124,
             150,
             152
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 91,
             "y": 144
@@ -3059,17 +3059,17 @@
         }
     },
     {
-        "number": 139,
+        "name": 139,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             130,
             140,
             153,
             154
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 111,
             "y": 139
@@ -3080,10 +3080,10 @@
         }
     },
     {
-        "number": 140,
-        "stationType": "Underground",
+        "name": 140,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             126,
             132,
             133,
@@ -3091,13 +3091,13 @@
             154,
             156
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             82,
             133,
             154,
             156
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             89,
             128,
             153
@@ -3112,17 +3112,17 @@
         }
     },
     {
-        "number": 141,
+        "name": 141,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             133,
             134,
             142,
             158
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 184,
             "y": 140
@@ -3133,10 +3133,10 @@
         }
     },
     {
-        "number": 142,
+        "name": 142,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             118,
             128,
             129,
@@ -3145,12 +3145,12 @@
             143,
             158
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             116,
             128,
             157
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 198,
             "y": 135
@@ -3161,18 +3161,18 @@
         }
     },
     {
-        "number": 143,
+        "name": 143,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             128,
             129,
             135,
             142,
             160
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 219,
             "y": 136
@@ -3183,20 +3183,20 @@
         }
     },
     {
-        "number": 144,
+        "name": 144,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             120,
             145,
             177
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             122,
             123,
             163
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 6,
             "y": 164
@@ -3207,16 +3207,16 @@
         }
     },
     {
-        "number": 145,
+        "name": 145,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             121,
             144,
             146
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 19,
             "y": 164
@@ -3227,17 +3227,17 @@
         }
     },
     {
-        "number": 146,
+        "name": 146,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             122,
             145,
             147,
             163
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 34,
             "y": 164
@@ -3248,16 +3248,16 @@
         }
     },
     {
-        "number": 147,
+        "name": 147,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             137,
             146,
             164
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 43,
             "y": 161
@@ -3268,16 +3268,16 @@
         }
     },
     {
-        "number": 148,
+        "name": 148,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             123,
             149,
             164
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 61,
             "y": 159
@@ -3288,17 +3288,17 @@
         }
     },
     {
-        "number": 149,
+        "name": 149,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             123,
             148,
             150,
             165
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 71,
             "y": 161
@@ -3309,16 +3309,16 @@
         }
     },
     {
-        "number": 150,
+        "name": 150,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             138,
             149,
             151
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 83,
             "y": 154
@@ -3329,17 +3329,17 @@
         }
     },
     {
-        "number": 151,
+        "name": 151,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             150,
             152,
             165,
             166
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 93,
             "y": 165
@@ -3350,16 +3350,16 @@
         }
     },
     {
-        "number": 152,
+        "name": 152,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             138,
             151,
             153
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 103,
             "y": 158
@@ -3370,23 +3370,23 @@
         }
     },
     {
-        "number": 153,
-        "stationType": "Underground",
+        "name": 153,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             139,
             152,
             154,
             166,
             167
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             124,
             154,
             180,
             184
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             111,
             140,
             163,
@@ -3402,21 +3402,21 @@
         }
     },
     {
-        "number": 154,
+        "name": 154,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             139,
             140,
             153,
             155
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             140,
             153,
             156
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 132,
             "y": 158
@@ -3427,17 +3427,17 @@
         }
     },
     {
-        "number": 155,
+        "name": 155,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             154,
             156,
             167,
             168
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 136,
             "y": 175
@@ -3448,22 +3448,22 @@
         }
     },
     {
-        "number": 156,
+        "name": 156,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             140,
             155,
             157,
             169
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             140,
             154,
             157,
             184
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 150,
             "y": 166
@@ -3474,21 +3474,21 @@
         }
     },
     {
-        "number": 157,
+        "name": 157,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             156,
             158,
             170
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             133,
             156,
             185,
             142
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 171,
             "y": 165
@@ -3499,17 +3499,17 @@
         }
     },
     {
-        "number": 158,
+        "name": 158,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             141,
             142,
             157,
             159
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 187,
             "y": 153
@@ -3520,18 +3520,18 @@
         }
     },
     {
-        "number": 159,
+        "name": 159,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             158,
             170,
             172,
             186,
             198
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 187,
             "y": 192
@@ -3542,17 +3542,17 @@
         }
     },
     {
-        "number": 160,
+        "name": 160,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             128,
             143,
             161,
             173
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 229,
             "y": 154
@@ -3563,21 +3563,21 @@
         }
     },
     {
-        "number": 161,
+        "name": 161,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             135,
             160,
             174
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             107,
             128,
             135,
             199
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 256,
             "y": 151
@@ -3588,15 +3588,15 @@
         }
     },
     {
-        "number": 162,
+        "name": 162,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             136,
             175
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 276,
             "y": 147
@@ -3607,19 +3607,19 @@
         }
     },
     {
-        "number": 163,
-        "stationType": "Underground",
+        "name": 163,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             146,
             177
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             144,
             176,
             191
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             111,
             153
         ],
@@ -3633,17 +3633,17 @@
         }
     },
     {
-        "number": 164,
+        "name": 164,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             147,
             148,
             178,
             179
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 48,
             "y": 176
@@ -3654,21 +3654,21 @@
         }
     },
     {
-        "number": 165,
+        "name": 165,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             149,
             151,
             179,
             180
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             123,
             180,
             191
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 74,
             "y": 182
@@ -3679,17 +3679,17 @@
         }
     },
     {
-        "number": 166,
+        "name": 166,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             151,
             153,
             181,
             183
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 110,
             "y": 186
@@ -3700,17 +3700,17 @@
         }
     },
     {
-        "number": 167,
+        "name": 167,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             153,
             155,
             168,
             183
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 130,
             "y": 196
@@ -3721,16 +3721,16 @@
         }
     },
     {
-        "number": 168,
+        "name": 168,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             155,
             167,
             184
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 138,
             "y": 202
@@ -3741,15 +3741,15 @@
         }
     },
     {
-        "number": 169,
+        "name": 169,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             156,
             184
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 153,
             "y": 180
@@ -3760,16 +3760,16 @@
         }
     },
     {
-        "number": 170,
+        "name": 170,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             157,
             159,
             185
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 172,
             "y": 181
@@ -3780,16 +3780,16 @@
         }
     },
     {
-        "number": 171,
+        "name": 171,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             173,
             175,
             199
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 257,
             "y": 202
@@ -3800,16 +3800,16 @@
         }
     },
     {
-        "number": 172,
+        "name": 172,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             128,
             159,
             187
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 208,
             "y": 168
@@ -3820,17 +3820,17 @@
         }
     },
     {
-        "number": 173,
+        "name": 173,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             160,
             171,
             174,
             188
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 246,
             "y": 184
@@ -3841,16 +3841,16 @@
         }
     },
     {
-        "number": 174,
+        "name": 174,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             161,
             173,
             175
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 264,
             "y": 162
@@ -3861,16 +3861,16 @@
         }
     },
     {
-        "number": 175,
+        "name": 175,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             162,
             171,
             174
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 276,
             "y": 168
@@ -3881,18 +3881,18 @@
         }
     },
     {
-        "number": 176,
+        "name": 176,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             177,
             189
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             163,
             190
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 5,
             "y": 196
@@ -3903,16 +3903,16 @@
         }
     },
     {
-        "number": 177,
+        "name": 177,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             144,
             163,
             176
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 16,
             "y": 191
@@ -3923,16 +3923,16 @@
         }
     },
     {
-        "number": 178,
+        "name": 178,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             164,
             189,
             191
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 41,
             "y": 195
@@ -3943,16 +3943,16 @@
         }
     },
     {
-        "number": 179,
+        "name": 179,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             164,
             165,
             191
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 69,
             "y": 194
@@ -3963,21 +3963,21 @@
         }
     },
     {
-        "number": 180,
+        "name": 180,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             165,
             181,
             193
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             153,
             165,
             184,
             190
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 83,
             "y": 203
@@ -3988,17 +3988,17 @@
         }
     },
     {
-        "number": 181,
+        "name": 181,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             166,
             180,
             182,
             193
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 100,
             "y": 201
@@ -4009,16 +4009,16 @@
         }
     },
     {
-        "number": 182,
+        "name": 182,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             181,
             183,
             195
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 110,
             "y": 208
@@ -4029,17 +4029,17 @@
         }
     },
     {
-        "number": 183,
+        "name": 183,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             166,
             167,
             182,
             196
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 120,
             "y": 202
@@ -4050,23 +4050,23 @@
         }
     },
     {
-        "number": 184,
+        "name": 184,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             168,
             169,
             185,
             196,
             197
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             153,
             156,
             180,
             185
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 146,
             "y": 208
@@ -4077,20 +4077,20 @@
         }
     },
     {
-        "number": 185,
-        "stationType": "Underground",
+        "name": 185,
+        "stationType": "Tube",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             170,
             184,
             186
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             157,
             184,
             187
         ],
-        "neighbourUndergrounds": [
+        "neighboursTube": [
             128,
             153
         ],
@@ -4104,16 +4104,16 @@
         }
     },
     {
-        "number": 186,
+        "name": 186,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             159,
             185,
             198
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 181,
             "y": 207
@@ -4124,19 +4124,19 @@
         }
     },
     {
-        "number": 187,
+        "name": 187,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             172,
             188,
             198
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             128,
             185
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 200,
             "y": 192
@@ -4147,17 +4147,17 @@
         }
     },
     {
-        "number": 188,
+        "name": 188,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             128,
             173,
             187,
             199
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 222,
             "y": 190
@@ -4168,16 +4168,16 @@
         }
     },
     {
-        "number": 189,
+        "name": 189,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             176,
             178,
             190
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 20,
             "y": 220
@@ -4188,20 +4188,20 @@
         }
     },
     {
-        "number": 190,
+        "name": 190,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             189,
             191,
             192
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             176,
             180,
             191
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 35,
             "y": 238
@@ -4212,21 +4212,21 @@
         }
     },
     {
-        "number": 191,
+        "name": 191,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             178,
             179,
             190,
             192
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             163,
             165,
             190
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 59,
             "y": 211
@@ -4237,16 +4237,16 @@
         }
     },
     {
-        "number": 192,
+        "name": 192,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             190,
             191,
             194
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 54,
             "y": 248
@@ -4257,16 +4257,16 @@
         }
     },
     {
-        "number": 193,
+        "name": 193,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             180,
             181,
             194
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 90,
             "y": 228
@@ -4277,16 +4277,16 @@
         }
     },
     {
-        "number": 194,
+        "name": 194,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             192,
             193,
             195
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 99,
             "y": 236
@@ -4297,16 +4297,16 @@
         }
     },
     {
-        "number": 195,
+        "name": 195,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             182,
             194,
             197
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 117,
             "y": 236
@@ -4317,16 +4317,16 @@
         }
     },
     {
-        "number": 196,
+        "name": 196,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             183,
             184,
             197
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 130,
             "y": 221
@@ -4337,16 +4337,16 @@
         }
     },
     {
-        "number": 197,
+        "name": 197,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             184,
             195,
             196
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 136,
             "y": 232
@@ -4357,17 +4357,17 @@
         }
     },
     {
-        "number": 198,
+        "name": 198,
         "stationType": "Taxi",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             159,
             186,
             187,
             199
         ],
-        "neighbourBuses": [],
-        "neighbourUndergrounds": [],
+        "neighboursBus": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 189,
             "y": 222
@@ -4378,19 +4378,19 @@
         }
     },
     {
-        "number": 199,
+        "name": 199,
         "stationType": "Bus",
         "blackStation": false,
-        "neighbourTaxis": [
+        "neighboursTaxi": [
             171,
             188,
             198
         ],
-        "neighbourBuses": [
+        "neighboursBus": [
             128,
             161
         ],
-        "neighbourUndergrounds": [],
+        "neighboursTube": [],
         "tuiCoordinates": {
             "x": 226,
             "y": 210
