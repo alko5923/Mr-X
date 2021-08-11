@@ -6,53 +6,53 @@ import com.rits.cloning.Cloner;
 
 import mrX_maven_game.Move;
 
-public class TreeNode<Hunter> {
-	private Hunter hunter = null;
-	private TreeNode<Hunter> parent = null;
-	private List<TreeNode<Hunter>> children = new ArrayList<TreeNode<Hunter>>();
+public class TreeNode<GameState> {
+	private GameState gameState = null;
+	private TreeNode<GameState> parent = null;
+	private List<TreeNode<GameState>> children = new ArrayList<TreeNode<GameState>>();
     private double nodeEvaluation;
     private final Cloner cloner;
     private List<Move> bestCombo = new ArrayList<Move>();
 
-    public TreeNode(Hunter hunter, Cloner cloner) {
-        this.hunter = hunter;
+    public TreeNode(GameState gameState, Cloner cloner) {
+        this.gameState = gameState;
         this.cloner = cloner;
     }
 
-    public void addChild(TreeNode<Hunter> child) {
+    public void addChild(TreeNode<GameState> child) {
         child.setParent(this);
         this.children.add(child);
     }
 
-    public void addChild(Hunter hunter) {
-        TreeNode<Hunter> newChild = new TreeNode<Hunter>(hunter, cloner);
+    public void addChild(GameState hunter) {
+        TreeNode<GameState> newChild = new TreeNode<GameState>(hunter, cloner);
         this.addChild(newChild);
     }
 
-    public void addChildren(List<TreeNode<Hunter>> children) {
-        for(TreeNode<Hunter> t : children) {
+    public void addChildren(List<TreeNode<GameState>> children) {
+        for(TreeNode<GameState> t : children) {
             t.setParent(this);
         }
         this.children.addAll(children);
     }
 
-    public List<TreeNode<Hunter>> getChildren() {
+    public List<TreeNode<GameState>> getChildren() {
         return children;
     }
 
-    public Hunter getData() {
-        return hunter;
+    public GameState getData() {
+        return gameState;
     }
 
-    public void setData(Hunter hunter) {
-        this.hunter = hunter;
+    public void setData(GameState gameState) {
+        this.gameState = gameState;
     }
 
-    private void setParent(TreeNode<Hunter> parent) {
+    private void setParent(TreeNode<GameState> parent) {
         this.parent = parent;
     }
 
-    public TreeNode<Hunter> getParent() {
+    public TreeNode<GameState> getParent() {
         return parent;
     }
     
@@ -64,8 +64,8 @@ public class TreeNode<Hunter> {
 		this.nodeEvaluation = nodeEvaluation;
 	}
 	
-	public Hunter getDeepCloneOfRepresentedState() {
-        return cloner.deepClone(hunter);
+	public GameState getDeepCloneOfRepresentedState() {
+        return cloner.deepClone(gameState);
     }
 	
 	public List<Move> getBestCombo() {

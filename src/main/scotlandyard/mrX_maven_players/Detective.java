@@ -2,6 +2,7 @@ package mrX_maven_players;
 
 import java.util.*;
 
+import mrX_maven_game.Board;
 import mrX_maven_game.Move;
 import mrX_maven_game.Station;
 
@@ -11,7 +12,6 @@ import mrX_maven_game.Station;
  *
  */
 public class Detective {
-	
 	private int number;
 	private String name;
 	private int startPosition;
@@ -21,12 +21,20 @@ public class Detective {
 	private int taxiTicketsAvailable;
 	private int busTicketsAvailable;
 	private int tubeTicketsAvailable;
-	//TODO: these 3 below seem unnecessary, is there a better way? 
-	private List<Station> perfectTubeStations;
-	private List<Station> lessPerfectTubeStations;
-	private List<Move> path;
+	private List<Station> closestTubeStations;
+	private Station firstDestination;
+	private List<Move> bestMoves;
 	
-	public Detective(int number, String name, int startPosition, int taxiTickets, int busTickets, int tubeTickets, List<Station> stationsList) {
+	/**
+	 * The class constructor.
+	 * @param number
+	 * @param name
+	 * @param startPosition
+	 * @param taxiTickets
+	 * @param busTickets
+	 * @param tubeTickets
+	 */
+	public Detective(int number, String name, int startPosition, int taxiTickets, int busTickets, int tubeTickets) {
 		this.number = number;
 		this.name = name;
 		this.startPosition = startPosition;
@@ -36,86 +44,30 @@ public class Detective {
 		this.tubeTicketsAvailable = tubeTickets;	
 	}
 	
-	/**Get the number of the detective.
-	 * 
-	 * @return		the number of the detective. 
+	/**
+	 * Find all possible moves for detective from his current position. 
+	 * @param board
 	 */
-	public int getNumber() {
-		return number;
-	}
-	
-	/**Get the name of the detective.
-	 * 
-	 * @return		the name of the detective.
-	 */
-	public String getName() {
-		return name;
-	}
-		
-	/**Get the start position of the detective.
-	 * 
-	 * @return		the start position of the detective. 
-	 */
-	public int getStartPosition() {
-		return startPosition;
-	}
-	
-	/**Get the current position of the detective.
-	 * 
-	 * @return		the number of the current location. 
-	 */
-	public int getCurrentPosition() {
-		return currentPosition;
-	}
-	
-	/**Set the current position of the detective.
-	 * 
-	 * @param currentPos	the current position.
-	 */
-	public void setCurrentPosition(int currentPos) {
-		this.currentPosition = currentPos;
-	}
-	
-	/**Get the list of possible moves from the current station.
-	 * 
-	 * @return	the list of possible moves from the current station.
-	 */
-	public List<Move> getPossibleMovesCurrentStation() {
-		return possibleMovesCurrentStation;
-	}
-	
-	/**Set the list of possible moves from current station. 
-	 * 
-	 * @param possibleMovesCurrentStation
-	 */
-	public void setPossibleMovesCurrentStation(List<Move> possibleMovesCurrentStation) {
-		this.possibleMovesCurrentStation = possibleMovesCurrentStation;
-	}
-	
-	/**Find all the possible moves the seeker can make from their current position.
-	 * 
-	 */
-	public void findPossibleMovesDetective(List<Station> stationsList) {
-		
+	public void findPossibleMovesDetective(Board board) {
 		List<Move> possibleMoves = new ArrayList<Move>();
-		Station startStation = stationsList.get(currentPosition-1);
+		Station startStation = board.getStations().get(currentPosition-1);
 			
 		for (int j = 0; j < startStation.getNumberTaxiConnections(); j++) {
-			Station destinationStation = stationsList.get(startStation.getTaxiNeighbours().get(j)-1);
+			Station destinationStation = board.getStations().get(startStation.getTaxiNeighbours().get(j)-1);
 			if (destinationStation.isOccupied()==false) {
 				Move move = new Move(startStation, destinationStation, "Taxi");
 				possibleMoves.add(move);
 			}
 		}
 		for (int j = 0; j < startStation.getNumberBusConnections(); j++) {
-			Station destinationStation = stationsList.get(startStation.getBusNeighbours().get(j)-1);
+			Station destinationStation = board.getStations().get(startStation.getBusNeighbours().get(j)-1);
 			if (destinationStation.isOccupied()==false) {
 				Move move = new Move(startStation, destinationStation, "Bus");
 				possibleMoves.add(move);
 			}
 		}
 		for (int j = 0; j < startStation.getNumberTubeConnections(); j++) {
-			Station destinationStation = stationsList.get(startStation.getTubeNeighbours().get(j)-1);
+			Station destinationStation = board.getStations().get(startStation.getTubeNeighbours().get(j)-1);
 			if (destinationStation.isOccupied()==false) {
 				Move move = new Move(startStation, destinationStation, "Tube");
 				possibleMoves.add(move);
@@ -126,95 +78,152 @@ public class Detective {
 			
 	}
 	
-	
-	/**Get the list of moves.
-	 * 
-	 * @return	list of moves
+	/**
+	 * Check if the move makes the detective move towards given destination. 
+	 * @param board
+	 * @param move
+	 * @param destination
+	 * @return
 	 */
-	public List<Move> getMoveList() {
-		return moveList;
+	public boolean checkIfDetectiveMovesTowardsDestination(Board board, Move move, Station destination) {
+		int distanceToDest = board.returnShortestDistance(currentPosition, destination.getNameInt());
+		int distanceFromMoveDestToDest = board.returnShortestDistance(move.getDestinationStation().getNameInt(), destination.getNameInt());
+		if (distanceFromMoveDestToDest < distanceToDest) {
+			return true;
+		}
+		return false;
 	}
 	
-	/**Get the number of available taxi tickets.
-	 * 
-	 * @return	the number of available taxi tickets. 
+	
+	/** 
+	 * Move the detective.
+	 * @param detective
+	 * @param move
 	 */
-	public int getTaxiTicketsAvailable() {
-		return taxiTicketsAvailable;
+	public boolean moveDetective(Move move, Board board) {
+		Station destinationStation = move.getDestinationStation();
+		if (destinationStation.isOccupied() == false) {
+			board.occupyAndUnoccupyRelevantStation(move);
+			handleStatisticsDetective(move);	
+			setCurrentPosition(destinationStation.getNameInt());
+			//findPossibleMovesDetective(board);
+			//TODO!! possibleMrXstations.remove(Integer.valueOf(destinationStation.getNameInt()));
+			return true;
+		}
+		return false;
 	}
 	
-	/**Get the number of available bus tickets.
-	 * 
-	 * @return	the number of available bus tickets. 
+	/**
+	 * Handle tickets and travel list for given detective.
+	 * @param bestMove			best move as calculated by the calculateBestMove method.
+	 * @param detectiveIndex	given index of detective. 
 	 */
-	public int getBusTicketsAvailable() {
-		return busTicketsAvailable;
+	public void handleStatisticsDetective(Move bestMove) {
+		if(bestMove.getTicket().equals("Taxi")) {
+			removeDetectiveTaxiTicket();
+			//TODO!! mrX.addTaxiTicket();
+		}
+		else if(bestMove.getTicket().equals("Bus")) {
+			removeDetectiveBusTicket();
+			//TODO!! mrX.addBusTicket();
+		}
+		else if(bestMove.getTicket().equals("Tube")) {
+			removeDetectiveTubeTicket();
+			//TODO!! mrX.addTubeTicket();
+		}
+		getMoveList().add(bestMove);
 	}
 	
-	/**Get the number of available tube tickets.
-	 * 
-	 * @return	the number of available tube tickets. 
-	 */
-	public int getTubeTicketsAvailable() {
-		return tubeTicketsAvailable;
-	}
-	
-	/**Decrease the amount of available taxi tickets by 1. 
-	 * 
+	/** 
+	 * Decrease the amount of available taxi tickets by 1.
 	 */
 	public void removeDetectiveTaxiTicket() {
 		taxiTicketsAvailable -= 1;
 	}
 	
-	/**Decrease the amount of available bus tickets by 1. 
-	 * 
+	/** 
+	 * Decrease the amount of available bus tickets by 1.
 	 */
 	public void removeDetectiveBusTicket() {
 		busTicketsAvailable -= 1;
 	}
 	
-	/**Decrease the amount of available tube tickets by 1. 
-	 * 
+	/** 
+	 * Decrease the amount of available tube tickets by 1.
 	 */
 	public void removeDetectiveTubeTicket() {
 		tubeTicketsAvailable -= 1;
 	}
 	
-	
-	public List<Station> getPerfectTubeStations() {
-		return perfectTubeStations;
-	}
-
-
-	public void setPerfectTubeStations(List<Station> perfectTubeStations) {
-		this.perfectTubeStations = perfectTubeStations;
-	}
-
-
-	public List<Station> getLessPerfectTubeStations() {
-		return lessPerfectTubeStations;
-	}
-
-
-	public void setLessPerfectTubeStations(List<Station> lessPerfectTubeStations) {
-		this.lessPerfectTubeStations = lessPerfectTubeStations;
+	public int getNumber() {
+		return number;
 	}
 	
+	public String getName() {
+		return name;
+	}
 	
-	public List<Move> getPath() {
-		return path;
+	public int getStartPosition() {
+		return startPosition;
+	}
+	
+	public int getCurrentPosition() {
+		return currentPosition;
+	}
+	
+	public void setCurrentPosition(int currentPos) {
+		this.currentPosition = currentPos;
+	}
+	
+	public List<Move> getPossibleMovesCurrentStation() {
+		return possibleMovesCurrentStation;
+	}
+	
+	public void setPossibleMovesCurrentStation(List<Move> possibleMovesCurrentStation) {
+		this.possibleMovesCurrentStation = possibleMovesCurrentStation;
+	}
+	
+	public List<Move> getMoveList() {
+		return moveList;
+	}
+	
+	public int getTaxiTicketsAvailable() {
+		return taxiTicketsAvailable;
+	}
+	
+	public int getBusTicketsAvailable() {
+		return busTicketsAvailable;
+	}
+	
+	public int getTubeTicketsAvailable() {
+		return tubeTicketsAvailable;
+	}
+	
+	public List<Station> getClosestTubeStations() {
+		return closestTubeStations;
 	}
 
+	public void setClosestTubeStations(List<Station> closestTubeStations) {
+		this.closestTubeStations = closestTubeStations;
+	}
 	
-	public void setPath(List<Move> path) {
-		this.path = path;
-	}	
+	public Station getFirstDestination() {
+		return firstDestination;
+	}
 
+	public void setFirstDestination(Station firstDestination) {
+		this.firstDestination = firstDestination;
+	}
+
+	public List<Move> getBestMoves() {
+		return bestMoves;
+	}
+
+	public void setBestMoves(List<Move> bestMoves) {
+		this.bestMoves = bestMoves;
+	}
 	
-	/**Print the information about the detective to the console.
-	 * 
-	 */
-	public String toString() {
+public String toString() {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("---------------------------------\n");
@@ -240,14 +249,11 @@ public class Detective {
 		sb.append(busTicketsAvailable);
 		sb.append("\nTube tickets available = "); 
 		sb.append(tubeTicketsAvailable);
-		sb.append("\nPerfect tube stations = ");
-		sb.append(perfectTubeStations);
-		sb.append("\nLess perfect tube stations = ");
-		sb.append(lessPerfectTubeStations);
-		sb.append("\nPath = ");
-		sb.append(path);
+		sb.append("\nFirst destination = ");
+		sb.append(firstDestination);
+		sb.append("\nBest moves = ");
+		sb.append(bestMoves);
 		sb.append("\n---------------------------------\n");
 		return sb.toString();
 	}
-	
 }
