@@ -19,7 +19,7 @@ public class MrX {
 	private List<Integer> possibleStartingStationsMrX = Arrays.asList(35, 45, 51, 71, 78, 104, 106, 127, 132, 146, 166, 170, 172);
 	private List<Integer> possibleStations = new ArrayList<Integer>();
 	private List<Move> possibleMoves = new ArrayList<Move>();
-	private int taxiTicketsAvailable;
+	private int taxiTicketsAvailable; 
 	private int busTicketsAvailable; 
 	private int tubeTicketsAvailable;
 	private List<String> ticketsUsed = new ArrayList<String>();
@@ -77,7 +77,10 @@ public class MrX {
 			addToUsedTickets(move.getTicket());
 			removeTicket(move.getTicket());
 		}
-		findPossibleStationsAfterTicket(board, move.getTicket());
+		//Set the list of possible stations to current station only
+		List<Integer> possibleStations = new ArrayList<Integer>();
+		possibleStations.add(getCurrentStation());
+		setPossibleStations(possibleStations);
 		findPossibleMoves(board);	
 	}
 	

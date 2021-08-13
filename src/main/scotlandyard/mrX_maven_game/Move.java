@@ -21,12 +21,6 @@ public class Move {
 		this.destinationStation = destinationStation;
 		this.ticket = ticket;
 	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Move from " + startStation.getNameInt() + " to " + destinationStation.getNameInt() + " using " + ticket + "\n");
-		return sb.toString();
-	}
 	
 	public Station getStartStation() {
 		return startStation;
@@ -50,5 +44,11 @@ public class Move {
 
 	public void setTicket(String ticket) {
 		this.ticket = ticket;
+	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Move from " + startStation.getNameInt() + " to " + destinationStation.getNameInt() + " using " + ticket + "\n");
+		return sb.toString();
 	}
 }

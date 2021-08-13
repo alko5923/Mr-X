@@ -7,11 +7,12 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.rits.cloning.Cloner;
 
 import mrX_maven_utilities.DistancesFileParser;
 
 public class Board {
-	
+	private final Cloner cloner;
 	private static final String DISTANCES_FILE_NAME = "src/main/resources/seekers_distances.xml";
 	private List<List<Integer>> distances = new ArrayList<List<Integer>>();
 	private List<Station> stations = new ArrayList<Station>();
@@ -21,7 +22,7 @@ public class Board {
 	 * @return The initialized board. 
 	 * @throws FileNotFoundException
 	 */
-	public static Board initializeBoard() throws FileNotFoundException {
+	public static Board initializeBoard(Cloner cloner) throws FileNotFoundException {
 		Gson gson = new Gson();
 		JsonReader reader = new JsonReader(new FileReader("src/main/resources/stations.json"));
 		List<Station> stations = gson.fromJson(reader, new TypeToken<ArrayList<Station>>(){}.getType());
@@ -30,9 +31,7 @@ public class Board {
 		
 		DistancesFileParser parser = new DistancesFileParser(DISTANCES_FILE_NAME);
 		List<List<Integer>> distances = parser.getParsedData();
-		
-		return new Board(stations, distances);
-		
+		return new Board(stations, distances, cloner);
 	}
 	
 	/**
@@ -40,10 +39,15 @@ public class Board {
 	 * @param stations
 	 * @param distances
 	 */
-	private Board (List<Station> stations, List<List<Integer>> distances) {
+	private Board (List<Station> stations, List<List<Integer>> distances, Cloner cloner) {
 		this.setStations(stations);
 		this.setDistances(distances);
+		this.cloner = cloner;
 	}
+	
+	public List<Station> getDeepCloneOfStations() {
+        return cloner.deepClone(stations);
+    }
 	
 	
 	/**
@@ -66,7 +70,6 @@ public class Board {
 	 * @return The shortest distance between two stations, and 0 if the stations are the same station.
 	 */
 	public int returnShortestDistance(int position1, int position2) {
-		
 		if (position1 == position2) {	
 		    return 0;
 		} else { 
@@ -81,7 +84,6 @@ public class Board {
 	 * @return The distance between two different stations. 
 	 */
 	public int shortestDistanceBetweenDifferent(int position1, int position2) {
-		
 		int index1, index2;
 		if (position1 < position2) {
 			index1 = position1 - 1;

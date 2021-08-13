@@ -3,15 +3,14 @@ package mrX_maven_utilities;
 import java.util.ArrayList;
 import java.util.List;
 import com.rits.cloning.Cloner;
-
 import mrX_maven_game.Move;
 
 public class TreeNode<GameState> {
+	private final Cloner cloner;
 	private GameState gameState = null;
 	private TreeNode<GameState> parent = null;
 	private List<TreeNode<GameState>> children = new ArrayList<TreeNode<GameState>>();
     private double nodeEvaluation;
-    private final Cloner cloner;
     private List<Move> bestCombo = new ArrayList<Move>();
 
     public TreeNode(GameState gameState, Cloner cloner) {
@@ -86,7 +85,6 @@ public class TreeNode<GameState> {
     	for (int i = 0; i < this.getChildren().size(); i ++) {
     		sb.append(this.getChildren().get(i));
     	}
-    	
     	return sb.toString();
     }
 

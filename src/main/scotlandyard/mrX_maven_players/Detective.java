@@ -17,13 +17,13 @@ public class Detective {
 	private int startPosition;
 	private int currentPosition;
 	private List<Move> possibleMovesCurrentStation = new ArrayList<Move>();
-	private List<Move> moveList = new ArrayList<Move>();
 	private int taxiTicketsAvailable;
 	private int busTicketsAvailable;
 	private int tubeTicketsAvailable;
 	private List<Station> closestTubeStations;
 	private Station firstDestination;
 	private List<Move> bestMoves;
+	private static final int CUTOFF_PRUNE = 3;
 	
 	/**
 	 * The class constructor.
@@ -45,10 +45,30 @@ public class Detective {
 	}
 	
 	/**
-	 * Find all possible moves for detective from his current position. 
+	 * If the distance from detective to Mr. X is larger than a certain cutoff, 
+	 * and if move destination to current position of Mr. X is larger than the distance 
+	 * from detective's current position to Mr. X, return true. 
+	 * @param move
+	 * @param mrX
+	 * @return
+	 */
+	public boolean checkIfPruneMove(Board board, Move move, MrX mrX) {
+		int distMoveDestToMrX = board.returnShortestDistance(move.getDestinationStation().getNameInt(), mrX.getCurrentStation());
+		int distDetToMrX = board.returnShortestDistance(currentPosition, mrX.getCurrentStation());
+		boolean check = false;
+		if (distDetToMrX > CUTOFF_PRUNE && distMoveDestToMrX > distDetToMrX) {
+			check = true;
+		}
+		return check;
+	}
+
+	
+	/**
+	 * Find all possible moves for detective from his current position and prune them
+	 * if the distance of the detective to the current position of Mr. X is above a certain cutoff. 
 	 * @param board
 	 */
-	public void findPossibleMovesDetective(Board board) {
+	public void findAndPrunePossibleMovesDetective(Board board, MrX mrX) {
 		List<Move> possibleMoves = new ArrayList<Move>();
 		Station startStation = board.getStations().get(currentPosition-1);
 			
@@ -56,6 +76,12 @@ public class Detective {
 			Station destinationStation = board.getStations().get(startStation.getTaxiNeighbours().get(j)-1);
 			if (destinationStation.isOccupied()==false) {
 				Move move = new Move(startStation, destinationStation, "Taxi");
+				if (mrX.getCurrentStation() != 0) {
+					boolean check = checkIfPruneMove(board, move, mrX);
+					if (check == true) {
+						continue;
+					}
+				}
 				possibleMoves.add(move);
 			}
 		}
@@ -96,20 +122,27 @@ public class Detective {
 	
 	
 	/** 
-	 * Move the detective.
+	 * Move the detective and remove the newly occupied station 
+	 * from the list of possible Mr. X stations. 
 	 * @param detective
 	 * @param move
 	 */
-	public boolean moveDetective(Move move, Board board) {
+	public boolean moveDetective(Board board, Move move, MrX mrX) {
 		Station destinationStation = move.getDestinationStation();
+		List<Integer> possibleStationsMrX = mrX.getPossibleStations();
+		List<Integer> stationsToRemove = new ArrayList<Integer>();
+		
 		if (destinationStation.isOccupied() == false) {
 			board.occupyAndUnoccupyRelevantStation(move);
 			handleStatisticsDetective(move);	
 			setCurrentPosition(destinationStation.getNameInt());
-			//findPossibleMovesDetective(board);
-			//TODO!! possibleMrXstations.remove(Integer.valueOf(destinationStation.getNameInt()));
+			stationsToRemove.add(destinationStation.getNameInt());
 			return true;
 		}
+		possibleStationsMrX.removeAll(stationsToRemove);
+		mrX.setPossibleStations(possibleStationsMrX);
+		
+		
 		return false;
 	}
 	
@@ -121,17 +154,13 @@ public class Detective {
 	public void handleStatisticsDetective(Move bestMove) {
 		if(bestMove.getTicket().equals("Taxi")) {
 			removeDetectiveTaxiTicket();
-			//TODO!! mrX.addTaxiTicket();
 		}
 		else if(bestMove.getTicket().equals("Bus")) {
 			removeDetectiveBusTicket();
-			//TODO!! mrX.addBusTicket();
 		}
 		else if(bestMove.getTicket().equals("Tube")) {
 			removeDetectiveTubeTicket();
-			//TODO!! mrX.addTubeTicket();
 		}
-		getMoveList().add(bestMove);
 	}
 	
 	/** 
@@ -183,10 +212,6 @@ public class Detective {
 		this.possibleMovesCurrentStation = possibleMovesCurrentStation;
 	}
 	
-	public List<Move> getMoveList() {
-		return moveList;
-	}
-	
 	public int getTaxiTicketsAvailable() {
 		return taxiTicketsAvailable;
 	}
@@ -224,19 +249,12 @@ public class Detective {
 	}
 	
 public String toString() {
-		
 		StringBuilder sb = new StringBuilder();
 		sb.append("---------------------------------\n");
 		sb.append("DETECTIVE nr. " + number + " = " + name + "\n");
 		sb.append("---------------------------------\n");
 		sb.append("Start position: " + startPosition + "\n");
 		sb.append("Current position: " + currentPosition + "\n");
-		sb.append("Move list: [ ");
-		for (int i = 0; i < moveList.size(); i+=1 ) {
-			sb.append(moveList.get(i).toString());
-			sb.append(", ");
-		}
-		sb.append(" ]\n");
 		sb.append("Possible move list from current station: [ ");
 		for (int i = 0; i < possibleMovesCurrentStation.size(); i+=1 ) {
 			sb.append(possibleMovesCurrentStation.get(i).toString());
