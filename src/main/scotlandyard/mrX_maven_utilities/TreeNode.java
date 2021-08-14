@@ -5,53 +5,53 @@ import java.util.List;
 import com.rits.cloning.Cloner;
 import mrX_maven_game.Move;
 
-public class TreeNode<GameState> {
+public class TreeNode<CoordinatePlayers> {
 	private final Cloner cloner;
-	private GameState gameState = null;
-	private TreeNode<GameState> parent = null;
-	private List<TreeNode<GameState>> children = new ArrayList<TreeNode<GameState>>();
+	private CoordinatePlayers coordinator = null;
+	private TreeNode<CoordinatePlayers> parent = null;
+	private List<TreeNode<CoordinatePlayers>> children = new ArrayList<TreeNode<CoordinatePlayers>>();
     private double nodeEvaluation;
     private List<Move> bestCombo = new ArrayList<Move>();
 
-    public TreeNode(GameState gameState, Cloner cloner) {
-        this.gameState = gameState;
+    public TreeNode(CoordinatePlayers coordinator, Cloner cloner) {
+        this.coordinator = coordinator;
         this.cloner = cloner;
     }
 
-    public void addChild(TreeNode<GameState> child) {
+    public void addChild(TreeNode<CoordinatePlayers> child) {
         child.setParent(this);
         this.children.add(child);
     }
 
-    public void addChild(GameState hunter) {
-        TreeNode<GameState> newChild = new TreeNode<GameState>(hunter, cloner);
+    public void addChild(CoordinatePlayers coordinator) {
+        TreeNode<CoordinatePlayers> newChild = new TreeNode<CoordinatePlayers>(coordinator, cloner);
         this.addChild(newChild);
     }
 
-    public void addChildren(List<TreeNode<GameState>> children) {
-        for(TreeNode<GameState> t : children) {
+    public void addChildren(List<TreeNode<CoordinatePlayers>> children) {
+        for(TreeNode<CoordinatePlayers> t : children) {
             t.setParent(this);
         }
         this.children.addAll(children);
     }
 
-    public List<TreeNode<GameState>> getChildren() {
+    public List<TreeNode<CoordinatePlayers>> getChildren() {
         return children;
     }
 
-    public GameState getData() {
-        return gameState;
+    public CoordinatePlayers getData() {
+        return coordinator;
     }
 
-    public void setData(GameState gameState) {
-        this.gameState = gameState;
+    public void setData(CoordinatePlayers coordinator) {
+        this.coordinator = coordinator;
     }
 
-    private void setParent(TreeNode<GameState> parent) {
+    private void setParent(TreeNode<CoordinatePlayers> parent) {
         this.parent = parent;
     }
 
-    public TreeNode<GameState> getParent() {
+    public TreeNode<CoordinatePlayers> getParent() {
         return parent;
     }
     
@@ -63,8 +63,8 @@ public class TreeNode<GameState> {
 		this.nodeEvaluation = nodeEvaluation;
 	}
 	
-	public GameState getDeepCloneOfRepresentedState() {
-        return cloner.deepClone(gameState);
+	public CoordinatePlayers getDeepCloneOfRepresentedState() {
+        return cloner.deepClone(coordinator);
     }
 	
 	public List<Move> getBestCombo() {

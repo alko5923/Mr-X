@@ -1,6 +1,7 @@
 package mrX_maven_strategies;
 
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -8,28 +9,41 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import com.google.common.collect.Lists;
-import mrX_maven_game.Board;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+
 import mrX_maven_game.Move;
 import mrX_maven_game.Station;
 import mrX_maven_players.Detective;
 import mrX_maven_players.MrX;
+import mrX_maven_utilities.DistancesFileParser;
 
 public class CoordinatePlayers {
-	
 	private static Scanner sc = new Scanner(System.in);
-	private Board board;
 	private static List<Integer> possibleStartingStationsDetectives = Arrays.asList(13, 26, 29, 34, 50, 53, 91, 94, 103, 112, 117, 123, 138, 141, 155, 174);
 	private List<Detective> detectives = new ArrayList<Detective>();
 	private MrX mrX;
 	private List<List<Move>> allPossibleMoveCombosDetectives = new ArrayList<List<Move>>();
 	private List<Move> bestCombo = new ArrayList<Move>();
 	private static final int CUTOFF_DETECTIVE_COMBOS = 300;
+	private List<Move> bestDetectiveMoves = new ArrayList<Move>();
+	private List<List<Integer>> distances = new ArrayList<List<Integer>>();
+	private List<Station> stations = new ArrayList<Station>();
+	private static final String DISTANCES_FILE_NAME = "src/main/resources/seekers_distances.xml";
 	
-	
-	public static CoordinatePlayers initializeCoordinator(Board board) throws FileNotFoundException {
-		List<Detective> detectives = setupDetectives(board);
+	/**
+	 * Initialize the coordinator. 
+	 * @param board
+	 * @return
+	 * @throws FileNotFoundException
+	 */
+	public static CoordinatePlayers initializeCoordinator() throws FileNotFoundException {
+		List<Station> stations = loadStations();
+		List<List<Integer>> distances = loadDistances();
+		List<Detective> detectives = setupDetectives(stations);
 		MrX mrX = new MrX(4, 3, 3);
-		return new CoordinatePlayers(board, detectives, mrX);
+		return new CoordinatePlayers(stations, distances, detectives, mrX);
 	}
 	
 	/**
@@ -37,12 +51,41 @@ public class CoordinatePlayers {
 	 * @param board
 	 * @throws FileNotFoundException
 	 */
-	public CoordinatePlayers(Board board, List<Detective> detectives, MrX mrX) {		
-		this.setBoard(board);
+	public CoordinatePlayers(List<Station> stations, List<List<Integer>> distances, List<Detective> detectives, MrX mrX) {
+		this.setStations(stations);
+		this.setDistances(distances);
 		this.setDetectives(detectives);
 		this.setMrX(mrX);
 	}
-		
+	
+	private static List<Station> loadStations() throws FileNotFoundException {
+		Gson gson = new Gson();
+		JsonReader reader = new JsonReader(new FileReader("src/main/resources/stations.json"));
+		List<Station> stations = gson.fromJson(reader, new TypeToken<ArrayList<Station>>(){}.getType());
+		stations.remove(0);
+		evaluateStations(stations);
+		return stations;
+	}
+	
+	private static List<List<Integer>> loadDistances() {
+		DistancesFileParser parser = new DistancesFileParser(DISTANCES_FILE_NAME);
+		List<List<Integer>> distances = parser.getParsedData();
+		return distances;
+	}
+	
+	/**
+	* A simple evaluation method for the stations, based on the number and the type of connections from them.
+	* @param stations
+	*/
+	public static void evaluateStations(List<Station> stations) {
+			
+		for (int i = 0; i < stations.size(); i++) {
+			Station station = stations.get(i);
+			int value = station.getNumberTaxiConnections()*10 + station.getNumberBusConnections()*20 + station.getNumberTubeConnections()*40;
+			station.setValue(value);
+		}
+	}
+	
 	/** 
 	 * Sets the first tube destination for all detectives.
 	 * @param closestTubeStations
@@ -61,7 +104,7 @@ public class CoordinatePlayers {
 	 * Sets up the detectives, including their number and names.
 	 * @return	The list of detectives. 
 	 */
-	public static List<Detective> setupDetectives(Board board) {
+	public static List<Detective> setupDetectives(List<Station> stations) {
 		List<Detective> detectives = new ArrayList<Detective>();
 		while(true) {
 			System.out.println("Please enter the number of detectives: ");
@@ -83,7 +126,7 @@ public class CoordinatePlayers {
 								Detective detective = new Detective(number, nameDetective, startPos, 10, 8, 4);
 								detective.setCurrentPosition(startPos);
 								detectives.add(detective);
-								board.getStations().get(startPos-1).occupyStation();
+								stations.get(startPos-1).occupyStation();
 								break;
 							}
 							System.out.println("That is not a valid starting position!");
@@ -106,17 +149,17 @@ public class CoordinatePlayers {
 			if(det.getBestMoves()!=null) {
 				bestMoves = det.getBestMoves();
 			}
-			det.findAndPrunePossibleMovesDetective(board, mrX);
+			det.findAndPrunePossibleMovesDetective(this, mrX);
 			for (Move move : det.getPossibleMovesCurrentStation()) {
-				boolean checkIfMoveRightDirection = det.checkIfDetectiveMovesTowardsDestination(board, move, det.getFirstDestination());
+				boolean checkIfMoveRightDirection = det.checkIfDetectiveMovesTowardsDestination(this, move, det.getFirstDestination());
 				//In case the detective starts at a tube station, we first want to just move him away one taxi station, to any station, and then back. 
-				if(step == 1 && board.getStations().get(det.getStartPosition()-1).getStationType().equals("Tube") && move.getTicket().equals("Taxi")) {
+				if(step == 1 && getStations().get(det.getStartPosition()-1).getStationType().equals("Tube") && move.getTicket().equals("Taxi")) {
 					bestMoves.add(move);
 					det.setBestMoves(bestMoves);
 					break;
 				}
 				//In case the first move already takes us to the destination, we want to just make any move away from it
-				if(step == 2 && board.getStations().get(det.getCurrentPosition()-1).getStationType().equals("Tube")) {
+				if(step == 2 && getStations().get(det.getCurrentPosition()-1).getStationType().equals("Tube")) {
 					bestMoves.add(move);
 					det.setBestMoves(bestMoves);
 					break;
@@ -240,7 +283,6 @@ public class CoordinatePlayers {
 		return allCombosCleanedUp;
 	}
 	
-	
 	/**
 	 * Coordinates the possible moves for every detective. 
 	 * @return	A list of lists of coordinated moves.
@@ -287,7 +329,7 @@ public class CoordinatePlayers {
 	 */
 	private void findPossibleMovesAllDetectives() {
 		for (Detective det : detectives) {
-			det.findAndPrunePossibleMovesDetective(board, mrX);
+			det.findAndPrunePossibleMovesDetective(this, mrX);
 		}
 	}
 	
@@ -301,7 +343,7 @@ public class CoordinatePlayers {
 		List<Station> coordinatedClosestStations = new ArrayList<Station>();
 		
 		for (int stationName : coordinatedClosestStationNames) {	
-			Station station = board.getStations().get(stationName-1);
+			Station station = getStations().get(stationName-1);
 			coordinatedClosestStations.add(station);
 		}
 		return coordinatedClosestStations;
@@ -320,7 +362,7 @@ public class CoordinatePlayers {
 			List<Tuple> stationsWithDistances = new ArrayList<Tuple>(); 
 			
 			for (int station : tubeStations) {	
-				int distance = board.returnShortestDistance(station, det.getCurrentPosition());
+				int distance = returnShortestDistance(station, det.getCurrentPosition());
 				Tuple tuple = new Tuple(station, distance);
 				stationsWithDistances.add(tuple);
 			}
@@ -330,7 +372,7 @@ public class CoordinatePlayers {
 			//Extract the stations from the set
 			for (Tuple t : stationsWithDistances) {
 				int station = t.getStation();
-				Station newStation = board.getStations().get(station-1);
+				Station newStation = getStations().get(station-1);
 				closestTubeStations.add(newStation);
 			}
 			
@@ -347,8 +389,33 @@ public class CoordinatePlayers {
 		 for (int i = 0; i < combo.size(); i++) {
 			 Detective det = detectives.get(i);
 			 Move move = combo.get(i);
-			 det.moveDetective(board, move, mrX);
+			 moveDetective(det, move, mrX);
 		 }
+	}
+	
+	/** 
+	 * Move the detective and remove the newly occupied station 
+	 * from the list of possible Mr. X stations. 
+	 * @param detective
+	 * @param move
+	 */
+	public boolean moveDetective(Detective det, Move move, MrX mrX) {
+		Station destinationStation = move.getDestinationStation();
+		List<Integer> possibleStationsMrX = mrX.getPossibleStations();
+		List<Integer> stationsToRemove = new ArrayList<Integer>();
+		
+		if (destinationStation.isOccupied() == false) {
+			occupyAndUnoccupyRelevantStation(move);
+			det.handleStatisticsDetective(move);	
+			det.setCurrentPosition(destinationStation.getNameInt());
+			stationsToRemove.add(destinationStation.getNameInt());
+			return true;
+		}
+		possibleStationsMrX.removeAll(stationsToRemove);
+		mrX.setPossibleStations(possibleStationsMrX);
+		
+		
+		return false;
 	}
 	
 	/** 
@@ -381,7 +448,7 @@ public class CoordinatePlayers {
 		int nrDetectives = detectives.size();
 		
 		for (Move move : combo) {
-			int dist = board.returnShortestDistance(move.getDestinationStation().getNameInt(), mrX.getCurrentStation());
+			int dist = returnShortestDistance(move.getDestinationStation().getNameInt(), mrX.getCurrentStation());
 			averageDistance += dist;
 		}
 		averageDistance = averageDistance / nrDetectives;
@@ -398,21 +465,58 @@ public class CoordinatePlayers {
 		int nrDetectives = detectives.size();
 		
 		for (Detective det : detectives) {
-			int dist = board.returnShortestDistance(det.getCurrentPosition(), mrX.getCurrentStation());	
+			int dist = returnShortestDistance(det.getCurrentPosition(), mrX.getCurrentStation());	
 			averageDistance += dist;
 		}
 		averageDistance = averageDistance / nrDetectives;
 		return averageDistance;
 	}
 	
-	public Board getBoard() {
-		return board;	
-	}
-
-	public void setBoard(Board board) {
-		this.board = board;
+	/**
+	 * Calculates the shortest distance between two stations, and returns 0 if the stations are the same station.
+	 * @param position1
+	 * @param position2
+	 * @return The shortest distance between two stations, and 0 if the stations are the same station.
+	 */
+	public int returnShortestDistance(int position1, int position2) {
+		if (position1 == position2) {	
+		    return 0;
+		} else { 
+			 return shortestDistanceBetweenDifferent(position1, position2);
+		}
 	}
 	
+	/**
+	 * Calculates the shortest distance between two different stations.
+	 * @param position1
+	 * @param position2
+	 * @return The distance between two different stations. 
+	 */
+	public int shortestDistanceBetweenDifferent(int position1, int position2) {
+		int index1, index2;
+		if (position1 < position2) {
+			index1 = position1 - 1;
+	        index2 = (position2 - position1) - 1;
+		} else {
+			index1 = position2 - 1;
+	        index2 = (position1 - position2) - 1;
+		}
+		return getDistances().get(index1).get(index2);
+	}
+	
+	/**
+	 * Changes the occupation status of both the station from which the detective has moved,
+	 * as well as the station to which the detective has moved. 
+	 * @param currentPosition
+	 * @param newPosition
+	 */
+	public void occupyAndUnoccupyRelevantStation(Move bestMove) {
+		Station currentLocation = getStations().get(bestMove.getStartStation().getNameInt()-1);
+		Station newLocation = getStations().get(bestMove.getDestinationStation().getNameInt()-1);
+		currentLocation.unoccupyStation();
+		newLocation.occupyStation();
+	}
+		
 	public List<Detective> getDetectives() {
 		return detectives;
 	}
@@ -445,10 +549,36 @@ public class CoordinatePlayers {
 		this.bestCombo = bestCombo;
 	}
 	
+	public List<Move> getBestDetectiveMoves() {
+		return bestDetectiveMoves;
+	}
+
+	public void setBestDetectiveMoves(List<Move> bestDetectiveMoves) {
+		this.bestDetectiveMoves = bestDetectiveMoves;
+	}
+
+	public List<Station> getStations() {
+		return stations;
+	}
+
+	public void setStations(List<Station> stations) {
+		this.stations = stations;
+	}
+
+	public List<List<Integer>> getDistances() {
+		return distances;
+	}
+
+	public void setDistances(List<List<Integer>> distances) {
+		this.distances = distances;
+	}
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(detectives.toString());
 		sb.append(mrX.toString());
 		return sb.toString();
 	}
+
+	
 }

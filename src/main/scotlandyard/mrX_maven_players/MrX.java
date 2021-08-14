@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
-import mrX_maven_game.Board;
 import mrX_maven_game.Move;
 import mrX_maven_game.Station;
 
@@ -70,7 +68,7 @@ public class MrX {
 	* Simulate Mr. X making a move, and update possible stations and moves list afterwards. 
 	* @param move
 	*/
-	public void simulateMove(Move move, Board board) {
+	public void simulateMove(Move move, List<Station> stations) {
 		setCurrentStation(move.getDestinationStation().getNameInt());
 		if (move.getTicket().equals("Taxi") && getAvailableTaxi() > 0 || move.getTicket().equals("Bus") && 
 			getAvailableBus() > 0 || move.getTicket().equals("Tube") && getAvailableTube() > 0) {
@@ -81,23 +79,23 @@ public class MrX {
 		List<Integer> possibleStations = new ArrayList<Integer>();
 		possibleStations.add(getCurrentStation());
 		setPossibleStations(possibleStations);
-		findPossibleMoves(board);	
+		findPossibleMoves(stations);	
 	}
 	
 	/**
 	 * Find all possible stations where Mr. X could be located after using a certain type of ticket.
 	 * @param ticketUsed
 	 */
-	public void findPossibleStationsAfterTicket(Board board, String ticketUsed) {
+	public void findPossibleStationsAfterTicket(String ticketUsed, List<Station> stations) {
 		//Loop through the list of possible Mr. X stations
 		//every station that can be reached with the ticketUsed and that is not occupied, 
 		//add it to the list of new possible Mr. X stations.
 		List<Integer> possibleStations = new ArrayList<Integer>();
 		if (ticketUsed.equals("Taxi")) {
 			for (int i = 0; i < getPossibleStations().size(); i++) {
-				Station startStation = board.getStations().get(getPossibleStations().get(i)-1);
+				Station startStation = stations.get(getPossibleStations().get(i)-1);
 				for (int j = 0; j < startStation.getNumberTaxiConnections(); j++) {	
-					Station destinationStation = board.getStations().get(startStation.getTaxiNeighbours().get(j)-1);
+					Station destinationStation = stations.get(startStation.getTaxiNeighbours().get(j)-1);
 					if (destinationStation.isOccupied()==false && possibleStations.contains(destinationStation.getNameInt())==false) {	
 						possibleStations.add(destinationStation.getNameInt());	
 					}
@@ -105,9 +103,9 @@ public class MrX {
 			}
 		} else if (ticketUsed.equals("Bus")) {
 			for (int i = 0; i < getPossibleStations().size(); i++) {
-				Station startStation = board.getStations().get(getPossibleStations().get(i)-1);
+				Station startStation = stations.get(getPossibleStations().get(i)-1);
 				for (int j = 0; j < startStation.getNumberBusConnections(); j++) {
-					Station destinationStation = board.getStations().get(startStation.getBusNeighbours().get(j)-1);
+					Station destinationStation = stations.get(startStation.getBusNeighbours().get(j)-1);
 					if (destinationStation.isOccupied()==false) {
 						possibleStations.add(destinationStation.getNameInt());
 					}
@@ -115,9 +113,9 @@ public class MrX {
 			}	
 		} else if (ticketUsed.equals("Tube")) {
 			for (int i = 0; i < getPossibleStations().size(); i++) {
-				Station startStation = board.getStations().get(getPossibleStations().get(i)-1);
+				Station startStation = stations.get(getPossibleStations().get(i)-1);
 				for (int j = 0; j < startStation.getNumberTubeConnections(); j++) {
-					Station destinationStation = board.getStations().get(startStation.getTubeNeighbours().get(j)-1);
+					Station destinationStation = stations.get(startStation.getTubeNeighbours().get(j)-1);
 					if (destinationStation.isOccupied()==false) {
 						possibleStations.add(destinationStation.getNameInt());
 					}
@@ -134,16 +132,16 @@ public class MrX {
 	* @param step
 	* @param board
 	*/
-	public void findPossibleMoves (Board board) {
+	public void findPossibleMoves (List<Station> stations) {
 		//Loop through all possible stations
 		//Check all possible moves from them and add them to the list of possible moves
 		List<Move> possibleMoves = new ArrayList<Move>();
 			for(int i = 0; i < getPossibleStations().size(); i++) {			
-				Station startStation = board.getStations().get(getPossibleStations().get(i)-1);
+				Station startStation = stations.get(getPossibleStations().get(i)-1);
 				//A move gets added if Mr. X has the right ticket and if the destination station is not occupied
 				for(int j = 0; j < startStation.getNumberTaxiConnections(); j++) {
 						if (getAvailableTaxi() > 0) {
-							Station destinationStation = board.getStations().get(startStation.getTaxiNeighbours().get(j)-1);
+							Station destinationStation = stations.get(startStation.getTaxiNeighbours().get(j)-1);
 							if (destinationStation.isOccupied()==false) {
 								Move possibleMove = new Move(startStation, destinationStation, "Taxi");
 								possibleMoves.add(possibleMove);
@@ -152,7 +150,7 @@ public class MrX {
 				}
 				for(int j = 0; j < startStation.getNumberBusConnections(); j++) {
 						if (getAvailableBus() > 0) {
-							Station destinationStation = board.getStations().get(startStation.getBusNeighbours().get(j)-1);
+							Station destinationStation = stations.get(startStation.getBusNeighbours().get(j)-1);
 							if (destinationStation.isOccupied()==false) {
 								Move possibleMove = new Move(startStation, destinationStation, "Bus");
 								possibleMoves.add(possibleMove);
@@ -161,7 +159,7 @@ public class MrX {
 				}
 				for(int j = 0; j < startStation.getNumberTubeConnections(); j++) {
 						if (getAvailableBus() > 0) {
-							Station destinationStation = board.getStations().get(startStation.getTubeNeighbours().get(j)-1);
+							Station destinationStation = stations.get(startStation.getTubeNeighbours().get(j)-1);
 							if (destinationStation.isOccupied()==false) {
 								Move possibleMove = new Move(startStation, destinationStation, "Tube");
 								possibleMoves.add(possibleMove);

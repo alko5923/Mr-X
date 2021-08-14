@@ -1,10 +1,9 @@
 package mrX_maven_players;
 
 import java.util.*;
-
-import mrX_maven_game.Board;
 import mrX_maven_game.Move;
 import mrX_maven_game.Station;
+import mrX_maven_strategies.CoordinatePlayers;
 
 /**This class represents a detective.
  * 
@@ -52,9 +51,9 @@ public class Detective {
 	 * @param mrX
 	 * @return
 	 */
-	public boolean checkIfPruneMove(Board board, Move move, MrX mrX) {
-		int distMoveDestToMrX = board.returnShortestDistance(move.getDestinationStation().getNameInt(), mrX.getCurrentStation());
-		int distDetToMrX = board.returnShortestDistance(currentPosition, mrX.getCurrentStation());
+	public boolean checkIfPruneMove(CoordinatePlayers coordinator, Move move, MrX mrX) {
+		int distMoveDestToMrX = coordinator.returnShortestDistance(move.getDestinationStation().getNameInt(), mrX.getCurrentStation());
+		int distDetToMrX = coordinator.returnShortestDistance(currentPosition, mrX.getCurrentStation());
 		boolean check = false;
 		if (distDetToMrX > CUTOFF_PRUNE && distMoveDestToMrX > distDetToMrX) {
 			check = true;
@@ -68,16 +67,16 @@ public class Detective {
 	 * if the distance of the detective to the current position of Mr. X is above a certain cutoff. 
 	 * @param board
 	 */
-	public void findAndPrunePossibleMovesDetective(Board board, MrX mrX) {
+	public void findAndPrunePossibleMovesDetective(CoordinatePlayers coordinator, MrX mrX) {
 		List<Move> possibleMoves = new ArrayList<Move>();
-		Station startStation = board.getStations().get(currentPosition-1);
+		Station startStation = coordinator.getStations().get(currentPosition-1);
 			
 		for (int j = 0; j < startStation.getNumberTaxiConnections(); j++) {
-			Station destinationStation = board.getStations().get(startStation.getTaxiNeighbours().get(j)-1);
+			Station destinationStation = coordinator.getStations().get(startStation.getTaxiNeighbours().get(j)-1);
 			if (destinationStation.isOccupied()==false) {
 				Move move = new Move(startStation, destinationStation, "Taxi");
 				if (mrX.getCurrentStation() != 0) {
-					boolean check = checkIfPruneMove(board, move, mrX);
+					boolean check = checkIfPruneMove(coordinator, move, mrX);
 					if (check == true) {
 						continue;
 					}
@@ -86,14 +85,14 @@ public class Detective {
 			}
 		}
 		for (int j = 0; j < startStation.getNumberBusConnections(); j++) {
-			Station destinationStation = board.getStations().get(startStation.getBusNeighbours().get(j)-1);
+			Station destinationStation = coordinator.getStations().get(startStation.getBusNeighbours().get(j)-1);
 			if (destinationStation.isOccupied()==false) {
 				Move move = new Move(startStation, destinationStation, "Bus");
 				possibleMoves.add(move);
 			}
 		}
 		for (int j = 0; j < startStation.getNumberTubeConnections(); j++) {
-			Station destinationStation = board.getStations().get(startStation.getTubeNeighbours().get(j)-1);
+			Station destinationStation = coordinator.getStations().get(startStation.getTubeNeighbours().get(j)-1);
 			if (destinationStation.isOccupied()==false) {
 				Move move = new Move(startStation, destinationStation, "Tube");
 				possibleMoves.add(move);
@@ -111,38 +110,12 @@ public class Detective {
 	 * @param destination
 	 * @return
 	 */
-	public boolean checkIfDetectiveMovesTowardsDestination(Board board, Move move, Station destination) {
-		int distanceToDest = board.returnShortestDistance(currentPosition, destination.getNameInt());
-		int distanceFromMoveDestToDest = board.returnShortestDistance(move.getDestinationStation().getNameInt(), destination.getNameInt());
+	public boolean checkIfDetectiveMovesTowardsDestination(CoordinatePlayers coordinator, Move move, Station destination) {
+		int distanceToDest = coordinator.returnShortestDistance(currentPosition, destination.getNameInt());
+		int distanceFromMoveDestToDest = coordinator.returnShortestDistance(move.getDestinationStation().getNameInt(), destination.getNameInt());
 		if (distanceFromMoveDestToDest < distanceToDest) {
 			return true;
 		}
-		return false;
-	}
-	
-	
-	/** 
-	 * Move the detective and remove the newly occupied station 
-	 * from the list of possible Mr. X stations. 
-	 * @param detective
-	 * @param move
-	 */
-	public boolean moveDetective(Board board, Move move, MrX mrX) {
-		Station destinationStation = move.getDestinationStation();
-		List<Integer> possibleStationsMrX = mrX.getPossibleStations();
-		List<Integer> stationsToRemove = new ArrayList<Integer>();
-		
-		if (destinationStation.isOccupied() == false) {
-			board.occupyAndUnoccupyRelevantStation(move);
-			handleStatisticsDetective(move);	
-			setCurrentPosition(destinationStation.getNameInt());
-			stationsToRemove.add(destinationStation.getNameInt());
-			return true;
-		}
-		possibleStationsMrX.removeAll(stationsToRemove);
-		mrX.setPossibleStations(possibleStationsMrX);
-		
-		
 		return false;
 	}
 	
