@@ -31,28 +31,26 @@ public class Hunt {
 		
 		System.out.println("Welcome to The Hunt for Mr X, the codebreaker for the game Scotland Yard!\n");
 		
-		Cloner cloner = new Cloner();
-		
-		GameState gameState = setupFullGame(cloner);
+		GameState gameState = setupFullGame();
 			
 		for(int step = 1; step < steps+1; step++) {
 			System.out.println(" ***** MOVE NR. " + (step) + " *****\n");	
-			playOneRound(step, gameState, cloner);	
+			playOneRound(step, gameState);	
 		}
 	}
 	
 	/**
 	 * Set up the full game.
 	 */
-	public static GameState setupFullGame(Cloner cloner) throws FileNotFoundException {
+	public static GameState setupFullGame() throws FileNotFoundException {
 		
-		Board board = Board.initializeBoard(cloner);
+		Board board = Board.initializeBoard();
 		CoordinatePlayers coordinator = CoordinatePlayers.initializeCoordinator(board);
 		GameState gameState = new GameState(coordinator);
 		return gameState;
 	}
 	
-	public static void playOneRound(int step, GameState gameState, Cloner cloner) {
+	public static void playOneRound(int step, GameState gameState) {
 		
 		if (step == 1) {
 			//Initialize possible stations for Mr.X
@@ -72,6 +70,7 @@ public class Hunt {
 			
 			//Extract and set the best combo
 			List<Move> bestCombo = gameState.getCoordinator().extractAndSetBestCombo();
+			gameState.setBestDetMoves(bestCombo);
 			
 			//Execute the combo
 			gameState.getCoordinator().executeCombo(bestCombo);
@@ -80,10 +79,7 @@ public class Hunt {
 			gameState.getCoordinator().getMrX().handleTickets(gameState.getCoordinator().getDetectives());
 			
 			//Find all possible detective move combos
-			gameState.getCoordinator().generatePrunedDetectiveCombos();
-			
-			//Print out game state
-			System.out.println(gameState);
+			gameState.getCoordinator().generateAllMeaningfulMoveCombosDetectives();
 			
 			//Give instructions to the user
 			for (Detective det : gameState.getCoordinator().getDetectives()) {
@@ -99,9 +95,11 @@ public class Hunt {
 			
 			//Extract and set the best combo
 			List<Move> bestCombo = gameState.getCoordinator().extractAndSetBestCombo();
+			gameState.setBestDetMoves(bestCombo);
 			
 			//Execute the combo
 			gameState.getCoordinator().executeCombo(bestCombo);
+			
 			
 			//Handle new tickets for Mr. X
 			gameState.getCoordinator().getMrX().handleTickets(gameState.getCoordinator().getDetectives());
@@ -113,10 +111,7 @@ public class Hunt {
 			}
 			
 			//Find all possible detective move combos
-			gameState.getCoordinator().generatePrunedDetectiveCombos();
-			
-			//Print out game state
-			System.out.println(gameState);
+			gameState.getCoordinator().generateAllMeaningfulMoveCombosDetectives();
 			
 			//Give instructions to the user
 			for (Detective det : gameState.getCoordinator().getDetectives()) {
@@ -142,19 +137,16 @@ public class Hunt {
 			gameState.getCoordinator().getMrX().findPossibleMoves(gameState.getCoordinator().getBoard());
 			
 			//Find all possible detective move combos
-			gameState.getCoordinator().generatePrunedDetectiveCombos();
+			gameState.getCoordinator().generateAllMeaningfulMoveCombosDetectives();
 			
 			//Perform tree search
-			TreeNode<GameState> rootNode = treeSearch(gameState, cloner);
+			TreeNode<GameState> rootNode = treeSearch(gameState);
 			
 			//Execute best moves
 			executeBestMoves(rootNode);	
 			
 			//Handle new tickets for Mr. X
 			gameState.getCoordinator().getMrX().handleTickets(gameState.getCoordinator().getDetectives());
-			
-			//Print out game state
-			System.out.println(gameState);
 			
 			//Give instructions to the user
 			for (Detective det : gameState.getCoordinator().getDetectives()) {
@@ -164,32 +156,32 @@ public class Hunt {
 		}
 	}
 	
-	private static TreeNode<GameState> treeSearch(GameState gameState, Cloner cloner) {
-		//Clone Hunter
+	private static TreeNode<GameState> treeSearch(GameState gameState) {
+		//Clone game state
+		Cloner cloner = new Cloner();
 		TreeNode<GameState> rootNode = new TreeNode<GameState>(gameState, cloner);
-		List<Station> stations = rootNode.getData().getCoordinator().getBoard().getDeepCloneOfStations();
 		double bestScore = Double.POSITIVE_INFINITY;
 		
-		//Start making moves on the cloned state, thus simulating moves of Mr. X and detectives
-		for (int i = 0; i < gameState.getCoordinator().getAllPossibleMoveCombosDetectives().size(); i++) {
-			List<Move> moveCombo = gameState.getCoordinator().getAllPossibleMoveCombosDetectives().get(i);
+		//Start making moves on the cloned state, thus simulating moves of detectives and Mr. X
+		for (int i = 0; i < rootNode.getData().getCoordinator().getAllMeaningfulMoveCombosDetectives().size(); i++) {
+			List<Move> moveCombo = rootNode.getData().getCoordinator().getAllMeaningfulMoveCombosDetectives().get(i);
 			GameState clonedState = rootNode.getDeepCloneOfRepresentedState();
-			
-			clonedState.getCoordinator().getBoard().setStations(stations);
 			clonedState.getCoordinator().executeCombo(moveCombo);
-			clonedState.getCoordinator().generatePrunedDetectiveCombos();
+			clonedState.getCoordinator().generateAllMeaningfulMoveCombosDetectives();
 			TreeNode<GameState> newNode = new TreeNode<GameState>(clonedState, cloner);
 			rootNode.addChild(newNode);
 			double score = clonedState.miniMax(0, true, newNode, cloner, moveCombo);
 		
 			if (score < bestScore) {
 				bestScore = score;
-				rootNode.setBestCombo(clonedState.getCoordinator().getBestCombo());
+				rootNode.setBestCombo(moveCombo);
+				gameState.setBestDetMoves(moveCombo);
 			}
 			rootNode.setNodeEvaluation(bestScore);
 		}
 		
 		setBestMoves(rootNode);
+		
 		
 		return rootNode;
 	}

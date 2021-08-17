@@ -8,6 +8,7 @@ import java.util.Scanner;
 import mrX_maven_game.Board;
 import mrX_maven_game.Move;
 import mrX_maven_game.Station;
+import mrX_maven_utilities.TreeNodeMrX;
 
 /**
  * This class represents Mr. X, the villain of the game.
@@ -18,6 +19,7 @@ public class MrX {
 	private static Scanner sc = new Scanner(System.in);
 	private List<Integer> possibleStartingStationsMrX = Arrays.asList(35, 45, 51, 71, 78, 104, 106, 127, 132, 146, 166, 170, 172);
 	private List<Integer> possibleStations = new ArrayList<Integer>();
+	private TreeNodeMrX<Station> possibleStationsNode;
 	private List<Move> possibleMoves = new ArrayList<Move>();
 	private int taxiTicketsAvailable; 
 	private int busTicketsAvailable; 
@@ -288,6 +290,14 @@ public class MrX {
 		this.possibleMoves = possibleMoves;
 	}
 	
+	public TreeNodeMrX<Station> getPossibleStationsNode() {
+		return possibleStationsNode;
+	}
+
+	public void setPossibleStationsNode(TreeNodeMrX<Station> possibleStationsNode) {
+		this.possibleStationsNode = possibleStationsNode;
+	}
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("---------------------------------\n");
@@ -306,4 +316,5 @@ public class MrX {
 		sb.append("Current station = " + currentStation + "\n");		
 		return sb.toString();
 	}
+
 }

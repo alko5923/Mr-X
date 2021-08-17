@@ -7,12 +7,10 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import com.rits.cloning.Cloner;
 
 import mrX_maven_utilities.DistancesFileParser;
 
 public class Board {
-	private final Cloner cloner;
 	private static final String DISTANCES_FILE_NAME = "src/main/resources/seekers_distances.xml";
 	private List<List<Integer>> distances = new ArrayList<List<Integer>>();
 	private List<Station> stations = new ArrayList<Station>();
@@ -22,7 +20,7 @@ public class Board {
 	 * @return The initialized board. 
 	 * @throws FileNotFoundException
 	 */
-	public static Board initializeBoard(Cloner cloner) throws FileNotFoundException {
+	public static Board initializeBoard() throws FileNotFoundException {
 		Gson gson = new Gson();
 		JsonReader reader = new JsonReader(new FileReader("src/main/resources/stations.json"));
 		List<Station> stations = gson.fromJson(reader, new TypeToken<ArrayList<Station>>(){}.getType());
@@ -31,7 +29,7 @@ public class Board {
 		
 		DistancesFileParser parser = new DistancesFileParser(DISTANCES_FILE_NAME);
 		List<List<Integer>> distances = parser.getParsedData();
-		return new Board(stations, distances, cloner);
+		return new Board(stations, distances);
 	}
 	
 	/**
@@ -39,23 +37,16 @@ public class Board {
 	 * @param stations
 	 * @param distances
 	 */
-	private Board (List<Station> stations, List<List<Integer>> distances, Cloner cloner) {
+	private Board (List<Station> stations, List<List<Integer>> distances) {
 		this.setStations(stations);
 		this.setDistances(distances);
-		this.cloner = cloner;
 	}
-	
-	public List<Station> getDeepCloneOfStations() {
-        return cloner.deepClone(stations);
-    }
-	
 	
 	/**
 	* A simple evaluation method for the stations, based on the number and the type of connections from them.
 	* @param stations
 	*/
 	public static void evaluateStations(List<Station> stations) {
-			
 		for (int i = 0; i < stations.size(); i++) {
 			Station station = stations.get(i);
 			int value = station.getNumberTaxiConnections()*10 + station.getNumberBusConnections()*20 + station.getNumberTubeConnections()*40;
@@ -102,8 +93,8 @@ public class Board {
 	 * @param newPosition
 	 */
 	public void occupyAndUnoccupyRelevantStation(Move bestMove) {
-		Station currentLocation = bestMove.getStartStation();
-		Station newLocation = bestMove.getDestinationStation();
+		Station currentLocation = getStations().get(bestMove.getStartStation().getNameInt()-1);
+		Station newLocation = getStations().get(bestMove.getDestinationStation().getNameInt()-1);
 		currentLocation.unoccupyStation();
 		newLocation.occupyStation();
 	}

@@ -21,10 +21,8 @@ public class CoordinatePlayers {
 	private static List<Integer> possibleStartingStationsDetectives = Arrays.asList(13, 26, 29, 34, 50, 53, 91, 94, 103, 112, 117, 123, 138, 141, 155, 174);
 	private List<Detective> detectives = new ArrayList<Detective>();
 	private MrX mrX;
-	private List<List<Move>> allPossibleMoveCombosDetectives = new ArrayList<List<Move>>();
+	private List<List<Move>> allMeaningfulMoveCombosDetectives = new ArrayList<List<Move>>();
 	private List<Move> bestCombo = new ArrayList<Move>();
-	private static final int CUTOFF_DETECTIVE_COMBOS = 300;
-	
 	
 	public static CoordinatePlayers initializeCoordinator(Board board) throws FileNotFoundException {
 		List<Detective> detectives = setupDetectives(board);
@@ -143,68 +141,14 @@ public class CoordinatePlayers {
 		return bestCombo;
 	}
 	
-	//TODO: this is taking too much time.  
-	/**
-	 * Generate all possible move combos, and prune them after
-	 * a certain cutoff rate. 
-	 */
-	public List<List<Move>> generatePrunedDetectiveCombos() {
-		List<List<Move>> allCombos = generateAllPossibleMoveCombosDetectives();
-		List<List<Move>> allCombosCleanedUp = new ArrayList<List<Move>>();
-		
-		if (allCombos.size() > CUTOFF_DETECTIVE_COMBOS) {
-			allCombosCleanedUp = pruneAllPossibleMoveCombos(allCombos);
-			setAllPossibleMoveCombosDetectives(allCombosCleanedUp);
-		} else {
-			allCombosCleanedUp = allCombos;
-			setAllPossibleMoveCombosDetectives(allCombosCleanedUp);
-		}
-		//System.out.println("Number of all combos = " + getAllPossibleMoveCombosDetectives().size());
-		return allCombosCleanedUp;
-	}
-	
-	/**
-	 * Prune all possible move combos with the following criteria:
-	 * remove the combo if it increases the average distance of detectives to the current Mr. X position.
-	 */
-	public List<List<Move>> pruneAllPossibleMoveCombos(List<List<Move>> allCombos) {
-		List<List<Move>> combosToPrune = new ArrayList<List<Move>>();
-		
-		for (List<Move> combo : allCombos) {
-			boolean check = checkIfComboIncreasesDistance(combo);
-			if (check == true) {
-				combosToPrune.add(combo);
-			}
-		}
-		allCombos.removeAll(combosToPrune);
-		return allCombos;
-	}
-	
-	/**
-	 * Checks if given combo increases the average distance of detectives to the
-	 * current position of Mr. X. 
-	 * @param combo
-	 * @return True if average distance is increased, false otherwise. 
-	 */
-	public boolean checkIfComboIncreasesDistance(List<Move> combo) {
-		boolean check = false;
-		double currentAverageDistance = calculateAverageDistanceDetectives();
-		double newAverageDistance = calculateAverageDistanceAfterCombo(combo);
-		
-		if(newAverageDistance > currentAverageDistance) {
-			check = true;
-		}
-		return check; 
-	}
-	
 	/** 
 	 * Generates all possible meaningful move combinations for detectives, based on all possible moves
 	 * every detective can make from its current position. Meaningful means that the combo is checked 
 	 * for whether it increases the average distance of detectives to the current Mr. X station. 
 	 */
-	public List<List<Move>> generateAllPossibleMoveCombosDetectives() {
-		findPossibleMovesAllDetectives();
-		List<List<Move>> allPossibleDetectiveMoves = coordinatePossibleDetectiveMoves();
+	public List<List<Move>> generateAllMeaningfulMoveCombosDetectives() {
+		findMeaningfulMovesAllDetectives();
+		List<List<Move>> allPossibleDetectiveMoves = coordinateMeaningfulDetectiveMoves();
 		//Use guava to create a cartesian product of all possible combos
 		List<List<Move>> allCombos = new ArrayList<List<Move>>();
 		allCombos = Lists.cartesianProduct(allPossibleDetectiveMoves);
@@ -237,6 +181,7 @@ public class CoordinatePlayers {
 				allCombosCleanedUp.add(goodCombo);	
 			}
 		}
+		setAllMeaningfulMoveCombosDetectives(allCombosCleanedUp);
 		return allCombosCleanedUp;
 	}
 	
@@ -245,7 +190,7 @@ public class CoordinatePlayers {
 	 * Coordinates the possible moves for every detective. 
 	 * @return	A list of lists of coordinated moves.
 	 */
-	private List<List<Move>> coordinatePossibleDetectiveMoves() {
+	private List<List<Move>> coordinateMeaningfulDetectiveMoves() {
 		/**Loop through all detectives, except for the last one 
 		 * For every detective, loop through all possible moves
 		 * If any of the moves' destinations stations equals any of the detectives' current stations,
@@ -285,7 +230,7 @@ public class CoordinatePlayers {
 	/** 
 	 * Finds and sets the possible moves for all detectives.
 	 */
-	private void findPossibleMovesAllDetectives() {
+	private void findMeaningfulMovesAllDetectives() {
 		for (Detective det : detectives) {
 			det.findAndPrunePossibleMovesDetective(board, mrX);
 		}
@@ -429,12 +374,12 @@ public class CoordinatePlayers {
 		this.mrX = mrX;
 	}
 	
-	public List<List<Move>> getAllPossibleMoveCombosDetectives() {	
-		return allPossibleMoveCombosDetectives;
+	public List<List<Move>> getAllMeaningfulMoveCombosDetectives() {	
+		return allMeaningfulMoveCombosDetectives;
 	}
 	
-	public void setAllPossibleMoveCombosDetectives(List<List<Move>> allPossibleMoveCombosDetectives) {	
-		this.allPossibleMoveCombosDetectives = allPossibleMoveCombosDetectives;
+	public void setAllMeaningfulMoveCombosDetectives(List<List<Move>> allMeaningfulMoveCombosDetectives) {	
+		this.allMeaningfulMoveCombosDetectives = allMeaningfulMoveCombosDetectives;
 	}
 	
 	public List<Move> getBestCombo() {

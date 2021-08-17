@@ -17,8 +17,7 @@ import java.util.*;
 public class GameState {
 	
 	private CoordinatePlayers coordinator;
-	private List<Move> bestDetectiveMoves = new ArrayList<Move>();
-	private Move winningMove = null;
+	private List<Move> bestDetMoves = new ArrayList<Move>();
 	
 	/**
 	 * The class constructor. 
@@ -76,7 +75,7 @@ public class GameState {
 				Move move = clonedState.getCoordinator().getMrX().getPossibleMoves().get(i);
 				clonedState.getCoordinator().getMrX().simulateMove(move, clonedState.getCoordinator().getBoard());
 				//clonedState.getCoordinator().getMrX().findPossibleStationsAfterTicket(clonedState.getCoordinator().getBoard(), move.getTicket());
-				clonedState.getCoordinator().generatePrunedDetectiveCombos();
+				clonedState.getCoordinator().generateAllMeaningfulMoveCombosDetectives();
 				TreeNode<GameState> newChild = new TreeNode<GameState>(clonedState, cloner);
 				double score = clonedState.miniMax(depth+1, false, newChild, cloner, combo);
 				node.addChild(newChild);
@@ -87,17 +86,17 @@ public class GameState {
 			bestScore = Double.POSITIVE_INFINITY;
 			//Loop through all move combos and make every one of them
 			//After executing a combo, call minimax with maximizing player
-			List<List<Move>> allPossibleDetectiveCombos = node.getData().getCoordinator().getAllPossibleMoveCombosDetectives();
+			List<List<Move>> allPossibleDetectiveCombos = node.getData().getCoordinator().getAllMeaningfulMoveCombosDetectives();
 			for (int i = 0; i < allPossibleDetectiveCombos.size(); i++) {
 				GameState clonedState = node.getDeepCloneOfRepresentedState();
-				clonedState.getCoordinator().executeCombo(clonedState.getCoordinator().getAllPossibleMoveCombosDetectives().get(i));
+				clonedState.getCoordinator().executeCombo(clonedState.getCoordinator().getAllMeaningfulMoveCombosDetectives().get(i));
 				
 				boolean check = checkIfMrXFound(node);
 				if (check == true) {
 					bestScore = Double.NEGATIVE_INFINITY;
 				}
 				//TODO: check the order of execution here! 
-				clonedState.getCoordinator().generatePrunedDetectiveCombos();
+				clonedState.getCoordinator().generateAllMeaningfulMoveCombosDetectives();
 				TreeNode<GameState> newChild = new TreeNode<GameState>(clonedState, cloner);
 				double score = clonedState.miniMax(depth+1, true, newChild, cloner, combo);
 				node.addChild(newChild);
@@ -134,20 +133,12 @@ public class GameState {
 		return evaluation;
 	}
 	
-	public List<Move> getBestDetectiveMoves() {	
-		return this.bestDetectiveMoves;
+	public List<Move> getBestDetMoves() {	
+		return this.bestDetMoves;
 	}
 		
 	public void setBestDetMoves(List<Move> bestDetMoves) {
-		this.bestDetectiveMoves = bestDetMoves;	
-	}
-	
-	public Move getWinningMove() {	
-		return winningMove;
-	}
-	
-	public void setWinningMove(Move winningMove) {	
-		this.winningMove = winningMove;
+		this.bestDetMoves = bestDetMoves;	
 	}
 	
 	public CoordinatePlayers getCoordinator() {	
@@ -164,8 +155,8 @@ public class GameState {
 		sb.append("THE CURRENT GAME STATE\n");
 		sb.append("---------------------------------\n");
 		sb.append(coordinator.toString());
+		sb.append("The best detective moves = " + getBestDetMoves() + "\n");
 		sb.append("---------------------------------\n");
-		sb.append("The best detective moves = " + bestDetectiveMoves + "\n");
 		return sb.toString();
 	}
 	

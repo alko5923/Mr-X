@@ -2,8 +2,8 @@ package mrX_maven_game;
 
 import java.util.ArrayList;
 
-public class Station {
-	private int name;
+public class Station  implements Comparable<Station> {
+	private Integer name;
 	private String stationType;
 	private boolean blackStation;
 	private ArrayList<Integer> neighboursTaxi;
@@ -21,7 +21,7 @@ public class Station {
 	 * @param neighboursBus
 	 * @param neighboursTube
 	 */
-	public Station(int name, String stationType, boolean blackStation, ArrayList<Integer> neighboursTaxi, ArrayList<Integer> neighboursBus, ArrayList<Integer> neighboursTube) {
+	public Station(Integer name, String stationType, boolean blackStation, ArrayList<Integer> neighboursTaxi, ArrayList<Integer> neighboursBus, ArrayList<Integer> neighboursTube) {
 		this.name = name;
 		this.stationType = stationType;
 		this.neighboursTaxi = neighboursTaxi;
@@ -29,7 +29,7 @@ public class Station {
 		this.neighboursTube = neighboursTube;
 	}
 	
-	public int getNameInt() {
+	public Integer getNameInt() {
 		return this.name;
 	}
 	
@@ -94,5 +94,10 @@ public class Station {
 		sb.append("Station occupied = " + occupied + "\n");
 		
 		return sb.toString();
+	}
+
+	@Override
+	public int compareTo(Station anotherStation) {
+		return this.name.compareTo(anotherStation.getNameInt());
 	}
 }
