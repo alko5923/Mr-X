@@ -123,14 +123,14 @@ public class Hunt {
 			String ticketUsed = gameState.getCoordinator().getMrX().moveMrX();
 			
 			//Find all possible Mr. X stations
-			gameState.getCoordinator().getMrX().findPossibleStationsAfterTicket(gameState.getCoordinator().getBoard(), ticketUsed);
+			gameState.getCoordinator().getMrX().findPossibleStationsAfterTicket(step, gameState.getCoordinator().getBoard(), ticketUsed, gameState.getCoordinator().getDetectives());
 			
 			//Reveal Mr. X on defined steps
 			if (step == 3 || step == 8 || step == 13 || step == 18 || step == 24) {
 				System.out.println("\nMr. X, reveal yourself!\n");
 				System.out.println("Where is Mr. X at the moment?\n");
 				mrXLocation = sc.nextInt();
-				gameState.getCoordinator().getMrX().reveal(mrXLocation);
+				gameState.getCoordinator().getMrX().reveal(mrXLocation, gameState.getCoordinator().getBoard());
 			}
 			
 			//Find all possible Mr. X moves

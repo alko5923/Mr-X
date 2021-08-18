@@ -112,8 +112,48 @@ public class Detective {
 			}
 		}
 			
-		this.possibleMovesCurrentStation = possibleMoves;
-			
+		setPossibleMovesCurrentStation(possibleMoves);
+	}
+	
+	public void findAnyMove(Board board) {
+		
+		List<Move> possibleMoves = new ArrayList<Move>();
+		Station detStartStation = board.getStations().get(getCurrentPosition()-1);
+		
+		for (int j = 0; j < detStartStation.getNumberTaxiConnections(); j++) {
+			Station destinationStation = board.getStations().get(detStartStation.getTaxiNeighbours().get(j)-1);
+			if (destinationStation.isOccupied()==false) {
+				Move move = new Move(detStartStation, destinationStation, "Taxi");
+				boolean check = possibleMoves.add(move);
+				if (check == true) {
+					setPossibleMovesCurrentStation(possibleMoves);
+					return;
+				}
+			}
+		}
+		for (int j = 0; j < detStartStation.getNumberBusConnections(); j++) {
+			Station destinationStation = board.getStations().get(detStartStation.getBusNeighbours().get(j)-1);
+			if (destinationStation.isOccupied()==false) {
+				Move move = new Move(detStartStation, destinationStation, "Bus");
+				boolean check = possibleMoves.add(move);
+				if (check == true) {
+					setPossibleMovesCurrentStation(possibleMoves);
+					return;
+				}
+			}
+		}
+		for (int j = 0; j < detStartStation.getNumberTubeConnections(); j++) {
+			Station destinationStation = board.getStations().get(detStartStation.getTubeNeighbours().get(j)-1);
+			if (destinationStation.isOccupied()==false) {
+				Move move = new Move(detStartStation, destinationStation, "Tube");
+				boolean check = possibleMoves.add(move);
+				if (check == true) {
+					setPossibleMovesCurrentStation(possibleMoves);
+					return;
+				}
+			}
+		}
+		
 	}
 	
 	/**

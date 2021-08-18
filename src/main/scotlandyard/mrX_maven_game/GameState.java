@@ -58,7 +58,7 @@ public class GameState {
 		}
 		
 		//Once you reach a certain depth, evaluate the game state and propagate the score 
-		if(depth == 1) {
+		if(depth == 14) {
 			double miniMaxEvaluation = node.getData().evaluateGameState(node);
 			node.setNodeEvaluation(miniMaxEvaluation);
 			return miniMaxEvaluation;
@@ -74,8 +74,6 @@ public class GameState {
 				GameState clonedState = node.getDeepCloneOfRepresentedState();
 				Move move = clonedState.getCoordinator().getMrX().getPossibleMoves().get(i);
 				clonedState.getCoordinator().getMrX().simulateMove(move, clonedState.getCoordinator().getBoard());
-				//clonedState.getCoordinator().getMrX().findPossibleStationsAfterTicket(clonedState.getCoordinator().getBoard(), move.getTicket());
-				clonedState.getCoordinator().generateAllMeaningfulMoveCombosDetectives();
 				TreeNode<GameState> newChild = new TreeNode<GameState>(clonedState, cloner);
 				double score = clonedState.miniMax(depth+1, false, newChild, cloner, combo);
 				node.addChild(newChild);

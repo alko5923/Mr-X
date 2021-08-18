@@ -2,12 +2,15 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import mrX_maven_game.Board;
 import mrX_maven_game.Move;
 import mrX_maven_game.Station;
+import mrX_maven_strategies.Tuple;
 import mrX_maven_utilities.TreeNodeMrX;
 
 /**
@@ -90,47 +93,101 @@ public class MrX {
 	 * Find all possible stations where Mr. X could be located after using a certain type of ticket.
 	 * @param ticketUsed
 	 */
-	public void findPossibleStationsAfterTicket(Board board, String ticketUsed) {
-		//Loop through the list of possible Mr. X stations
-		//every station that can be reached with the ticketUsed and that is not occupied, 
-		//add it to the list of new possible Mr. X stations.
-		List<Integer> possibleStations = new ArrayList<Integer>();
-		if (ticketUsed.equals("Taxi")) {
-			for (int i = 0; i < getPossibleStations().size(); i++) {
-				Station startStation = board.getStations().get(getPossibleStations().get(i)-1);
-				for (int j = 0; j < startStation.getNumberTaxiConnections(); j++) {	
-					Station destinationStation = board.getStations().get(startStation.getTaxiNeighbours().get(j)-1);
-					if (destinationStation.isOccupied()==false && possibleStations.contains(destinationStation.getNameInt())==false) {	
-						possibleStations.add(destinationStation.getNameInt());	
-					}
+	public void findPossibleStationsAfterTicket(int step, Board board, String ticketUsed, List<Detective> detectives) {
+		if (step == 3 || step == 8 || step == 13 || step == 18 || step == 24) {
+			return;
+		}
+		List<Integer> oldPossibleStations = getPossibleStations();
+		TreeNodeMrX<Station> possibleStationsNode = getPossibleStationsNode();
+		for (Integer station : oldPossibleStations) {
+			Station oldStation = board.getStations().get(station-1);
+			List<Integer> newStations = new ArrayList<Integer>();
+			if (ticketUsed.equals("Taxi") && oldStation.isOccupied()==false) {
+				newStations = oldStation.getTaxiNeighbours();
+			}
+			else if (ticketUsed.equals("Bus") && oldStation.isOccupied()==false && (oldStation.getStationType().equals("Bus") || oldStation.getStationType().equals("Tube"))) {
+				newStations = oldStation.getBusNeighbours();
+			}
+			else if (ticketUsed.equals("Tube") && oldStation.isOccupied()==false && oldStation.getStationType().equals("Tube")) {
+				newStations = oldStation.getTubeNeighbours();
+			}
+			//Add new nodes
+			for (Integer st : newStations) {
+				Station newSt = board.getStations().get(st-1);
+				if (newSt.isOccupied()==false) {
+					TreeNodeMrX<Station> node = possibleStationsNode.findTreeNode(oldStation);
+					node.addChild(newSt);
 				}
 			}
-		} else if (ticketUsed.equals("Bus")) {
-			for (int i = 0; i < getPossibleStations().size(); i++) {
-				Station startStation = board.getStations().get(getPossibleStations().get(i)-1);
-				for (int j = 0; j < startStation.getNumberBusConnections(); j++) {
-					Station destinationStation = board.getStations().get(startStation.getBusNeighbours().get(j)-1);
-					if (destinationStation.isOccupied()==false) {
-						possibleStations.add(destinationStation.getNameInt());
-					}
-				}	
-			}	
-		} else if (ticketUsed.equals("Tube")) {
-			for (int i = 0; i < getPossibleStations().size(); i++) {
-				Station startStation = board.getStations().get(getPossibleStations().get(i)-1);
-				for (int j = 0; j < startStation.getNumberTubeConnections(); j++) {
-					Station destinationStation = board.getStations().get(startStation.getTubeNeighbours().get(j)-1);
-					if (destinationStation.isOccupied()==false) {
-						possibleStations.add(destinationStation.getNameInt());
-					}
-				}	
-			}	
 		}
-		//TODO: throw an exception if ticket type does not match any of the keywords	
-		possibleStations.sort(null);
-		setPossibleStations(possibleStations);
-	}
+		//Extract the possible stations from the tree
+		Set<Integer> newPossibleStationsSet = new HashSet<Integer>();
+		for (TreeNodeMrX<Station> node : getPossibleStationsNode()) {
+			if (step > 3 && step < 9) {
+				if (node.getLevel()==(step-3)) {
+					newPossibleStationsSet.add(node.getStation().getNameInt());
+				}
+			}
+			else if (step > 8 && step < 13) {
+				if (node.getLevel()==(step-8)) {
+					newPossibleStationsSet.add(node.getStation().getNameInt());
+				}
+			}
+			else if (step > 13 && step < 18) {
+				if (node.getLevel()==(step-13)) {
+					newPossibleStationsSet.add(node.getStation().getNameInt());
+				}
+			}
+			else if (step > 18 && step < 24) {
+				if (node.getLevel()==(step-18)) {
+					newPossibleStationsSet.add(node.getStation().getNameInt());
+				}
+			}
+			
+		}
 		
+		//Extract from set to list
+		List<Integer> newPossibleStations = new ArrayList<Integer>();
+		for (Integer st : newPossibleStationsSet) {
+			newPossibleStations.add(st);
+		}
+		
+		if (newPossibleStations.size() > 5) {
+			List<Integer> newPossibleStationsFiltered = new ArrayList<Integer>();
+			
+			//Sort the stations according to distance from current station
+			List<Tuple> stationsWithDistances = new ArrayList<Tuple>();
+			for (Integer stat : newPossibleStations) {
+				int dist = calculateDistanceFromDetectives(stat, detectives, board);
+				Tuple tuple = new Tuple(stat, dist);
+				stationsWithDistances.add(tuple);	
+			}
+			stationsWithDistances.sort((t1, t2) -> t1.getDistance().compareTo(t2.getDistance()));
+			
+			//Take the five stations that are furthest from detectives
+			List<Tuple> bestFive = stationsWithDistances.subList(stationsWithDistances.size()-5, stationsWithDistances.size());
+			
+			//Extract the stations from the list of tuples
+			for (Tuple t : bestFive) {
+				int station = t.getStation();
+				newPossibleStationsFiltered.add(station);
+			}
+			
+			setPossibleStations(newPossibleStationsFiltered);
+			return;
+		}
+		
+		setPossibleStations(newPossibleStations);
+	}
+	
+	public int calculateDistanceFromDetectives(Integer station, List<Detective> detectives, Board board) {
+		int distance = 0;
+		for (Detective det : detectives) {
+			distance += board.returnShortestDistance(station, det.getCurrentPosition());
+		}
+		return distance;
+	}
+	
 	/** 
 	* Find all possible Mr. X moves from all his possible stations.
 	* @param step
@@ -178,12 +235,15 @@ public class MrX {
 	 * Sets the necessary attributes after Mr. X's location is revealed.
 	 * @param station
 	 */
-	public void reveal(int station) {
+	public void reveal(int station, Board board) {
 		addToReveals(station);
 		setCurrentStation(station);
 		List<Integer> possibleStations = new ArrayList<Integer>();
 		possibleStations.add(station);
 		setPossibleStations(possibleStations);
+		Station newStation = board.getStations().get(station-1);
+		TreeNodeMrX<Station> newNode = new TreeNodeMrX<Station>(newStation);
+		setPossibleStationsNode(newNode);
 	}
 	
 	/** 

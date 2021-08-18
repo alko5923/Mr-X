@@ -233,6 +233,9 @@ public class CoordinatePlayers {
 	private void findMeaningfulMovesAllDetectives() {
 		for (Detective det : detectives) {
 			det.findAndPrunePossibleMovesDetective(board, mrX);
+			if (det.getPossibleMovesCurrentStation().size()==0) {
+				det.findAnyMove(board);
+			}
 		}
 	}
 	
