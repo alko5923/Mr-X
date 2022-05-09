@@ -1,26 +1,6 @@
 ## Mr. X, the codebreaker for the Scotland Yard board game.
 
 
-### Markdown
+This is a simple AI for the board game Scotland Yard. Up to four detective are on the chase for Mr. X, the criminal mastermind. The detectives must navigate the tricky streets of London, using a combination of transport options, while Mr. X tries to stay a step or two ahead of them. Who will win? Play to find out!
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+The AI uses the minimax algorithm to explore the possible moves Mr. X could make, and to suggest the best move for each of the detectives. 
